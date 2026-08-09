@@ -110,10 +110,32 @@ const TREATMENTS = [
   tags:['fit bodywrap','body wrap','cellulite','weight loss','water retention'] }
 ];
 
+/* ═══════════════════ EDITABLE: SERVICE CATEGORIES ═══════════════════
+   The four buttons shown when the chat opens. Tapping one shows every
+   treatment in that category (pulled from TREATMENTS above) in one go. */
+const CATEGORIES = [
+{ id:'hair-removal', label:'Hair Removal Services', page:'services-hair-removal.html',
+  intro:'Two ways to remove hair permanently, depending on your hair and skin — including the only FDA-approved method for every hair color.',
+  triggers:['hair removal service','hair removal services','remove hair','hair removal'],
+  treatmentIds:['laser','electrolysis'] },
+{ id:'detox', label:'Detoxification Services', page:'services-detox.html',
+  intro:'Three whole-body treatments supporting circulation, digestion, and recovery.',
+  triggers:['detox service','detox services','detoxification service','detoxification services'],
+  treatmentIds:['sauna','colonics','bodywrap'] },
+{ id:'facials', label:'Rejuvenating Facials', page:'services-facials.html',
+  intro:'Seven treatments aimed at texture, tone, congestion, and fine lines.',
+  triggers:['rejuvenating facial','facial service','what facials','facials do you','facial menu','facial options'],
+  treatmentIds:['hydrafacial','peels','microneedling','dermaplaning','acne-facial','anti-aging','back-facial'] },
+{ id:'beauty', label:'Precise Beauty Enhancements', page:'services-beautification.html',
+  intro:'The finishing details — lashes, lips, teeth, and tone, done conservatively.',
+  triggers:['beauty enhancement','beautification','precise beauty','what beauty','beauty options'],
+  treatmentIds:['lash-lift','teeth-whitening','lip-blushing','hyperpig','tooth-gems'] }
+];
+
 /* ═══════════════════ EDITABLE: GENERAL SITE INFO ═══════════════════ */
 const GENERAL = [
 { id:'hours', triggers:['hour','open today','close','same day','same-day','availability'],
-  a:'We\'re open seven days a week, and same-day appointments are often available.' },
+  a:'By appointment, same-day appointments are available. Open seven days a week.' },
 { id:'contact', triggers:['phone number','call you','email address','contact you','reach you','e-mail'],
   a:'You can call us at (631) 923-1174 or email Preciselaserspa@gmail.com.' },
 { id:'location', triggers:['where are you','location','address','directions','parking','babylon'],
@@ -146,6 +168,7 @@ const PHONE = 'tel:6319231174';
 
 /* ═══════════════════ MATCHING ENGINE ═══════════════════ */
 function norm(s){ return (s || '').toLowerCase(); }
+function treatmentById(id){ return TREATMENTS.find(t => t.id === id); }
 
 function tagHits(text, tags){
   const t = norm(text);
@@ -182,14 +205,19 @@ function findReply(message){
     return { text: BOOKING.a, book:true };
   }
 
-  // 4. score general + treatments, take best
-  const generalScored = GENERAL.map(g => ({ kind:'general', item:g, score: tagHits(text, g.triggers) }));
+  // 4. score treatments + general + categories together, take best.
+  // Order matters only for tie-breaks: specific treatment answers win
+  // over generic FAQ answers, which win over a whole-category browse.
   const treatScored = TREATMENTS.map(t => ({ kind:'treatment', item:t, score: tagHits(text, t.tags) }));
-  // treatments listed first so a tied score favors the specific answer over the generic one
-  const best = treatScored.concat(generalScored).filter(x => x.score > 0).sort((a,b) => b.score - a.score)[0];
+  const generalScored = GENERAL.map(g => ({ kind:'general', item:g, score: tagHits(text, g.triggers) }));
+  const catScored = CATEGORIES.map(c => ({ kind:'category', item:c, score: tagHits(text, c.triggers) }));
+  const best = treatScored.concat(generalScored, catScored).filter(x => x.score > 0).sort((a,b) => b.score - a.score)[0];
 
   if (!best){
     return { text:'I don\'t have a specific answer for that in what\'s on our site — but our team can help directly.', fallback:true };
+  }
+  if (best.kind === 'category'){
+    return { category: best.item };
   }
   if (best.kind === 'general'){
     return { text: best.item.a, link: best.item.link };
@@ -253,11 +281,30 @@ function buildPanel(){
   return panel;
 }
 
+function categoryHtml(cat){
+  let html = `<div style="font-weight:700; color:var(--teal-deep); margin-bottom:5px">${escapeHtml(cat.label)}</div>`;
+  html += `<div style="margin-bottom:4px">${escapeHtml(cat.intro)}</div>`;
+  cat.treatmentIds.forEach(id => {
+    const t = treatmentById(id);
+    if (!t) return;
+    html += `<div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--line)">`;
+    html += `<div style="font-weight:700; margin-bottom:3px">${escapeHtml(t.name)}</div>`;
+    html += `<div style="margin-bottom:8px">${escapeHtml(t.blurb)}</div>`;
+    html += `<div class="cb-msg-actions"><a class="cb-book" href="${t.bookUrl}" target="_blank" rel="noopener">Book ${escapeHtml(t.name)}</a></div>`;
+    html += `</div>`;
+  });
+  html += `<div style="margin-top:14px"><a class="cb-msg-link" href="${cat.page}">See full ${escapeHtml(cat.label)} page →</a></div>`;
+  return html;
+}
+
 function addMsg(body, role, data){
   const div = document.createElement('div');
   div.className = 'cb-msg ' + role;
   if (role === 'user'){
     div.textContent = data;
+  } else if (data.category){
+    div.style.maxWidth = '96%';
+    div.innerHTML = categoryHtml(data.category);
   } else {
     let html = escapeHtml(data.text);
     if (data.link){
@@ -275,7 +322,7 @@ function addMsg(body, role, data){
   body.scrollTop = body.scrollHeight;
 }
 
-const CHIPS = ['What do you offer?','Where are you located?','I have cellulite','Take the assessment','Book an appointment'];
+const CHIPS = CATEGORIES.map(c => c.label);
 
 function init(){
   const rail = document.querySelector('.action-rail');
@@ -305,7 +352,15 @@ function init(){
       const el = document.createElement('div');
       el.className = 'cb-chip';
       el.textContent = c;
-      el.onclick = () => sendMessage(c);
+      el.onclick = () => {
+        const cat = CATEGORIES.find(x => x.label === c);
+        if (cat){
+          addMsg(body, 'user', c);
+          setTimeout(() => addMsg(body, 'bot', { category:cat }), 260);
+        } else {
+          sendMessage(c);
+        }
+      };
       chips.appendChild(el);
     });
   }
@@ -324,7 +379,7 @@ function init(){
     panel.classList.add('open');
     if (!opened){
       opened = true;
-      addMsg(body, 'bot', { text:'Hi! I can help you find the right treatment or answer questions about Precise — hours, location, what we offer, anything.' });
+      addMsg(body, 'bot', { text:'Hi! Tap a service below to see what it includes, or ask me anything — hours, location, a specific concern, whatever you need.' });
       renderChips();
     }
     input.focus();

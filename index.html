@@ -210,14 +210,13 @@ padding:clamp(14px,2.4vw,28px)}
 .pillars{display:grid; grid-template-columns:1fr 1fr; gap:16px}
 @media (max-width:520px){ .pillars{grid-template-columns:1fr} }
 
-/* ===== OUR MISSION ===== */
-.mission{text-align:center; max-width:860px; margin:0 auto 54px}
-.mission-title{font-family:var(--serif,Georgia,'Times New Roman',serif); font-size:clamp(42px,7vw,76px); line-height:1.02; font-weight:400; letter-spacing:.5px; text-transform:uppercase; color:var(--ink); margin:0 0 34px}
-.mission-body p{font-family:var(--serif,Georgia,'Times New Roman',serif); font-size:clamp(17px,2.1vw,23px); line-height:1.5; letter-spacing:.4px; text-transform:uppercase; color:var(--ink); margin:0 0 20px}
-.mission-body p:last-child{margin-bottom:0}
-.mission-photo{margin:44px auto 0; width:min(340px,74vw); aspect-ratio:1/1; border-radius:50%; overflow:hidden; box-shadow:0 22px 52px -18px rgba(20,97,93,.34)}
+.about-in{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center}
+@media (max-width:860px){ .about-in{grid-template-columns:1fr; gap:30px} }
+.about-in .h2{margin:12px 0 16px}
+.about-in p{margin-bottom:15px}
+.mission-photo{margin:22px 0 0; width:190px; aspect-ratio:1/1; border-radius:50%; overflow:hidden; box-shadow:0 16px 36px -14px rgba(20,97,93,.32)}
 .mission-photo img{width:100%; height:100%; object-fit:cover; display:block}
-@media (max-width:640px){ .mission{margin-bottom:40px} .mission-photo{margin-top:34px} }
+@media (max-width:860px){ .mission-photo{margin-left:auto; margin-right:auto} }
 .pillar{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:24px 22px; box-shadow:0 10px 30px -14px rgba(20,97,93,.2)}
 .pillar-n{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:34px; color:var(--teal); line-height:1; margin-bottom:9px}
 .pillar h4{font-size:14.5px; font-weight:700; margin-bottom:6px}
@@ -656,37 +655,23 @@ textarea.f-in{min-height:130px; resize:vertical}
 
 <!-- ============================ ABOUT ============================ -->
 <section class="sec" id="about">
-<div class="wrap">
-
-<!-- ===== OUR MISSION ===== -->
-<div class="mission">
-<h2 class="mission-title">Our Mission</h2>
-<div class="mission-body">
-<p>To provide quality client care in an attentive and compassionate environment,</p>
-<p>while catering to every client's wants and needs;</p>
-<p>using state-of-the-art technology with proven results.</p>
-</div>
-
-<!-- ===== BUSINESS SIGN PHOTO =====
-     Drop the storefront sign photo in this folder and set the src below,
-     e.g. src="sign.jpg". It will be cropped into the circle automatically. -->
+<div class="wrap about-in">
+<div>
+<div class="eyebrow">About Precise</div>
+<h2 class="h2">Our Mission</h2>
+<p class="lede">To provide quality client care in an attentive and compassionate environment, while catering to every client's wants and needs, using state-of-the-art technology with proven results.</p>
 <div class="mission-photo">
 <img src="sign.jpg" alt="Precise Laser Hair Removal &amp; Esthetics — 626 Deer Park Ave, Babylon NY" loading="lazy"
      onerror="this.closest('.mission-photo').style.display='none'">
 </div>
+<a class="btn btn-o" style="margin-top:18px" href="#" onclick="openOverlay('contact');return false;">Ask us a question</a>
 </div>
-
 <div class="pillars">
 <div class="pillar"><div class="pillar-n">5.0</div><h4>Perfect rating</h4><p>Across 306 Google reviews, with no rating below five stars.</p></div>
 <div class="pillar"><div class="pillar-n">I–VI</div><h4>All skin types</h4><p>Equipment and settings suited to the full Fitzpatrick range.</p></div>
 <div class="pillar"><div class="pillar-n">18</div><h4>Treatments offered</h4><p>From laser and electrolysis to facials, PMU, and wellness.</p></div>
 <div class="pillar"><div class="pillar-n">$0</div><h4>Consultation</h4><p>Every treatment starts with a complimentary consult.</p></div>
 </div>
-
-<div style="text-align:center; margin-top:34px">
-<a class="btn btn-o" href="#" onclick="openOverlay('contact');return false;">Ask us a question</a>
-</div>
-
 </div>
 </section>
 

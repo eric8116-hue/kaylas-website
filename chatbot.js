@@ -232,7 +232,9 @@ function escapeHtml(s){
 }
 
 const CSS = `
-.cb-btn{background:none; border:none; padding:0; cursor:pointer}
+/* keep the rail's teal gradient — only strip the default <button> chrome */
+.cb-btn{border:none; padding:0; cursor:pointer; font:inherit; color:#fff; -webkit-appearance:none; appearance:none}
+.cb-btn svg{stroke:#fff; fill:none}
 .cb-panel{position:fixed; right:16px; bottom:24px; width:360px; max-width:calc(100vw - 24px); max-height:min(560px,calc(100vh - 100px)); background:var(--paper); border:1px solid var(--line); border-radius:20px; box-shadow:0 30px 60px -14px rgba(20,97,93,.35); z-index:950; display:none; flex-direction:column; overflow:hidden; font-family:'Inter',system-ui,sans-serif}
 .cb-panel.open{display:flex; animation:cbFade .22s ease}
 @keyframes cbFade{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}

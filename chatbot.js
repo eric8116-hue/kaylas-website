@@ -232,9 +232,12 @@ function escapeHtml(s){
 }
 
 const CSS = `
-/* keep the rail's teal gradient — only strip the default <button> chrome */
-.cb-btn{border:none; padding:0; cursor:pointer; font:inherit; color:#fff; -webkit-appearance:none; appearance:none}
+/* keep the rail's teal gradient — only strip the default <button> chrome.
+   Rounded-square shape (not a circle) so the bot is distinguishable from
+   the other four rail widgets at a glance. */
+.cb-btn{border:none; padding:0; cursor:pointer; font:inherit; color:#fff; -webkit-appearance:none; appearance:none; border-radius:16px}
 .cb-btn svg{stroke:#fff; fill:none}
+@media (max-width:640px){ .cb-btn{border-radius:13px} }
 .cb-panel{position:fixed; right:16px; bottom:24px; width:360px; max-width:calc(100vw - 24px); max-height:min(560px,calc(100vh - 100px)); background:var(--paper); border:1px solid var(--line); border-radius:20px; box-shadow:0 30px 60px -14px rgba(20,97,93,.35); z-index:950; display:none; flex-direction:column; overflow:hidden; font-family:'Inter',system-ui,sans-serif}
 .cb-panel.open{display:flex; animation:cbFade .22s ease}
 @keyframes cbFade{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}
@@ -334,8 +337,18 @@ function init(){
   btn.className = 'rail-btn cb-btn';
   btn.id = 'cbRailBtn';
   btn.setAttribute('aria-label', 'Chat with us');
-  btn.innerHTML = `<span class="rail-label">Chat With Us</span><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.83 8.38 9 9 0 0 1-4.17-1L3 20l1.13-4.83A8.38 8.38 0 0 1 12.17 3 8.5 8.5 0 0 1 21 11.5Z"/></svg>`;
-  rail.appendChild(btn);
+  btn.innerHTML = `<span class="rail-label">Chat With Us</span><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2.4v2.4"/>
+    <circle cx="12" cy="1.9" r="1.1" fill="#fff" stroke="none"/>
+    <rect x="4" y="4.8" width="16" height="12.4" rx="3.6"/>
+    <path d="M4 9.6H2.4v3.2H4M20 9.6h1.6v3.2H20"/>
+    <circle cx="9.2" cy="10.4" r="1.35" fill="#fff" stroke="none"/>
+    <circle cx="14.8" cy="10.4" r="1.35" fill="#fff" stroke="none"/>
+    <path d="M9.4 14.1h5.2"/>
+    <path d="M8.6 17.2v2.2M15.4 17.2v2.2"/>
+  </svg>`;
+  // first position in the rail — above the Self-Assessment button
+  rail.insertBefore(btn, rail.firstChild);
 
   const style = document.createElement('style');
   style.textContent = CSS;

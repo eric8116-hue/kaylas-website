@@ -173,8 +173,8 @@ padding:clamp(14px,2.4vw,28px)}
 .assess-art svg{width:100%; max-width:210px; height:auto; filter:drop-shadow(0 12px 20px rgba(20,97,93,.2))}
 
 /* reviews section (full, in-page) */
-.revsec{background:linear-gradient(165deg,var(--teal-deep),var(--teal) 60%,#2AA09A); color:#fff; padding:74px 0}
-.revsec-top{display:flex; align-items:center; justify-content:center; gap:clamp(16px,4vw,42px); flex-wrap:wrap; text-align:center; margin-bottom:40px}
+.revsec{background:linear-gradient(165deg,var(--teal-deep),var(--teal) 60%,#2AA09A); color:#fff; padding:59px 0}
+.revsec-top{display:flex; align-items:center; justify-content:center; gap:clamp(16px,4vw,42px); flex-wrap:wrap; text-align:center; margin-bottom:32px}
 .revsec-score{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(56px,8vw,84px); line-height:.95}
 .revsec-mid{display:flex; flex-direction:column; align-items:center; gap:8px}
 .revsec-stars{display:flex; gap:4px}
@@ -190,7 +190,7 @@ padding:clamp(14px,2.4vw,28px)}
 .quote-who{font-size:12.5px; font-weight:600; color:rgba(255,255,255,.82)}
 .quote-flag{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.24); padding:4px 9px; border-radius:5px; margin-bottom:11px}
 .revsec-links{display:flex; gap:12px; justify-content:center; margin-top:34px; flex-wrap:wrap}
-.revsec-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:820px; margin:0 auto 40px}
+.revsec-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:820px; margin:0 auto 32px}
 @media (max-width:700px){ .revsec-stats{grid-template-columns:1fr; gap:12px} }
 .revsec-stat{background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.22); border-radius:16px; padding:22px 20px; text-align:center}
 .revsec-stat-n{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:32px; line-height:1; margin-bottom:8px}
@@ -210,11 +210,13 @@ padding:clamp(14px,2.4vw,28px)}
 .pillars{display:grid; grid-template-columns:1fr 1fr; gap:16px}
 @media (max-width:520px){ .pillars{grid-template-columns:1fr} }
 
+/* About / Our Mission — tinted band so it separates from the white contact section below */
+#about{background:var(--sand); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:66px 0}
 .about-in{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center}
-@media (max-width:860px){ .about-in{grid-template-columns:1fr; gap:30px} }
-.about-in .h2{margin:12px 0 16px}
-.about-in p{margin-bottom:15px}
-.mission-photo{margin:22px 0 0; width:190px; aspect-ratio:1/1; border-radius:50%; overflow:hidden; box-shadow:0 16px 36px -14px rgba(20,97,93,.32)}
+@media (max-width:860px){ .about-in{grid-template-columns:1fr; gap:30px} #about{padding:48px 0} }
+.about-in .h2{margin:12px 0 14px}
+.about-in p{margin-bottom:12px}
+.mission-photo{margin:18px 0 0; width:190px; aspect-ratio:1/1; border-radius:50%; overflow:hidden; box-shadow:0 16px 36px -14px rgba(20,97,93,.32)}
 .mission-photo img{width:100%; height:100%; object-fit:cover; display:block}
 @media (max-width:860px){ .mission-photo{margin-left:auto; margin-right:auto} }
 .pillar{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:24px 22px; box-shadow:0 10px 30px -14px rgba(20,97,93,.2)}

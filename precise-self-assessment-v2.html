@@ -15,7 +15,7 @@
 :root{
 --teal:#1E8A85; --teal-deep:#14615D; --teal-darker:#0D3E3B; --teal-light:#E4F4F2;
 --paper:#FFFFFF; --sand:#FAF8F5; --ink:#16302E; --ink-soft:#5A716F; --line:#E3E8E7;
---fig:url(#figGrad); --fig-sel:url(#figGradSel); --fig-hair:#A7D2CD;
+--fig:rgba(30,138,133,0); --fig-sel:rgba(30,138,133,.15); --fig-hair:#A7D2CD;
 }
 *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%; overflow-x:hidden}
@@ -64,11 +64,13 @@ svg{max-width:100%}
 .figure-col{display:flex; flex-direction:column; align-items:center; position:relative; z-index:1; width:100%}
 .figure-hint{font-size:12.5px; color:var(--ink-soft); margin-top:14px; display:flex; align-items:center; gap:6px}
 
-#bodyFigure{filter:drop-shadow(0 16px 22px rgba(20,97,93,.16)); width:100%; max-width:260px; height:auto; display:block; margin:0 auto}
-#bodyFigure :is(path,circle,ellipse,rect){stroke:var(--sand); stroke-width:3; stroke-linejoin:round; stroke-linecap:round}
-.fig-gender{transition:opacity .15s}
-.zone-btn{cursor:pointer; transition:opacity .15s}
-.zone-btn:hover{opacity:.85}
+.body-figure{width:100%; max-width:260px; height:auto; display:block; margin:0 auto; border-radius:14px}
+.body-figure image{border-radius:14px}
+.zone-btn{cursor:pointer}
+.zone-btn polygon{transition:fill .18s ease, stroke .18s ease; stroke:rgba(30,138,133,0); stroke-width:5; stroke-linejoin:round; vector-effect:non-scaling-stroke}
+.zone-btn:hover polygon{fill:rgba(30,138,133,.12) !important; stroke:rgba(30,138,133,.55) !important}
+/* selected zone: teal outline, clothing colour untouched */
+.zone-btn polygon[fill="var(--fig-sel)"]{stroke:#1E8A85}
 
 .panel{
 background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:34px 30px; min-height:380px;
@@ -167,79 +169,58 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 <div class="figure-card">
 <div class="figure-glow"></div>
 <div class="figure-col">
-<svg width="216" height="486" viewBox="0 0 240 540" id="bodyFigure">
-<defs>
-<linearGradient id="figGrad" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0" stop-color="#DCEEEC"/>
-<stop offset="1" stop-color="#C3E0DD"/>
-</linearGradient>
-<linearGradient id="figGradSel" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0" stop-color="#26ADA6"/>
-<stop offset="1" stop-color="#14615D"/>
-</linearGradient>
-</defs>
-
-<!-- FEMALE FIGURE -->
-<g id="figFemale" class="fig-gender">
-<path fill="var(--fig-hair)" stroke="none" d="M120,15 C147,15 163,37 161,65 C159,87 151,105 139,113 C143,91 141,67 131,57 C134,71 131,85 123,91 L117,91 C109,85 106,71 109,57 C99,67 96,91 100,113 C88,105 80,87 78,65 C76,37 93,15 120,15 Z"/>
+<svg class="body-figure" id="figFemale" viewBox="0 0 281 728">
+<image href="figure-female.jpg" x="0" y="0" width="281" height="728" preserveAspectRatio="xMidYMid meet"/>
 <g class="zone-btn" data-zone="head" onclick="toggleZone('head')">
-<circle cx="120" cy="48" r="26" fill="var(--fig)"/>
-<path fill="var(--fig)" d="M107,68 L133,68 L129,86 L111,86 Z"/>
+<polygon points="89,105 91,68 100,40 118,22 140,15 162,22 180,40 189,68 190,105 184,124 172,134 108,134 96,124" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="torso" onclick="toggleZone('torso')">
-<path fill="var(--fig)" d="M86,92 C98,83 142,83 154,92 C159,100 159,112 155,124 C151,144 145,159 141,172 L99,172 C95,159 89,144 85,124 C81,112 81,100 86,92 Z"/>
+<polygon points="104,134 176,134 196,166 199,205 197,245 193,286 88,286 84,245 82,205 85,166" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="arms" onclick="toggleZone('arms')">
-<rect x="-12" y="0" width="24" height="140" rx="12" fill="var(--fig)" transform="translate(75,98) rotate(9)"/>
-<rect x="-12" y="0" width="24" height="140" rx="12" fill="var(--fig)" transform="translate(165,98) rotate(-9)"/>
+<polygon points="88,152 66,160 56,190 50,242 49,300 50,352 54,408 81,408 79,352 82,300 84,250 86,198" fill="var(--fig)"/>
+<polygon points="193,152 215,160 225,190 231,242 232,300 231,352 227,408 200,408 202,352 199,300 197,250 195,198" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="stomach" onclick="toggleZone('stomach')">
-<path fill="var(--fig)" d="M99,172 L141,172 L144,204 C126,210 114,210 96,204 Z"/>
+<polygon points="88,286 193,286 197,322 85,322" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="hips" onclick="toggleZone('hips')">
-<path fill="var(--fig)" d="M96,204 C114,210 126,210 144,204 C152,216 156,228 156,240 L84,240 C84,228 88,216 96,204 Z"/>
+<polygon points="85,322 197,322 205,355 203,400 79,400 77,355" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="thighs" onclick="toggleZone('thighs')">
-<rect x="-16" y="0" width="32" height="112" rx="16" fill="var(--fig)" transform="translate(103,236) rotate(-3)"/>
-<rect x="-16" y="0" width="32" height="112" rx="16" fill="var(--fig)" transform="translate(137,236) rotate(3)"/>
+<polygon points="79,400 138,400 134,450 129,478 127,507 83,507 80,470 76,440" fill="var(--fig)"/>
+<polygon points="146,400 203,400 206,440 202,470 199,507 156,507 154,478 150,450" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="calves" onclick="toggleZone('calves')">
-<rect x="-12" y="0" width="24" height="108" rx="12" fill="var(--fig)" transform="translate(102,348) rotate(-2)"/>
-<rect x="-12" y="0" width="24" height="108" rx="12" fill="var(--fig)" transform="translate(138,348) rotate(2)"/>
-<ellipse cx="100" cy="462" rx="13" ry="8" fill="var(--fig)"/>
-<ellipse cx="140" cy="462" rx="13" ry="8" fill="var(--fig)"/>
+<polygon points="83,507 127,507 122,545 117,600 113,655 116,702 73,703 78,655 80,600 80,545" fill="var(--fig)"/>
+<polygon points="156,507 199,507 202,545 202,600 194,655 209,703 167,702 170,655 166,600 163,545" fill="var(--fig)"/>
 </g>
-</g>
-
-<!-- MALE FIGURE -->
-<g id="figMale" class="fig-gender" style="display:none">
+</svg>
+<svg class="body-figure" id="figMale" viewBox="0 0 308 728" style="display:none">
+<image href="figure-male.jpg" x="0" y="0" width="308" height="728" preserveAspectRatio="xMidYMid meet"/>
 <g class="zone-btn" data-zone="head" onclick="toggleZone('head')">
-<circle cx="120" cy="46" r="27" fill="var(--fig)"/>
-<path fill="var(--fig)" d="M103,68 L137,68 L132,88 L108,88 Z"/>
+<polygon points="116,105 116,58 124,32 142,20 158,20 176,32 184,58 184,105 178,124 168,134 130,134 120,124" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="torso" onclick="toggleZone('torso')">
-<path fill="var(--fig)" d="M66,94 C90,82 150,82 174,94 C180,104 180,118 175,132 C170,152 163,168 157,180 L83,180 C77,168 70,152 65,132 C60,118 60,104 66,94 Z"/>
+<polygon points="120,134 180,134 210,166 214,205 213,245 211,292 96,292 94,245 93,205 97,166" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="arms" onclick="toggleZone('arms')">
-<rect x="-14" y="0" width="28" height="146" rx="14" fill="var(--fig)" transform="translate(62,100) rotate(8)"/>
-<rect x="-14" y="0" width="28" height="146" rx="14" fill="var(--fig)" transform="translate(178,100) rotate(-8)"/>
+<polygon points="94,152 66,162 56,196 50,250 50,305 52,358 56,412 84,412 80,358 83,305 86,250 90,198" fill="var(--fig)"/>
+<polygon points="214,152 242,162 252,196 258,250 258,305 256,358 252,412 224,412 228,358 225,305 222,250 218,198" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="stomach" onclick="toggleZone('stomach')">
-<path fill="var(--fig)" d="M83,180 L157,180 L161,210 L79,210 Z"/>
+<polygon points="96,292 211,292 215,340 91,340" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="hips" onclick="toggleZone('hips')">
-<path fill="var(--fig)" d="M79,210 L161,210 C166,222 168,234 168,244 L72,244 C72,234 74,222 79,210 Z"/>
+<polygon points="91,340 215,340 220,400 86,400" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="thighs" onclick="toggleZone('thighs')">
-<rect x="-18" y="0" width="36" height="110" rx="10" fill="var(--fig)" transform="translate(104,240) rotate(-2)"/>
-<rect x="-18" y="0" width="36" height="110" rx="10" fill="var(--fig)" transform="translate(136,240) rotate(2)"/>
+<polygon points="86,400 152,400 150,440 144,470 138,512 84,512 80,470 79,440" fill="var(--fig)"/>
+<polygon points="156,400 220,400 224,440 226,470 224,512 171,512 165,470 160,440" fill="var(--fig)"/>
 </g>
 <g class="zone-btn" data-zone="calves" onclick="toggleZone('calves')">
-<rect x="-14" y="0" width="28" height="108" rx="8" fill="var(--fig)" transform="translate(103,350) rotate(-1)"/>
-<rect x="-14" y="0" width="28" height="108" rx="8" fill="var(--fig)" transform="translate(137,350) rotate(1)"/>
-<ellipse cx="101" cy="464" rx="15" ry="8" fill="var(--fig)"/>
-<ellipse cx="139" cy="464" rx="15" ry="8" fill="var(--fig)"/>
-</g>
+<polygon points="84,512 138,512 132,545 127,600 119,660 121,702 67,703 76,660 83,600 83,545" fill="var(--fig)"/>
+<polygon points="171,512 224,512 225,545 224,600 215,660 239,703 187,702 189,660 181,600 178,545" fill="var(--fig)"/>
 </g>
 </svg>
 <div class="figure-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11V6a3 3 0 0 1 6 0v5M5 11h14l-1 10H6z"/></svg> Tap an area on the figure</div>

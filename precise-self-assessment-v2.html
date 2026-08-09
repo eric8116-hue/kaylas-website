@@ -115,23 +115,21 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 .confirm-tags{display:flex; flex-wrap:wrap; gap:6px}
 .confirm-tag{background:var(--teal-light); color:var(--teal-deep); font-size:12.5px; font-weight:600; padding:6px 13px; border-radius:99px}
 
-.form-box{max-width:680px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:36px 34px; box-shadow:0 24px 50px -12px rgba(20,97,93,.12)}
-.form-note{color:var(--teal-deep); font-size:14px; text-align:center; margin-bottom:26px; line-height:1.6}
-.form-row{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px}
-@media (max-width:600px){ .form-row{grid-template-columns:1fr} }
-.field input, .field textarea{width:100%; padding:14px 16px; border:1.5px solid var(--line); border-radius:11px; font-size:16px; transition:border-color .15s, box-shadow .15s; background:var(--sand)}
-.field input:focus, .field textarea:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 4px var(--teal-light); background:var(--paper)}
-.field textarea{min-height:120px; resize:vertical}
-.hear-label{font-size:13px; font-weight:600; margin:22px 0 10px}
-.hear-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px}
-@media (max-width:600px){ .hear-grid{grid-template-columns:1fr} }
-.hear-opt{display:flex; align-items:center; gap:10px; padding:14px 16px; border:1.5px solid var(--line); border-radius:11px; font-size:14px; font-weight:500; transition:border-color .15s, background .15s, box-shadow .15s}
-.hear-opt:hover{border-color:var(--teal)}
-.hear-opt.selected{border-color:var(--teal); background:var(--teal-light); font-weight:600; box-shadow:0 4px 12px rgba(20,97,93,.1)}
-.hear-radio{width:18px; height:18px; border-radius:50%; border:2px solid var(--line); flex-shrink:0; transition:border-color .15s, border-width .15s}
-.hear-opt.selected .hear-radio{border-color:var(--teal); border-width:5px}
+.results-list{display:flex; flex-direction:column; gap:18px; max-width:760px; margin:0 auto 40px}
+.result-card{background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:26px 28px; box-shadow:0 20px 40px -14px rgba(20,97,93,.12)}
+.result-name{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:22px; color:var(--teal-deep); margin-bottom:8px}
+.result-blurb{font-size:14px; color:var(--ink-soft); line-height:1.6; margin-bottom:12px}
+.result-expect{font-size:12.5px; color:var(--ink); background:var(--teal-light); border-radius:10px; padding:10px 14px; margin-bottom:14px; line-height:1.55}
+.result-expect b{color:var(--teal-deep)}
+.result-tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px}
+.result-tag{background:var(--sand); border:1px solid var(--line); color:var(--ink-soft); font-size:11.5px; font-weight:600; padding:5px 11px; border-radius:99px}
+.result-actions{display:flex; gap:10px; flex-wrap:wrap}
+.result-actions .btn{padding:11px 20px; font-size:13px}
 
-.done-icon{width:74px; height:74px; border-radius:50%; background:var(--teal-light); display:flex; align-items:center; justify-content:center; margin:0 auto 22px; box-shadow:0 10px 24px rgba(20,97,93,.18)}
+.results-cta{max-width:620px; margin:36px auto 0; background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:28px 30px; text-align:center; box-shadow:0 24px 50px -12px rgba(20,97,93,.12)}
+.results-cta .center-title{font-size:clamp(22px,3.2vw,28px); margin-bottom:8px}
+.results-cta .row{display:flex; gap:12px; justify-content:center; margin-top:18px; flex-wrap:wrap}
+@media (max-width:480px){ .results-cta .row{flex-direction:column} .results-cta .row .btn{width:100%} }
 </style>
 </head>
 <body>
@@ -261,48 +259,31 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 </div>
 <div class="footer-bar">
 <button class="btn btn-secondary" onclick="goScreen('select')">Back</button>
-<button class="btn btn-primary" onclick="goScreen('form')">Confirm &amp; continue</button>
+<button class="btn btn-primary" onclick="goResults()">See My Results</button>
 </div>
 </div>
 
-<!-- SCREEN 3: FORM -->
-<div class="screen" id="screen-form">
+<!-- SCREEN 3: RESULTS -->
+<div class="screen" id="screen-results">
 <div class="wrap">
 <div class="center-head">
-<div class="center-eyebrow">Almost there</div>
-<div class="center-title">Get your results</div>
+<div class="center-eyebrow">Your Results</div>
+<div class="center-title">Here's what we'd recommend</div>
+<div class="center-sub">Based on the areas and concerns you picked — what each treatment does, and what to expect.</div>
 </div>
-<div class="form-box">
-<p class="form-note">Enter your contact information to instantly receive your customized self-assessment.<br>Your information is kept private and only shared with Precise.</p>
-<div class="form-row">
-<div class="field"><input type="text" id="fFirst" placeholder="First Name"></div>
-<div class="field"><input type="text" id="fLast" placeholder="Last Name"></div>
-</div>
-<div class="form-row">
-<div class="field"><input type="email" id="fEmail" placeholder="Email Address"></div>
-<div class="field"><input type="tel" id="fPhone" placeholder="Phone Number"></div>
-</div>
-<div class="hear-label">How did you hear about us?</div>
-<div class="hear-grid">
-<div class="hear-opt" onclick="setHear(this,'Instagram')"><span class="hear-radio"></span>Instagram</div>
-<div class="hear-opt" onclick="setHear(this,'Facebook')"><span class="hear-radio"></span>Facebook</div>
-<div class="hear-opt" onclick="setHear(this,'Google')"><span class="hear-radio"></span>Google</div>
-<div class="hear-opt" onclick="setHear(this,'From a friend')"><span class="hear-radio"></span>From a friend</div>
-</div>
-<div class="field"><textarea id="fMsg" placeholder="Message (optional)"></textarea></div>
-<button class="btn btn-primary btn-full" style="margin-top:22px" onclick="submitForm()">Submit</button>
+<div class="results-list" id="resultsList"></div>
+<div class="results-cta">
+<div class="center-title">Ready to book?</div>
+<div class="center-sub">Every treatment starts with a complimentary consultation — we'll confirm the plan in person before anything is scheduled.</div>
+<div class="row">
+<a href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener" class="btn btn-primary">Book a Consultation</a>
+<a href="tel:6319231174" class="btn btn-secondary">Call (631) 923-1174</a>
 </div>
 </div>
 </div>
-
-<!-- SCREEN 4: DONE -->
-<div class="screen" id="screen-done">
-<div class="wrap" style="text-align:center; max-width:420px">
-<div class="done-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1E8A85" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div>
-<div class="center-title">You're all set</div>
-<div class="center-sub" style="margin-bottom:26px">We've received your assessment. Ready to book your consultation?</div>
-<a href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" class="btn btn-primary btn-full" style="margin-bottom:12px">Book a Consultation</a>
-<a href="tel:6319231174" class="btn btn-secondary btn-full">Call (631) 923-1174</a>
+<div class="footer-bar">
+<button class="btn btn-secondary" onclick="goScreen('select')">Adjust My Answers</button>
+<span></span>
 </div>
 </div>
 
@@ -393,24 +374,126 @@ box.appendChild(g);
 goScreen('confirm');
 }
 
-function setHear(el, val){
-state.hear = val;
-document.querySelectorAll('.hear-opt').forEach(o => o.classList.remove('selected'));
-el.classList.add('selected');
+/* ═══════════════════ TREATMENT KNOWLEDGE BASE ═══════════════════
+Pulled from the site's own service pages. Each treatment lists the
+keyword "tags" that map it to concern phrases in the CONCERNS object
+above (matched as substrings, case-insensitive) — add a tag here any
+time new concern wording should trigger this treatment. */
+const TREATMENTS = [
+{ id:'laser', name:'Laser Hair Removal', page:'services-hair-removal.html',
+  blurb:'A concentrated beam of light targets pigment in the hair follicle, damaging it so future growth slows — up to 95% permanent reduction on most skin types.',
+  expect:'6–12 sessions typical, spaced a few weeks apart to catch hair in every growth cycle. No downtime.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
+  tags:['hair','ingrown','chafing'] },
+{ id:'electrolysis', name:'Electrolysis', page:'services-hair-removal.html',
+  blurb:'Reaches hair a laser can\'t — blonde, red, grey, fine — by sending current directly into the follicle. The only FDA-approved method for permanent removal of all hair types.',
+  expect:'Multiple sessions over months, since hair grows in three separate cycles.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/VQT3OY4IK4KP4ITGJWXWGQ5Z',
+  tags:['hair','ingrown','peach fuzz'] },
+{ id:'hydrafacial', name:'HydraFacial', page:'services-facials.html',
+  blurb:'A four-step medical-grade resurfacing treatment — cleanse, exfoliate, extract, hydrate — that detoxifies pores and infuses the skin with serums.',
+  expect:'About 30–45 minutes, no downtime, visible glow immediately after.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/RZI72QMTVG4DMSSC4562SXMI',
+  tags:['acne','breakout','dull','tired','pore','blackhead','uneven skin','redness','congestion'] },
+{ id:'peels', name:'Chemical Peels', page:'services-facials.html',
+  blurb:'A chemical solution exfoliates and peels the top layer of skin — used for age spots, fine lines and wrinkles, freckles, and moderate discoloration.',
+  expect:'Some visible peeling over the following days as new skin surfaces. Sun protection matters more than usual afterward.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y2EVHTJXMZDIKJFXQEHIT6KN',
+  tags:['wrinkle','fine line','hyperpigmentation','dark spot','dark patch','sun damage','age spot','freckle','discoloration','rough','dull','dry skin','uneven skin'] },
+{ id:'microneedling', name:'Microneedling', page:'services-facials.html',
+  blurb:'Generates new collagen and skin tissue for smoother, firmer, more toned skin.',
+  expect:'Mild redness for a day or so afterward, similar to a light sunburn, as the skin rebuilds collagen.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/K7OVRV2ARB7A66TDDDYUY2VQ',
+  tags:['wrinkle','fine line','rough','elasticity'] },
+{ id:'dermaplaning', name:'Dermaplaning', page:'services-facials.html',
+  blurb:'An exfoliating blade removes dead skin cells and peach fuzz, instantly brightening and smoothing the surface.',
+  expect:'Immediate results, no downtime — a popular pre-event treatment for flawless makeup application.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y72LAGIZQI2WA6U3O6EHYON4',
+  tags:['peach fuzz','dull','tired','rough'] },
+{ id:'acne-facial', name:'Acne Facial', page:'services-facials.html',
+  blurb:'Focuses on extractions for blocked pores, releasing built-up oil and clearing out congestion.',
+  expect:'Some redness immediately after extractions, settling within a day.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/USWYMBELIX5KWS2DG6MT63ZP',
+  tags:['acne','breakout','blackhead','pore','congestion'] },
+{ id:'anti-aging', name:'Anti-Aging Facial', page:'services-facials.html',
+  blurb:'Generates new collagen and skin tissue for smoother, firmer, more toned skin.',
+  expect:'A relaxing, non-invasive session with a visible glow immediately after.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/2U7OZUOMOFXK5T3B4OBJUCQC',
+  tags:['wrinkle','fine line','dull','tired'] },
+{ id:'back-facial', name:'Back Facial', page:'services-facials.html',
+  blurb:'A facial for your back — cleanses, exfoliates, and hydrates, leaving skin velvety smooth.',
+  expect:'No downtime; skin may look slightly flushed for a few hours after extractions.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/7FGWCAYW4NYGAHSJU4NYMSEF',
+  tags:['back acne','congestion','rough'] },
+{ id:'lash-lift', name:'Keratin Lash Lift', page:'services-beautification.html',
+  blurb:'Curls, lifts, and tints your own lashes for a brighter, more open look — nothing attached, nothing extended.',
+  expect:'Lasts 4–6 weeks, the natural life cycle of an eyelash. No mascara needed afterward.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/URGO3WEIP2ODMHHXJDVFZPTE',
+  tags:['lash'] },
+{ id:'teeth-whitening', name:'Teeth Whitening', page:'services-beautification.html',
+  blurb:'Professional whitening removes persistent stains and brightens your smile.',
+  expect:'Instant results, no downtime.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/WTPSHKZCRHFO6LQ3U7TOORGC',
+  tags:['teeth','stained'] },
+{ id:'lip-blushing', name:'Lip Blushing (PMU)', page:'services-beautification.html',
+  blurb:'Semi-permanent pigment deposited in the lips to correct tone and create the look of fuller lips without fillers.',
+  expect:'Touch-ups recommended every two years.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/QY7N47DI3HBAGCKQL7AWZ2N6',
+  tags:['lip'] },
+{ id:'hyperpig', name:'Hyperpigmentation Correction', page:'services-beautification.html',
+  blurb:'Corrects uneven skin tone and diminishes hyperpigmentation anywhere on the body, including delicate areas, without disturbing natural pH.',
+  expect:'Gradual improvement over a short course of sessions.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/6HVGLGVJQM6YTWY5WWZUSVAK',
+  tags:['hyperpigmentation','dark spot','dark patch','discoloration','freckle','sun damage','uneven skin'] },
+{ id:'sauna', name:'Infrared Sauna', page:'services-detox.html',
+  blurb:'Infrared heat supports detoxification, circulation, pain relief, and stress reduction across six wellness programs.',
+  expect:'A single session runs 30–45 minutes in a private room. Sweating is the point — hydrate well beforehand.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/DEWX6Q3C7S7IYKKQZ72AC5NT',
+  tags:['circulation','joint','muscle','sore','cramp','inflammation','detox','toxin','immunity','weight','stress','tension','fatigue','energy','recovery','water retention','swelling','varicose'] },
+{ id:'colonics', name:'Colon Hydrotherapy', page:'services-detox.html',
+  blurb:'A gentle, thorough cleanse — warm purified water clears accumulated waste, gas, and toxins to support digestion and immunity.',
+  expect:'A private, one-on-one session with a trained technician. Most people feel lighter within a day.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/ND5YRLKZGKZRZN2K3UR6NBT4',
+  tags:['bloating','digestion','constipation','irregularity','detox','toxin','immunity','nutrient','water retention'] },
+{ id:'bodywrap', name:'FIT Bodywrap', page:'services-detox.html',
+  blurb:'A full-body far infrared heat wrap — contactless and self-controlled — that supports circulation, muscle recovery, and cellulite appearance.',
+  expect:'A relaxing, cocoon-style session. Effects on weight are temporary and work best paired with diet and exercise.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/4MQ75TQVR4E34LLS6W7WZYRN',
+  tags:['cellulite','weight','muscle','sore','circulation','elasticity','water retention','swelling','joint','fatigue','recovery','tension'] }
+];
+
+function matchTreatments(){
+const selected = [];
+Object.keys(state.concernsByZone).forEach(zone => {
+state.concernsByZone[zone].forEach(c => selected.push({zone, concern:c}));
+});
+const results = TREATMENTS.map(t => {
+const matches = selected.filter(s => t.tags.some(tag => s.concern.toLowerCase().includes(tag)));
+return Object.assign({}, t, {matches});
+}).filter(t => t.matches.length > 0);
+results.sort((a,b) => b.matches.length - a.matches.length);
+return results;
 }
 
-function submitForm(){
-const first = document.getElementById('fFirst').value.trim();
-const email = document.getElementById('fEmail').value.trim();
-const phone = document.getElementById('fPhone').value.trim();
-if (!first || !email || !phone){
-alert('Please enter your first name, email, and phone number to continue.');
-return;
+function goResults(){
+const results = matchTreatments();
+const list = document.getElementById('resultsList');
+list.innerHTML = '';
+if (!results.length){
+list.innerHTML = '<div class="result-card"><div class="result-name">Let\'s talk it through</div><div class="result-blurb">Your combination of concerns is specific enough that we\'d rather look at it in person. Book a free consultation and we\'ll build a plan together.</div></div>';
+} else {
+results.forEach(t => {
+const tagsHtml = t.matches.map(m => `<span class="result-tag">${m.concern}</span>`).join('');
+const card = document.createElement('div');
+card.className = 'result-card';
+card.innerHTML = `<div class="result-name">${t.name}</div><div class="result-blurb">${t.blurb}</div><div class="result-expect"><b>What to expect:</b> ${t.expect}</div><div class="result-tags">${tagsHtml}</div><div class="result-actions"><a class="btn btn-primary" href="${t.bookUrl}" target="_blank" rel="noopener">Book ${t.name}</a><a class="btn btn-secondary" href="${t.page}">Learn more</a></div>`;
+list.appendChild(card);
+});
 }
-goScreen('done');
+goScreen('results');
 }
 
-const PROGRESS = {select:33, confirm:66, form:88, done:100};
+const PROGRESS = {select:33, confirm:66, results:100};
 function goScreen(name){
 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
 document.getElementById('screen-'+name).classList.add('active');

@@ -139,8 +139,6 @@ padding:clamp(14px,2.4vw,28px)}
 .scale-row{display:grid; grid-template-columns:repeat(6,1fr); gap:8px; max-width:1000px; margin:18px auto 0}
 @media (max-width:640px){ .scale-row{grid-template-columns:repeat(3,1fr)} }
 .scale-chip{text-align:center; font-size:11.5px; font-weight:700; letter-spacing:.08em; padding:10px 4px; border-radius:8px; color:#fff}
-.swap-note{max-width:700px; margin:22px auto 0; border:1.5px dashed #C9D4D3; background:#FCFCFB; border-radius:12px; padding:16px 22px; font-size:12.5px; color:#8A6A22; text-align:center; line-height:1.6}
-.swap-note b{color:#6E5316}
 .skin-note{max-width:640px; margin:24px auto 0; text-align:center; font-size:13.5px; color:var(--ink-soft); line-height:1.65}
 
 /* ==================== SECTIONS ==================== */
@@ -209,12 +207,17 @@ padding:clamp(14px,2.4vw,28px)}
 @media (max-width:600px){ .foot-review{justify-content:center; text-align:center} }
 
 /* about */
-.about-in{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center}
-@media (max-width:860px){ .about-in{grid-template-columns:1fr; gap:30px} }
-.about-in .h2{margin:12px 0 16px}
-.about-in p{margin-bottom:15px}
 .pillars{display:grid; grid-template-columns:1fr 1fr; gap:16px}
 @media (max-width:520px){ .pillars{grid-template-columns:1fr} }
+
+/* ===== OUR MISSION ===== */
+.mission{text-align:center; max-width:860px; margin:0 auto 54px}
+.mission-title{font-family:var(--serif,Georgia,'Times New Roman',serif); font-size:clamp(42px,7vw,76px); line-height:1.02; font-weight:400; letter-spacing:.5px; text-transform:uppercase; color:var(--ink); margin:0 0 34px}
+.mission-body p{font-family:var(--serif,Georgia,'Times New Roman',serif); font-size:clamp(17px,2.1vw,23px); line-height:1.5; letter-spacing:.4px; text-transform:uppercase; color:var(--ink); margin:0 0 20px}
+.mission-body p:last-child{margin-bottom:0}
+.mission-photo{margin:44px auto 0; width:min(340px,74vw); aspect-ratio:1/1; border-radius:50%; overflow:hidden; box-shadow:0 22px 52px -18px rgba(20,97,93,.34)}
+.mission-photo img{width:100%; height:100%; object-fit:cover; display:block}
+@media (max-width:640px){ .mission{margin-bottom:40px} .mission-photo{margin-top:34px} }
 .pillar{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:24px 22px; box-shadow:0 10px 30px -14px rgba(20,97,93,.2)}
 .pillar-n{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:34px; color:var(--teal); line-height:1; margin-bottom:9px}
 .pillar h4{font-size:14.5px; font-weight:700; margin-bottom:6px}
@@ -478,7 +481,6 @@ textarea.f-in{min-height:130px; resize:vertical}
 <p class="hero-sub">Laser hair removal, electrolysis, facials, and wellness treatments — delivered by licensed estheticians who take the time to get it right.</p>
 <div class="hero-cta">
 <a class="btn btn-p" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book a Free Consultation</a>
-<a class="btn btn-w" href="precise-self-assessment-v2.html">Take the Free Assessment</a>
 </div>
 <div class="hero-micro">
 <span><svg width="15" height="15" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> 5.0 ★ · 306 reviews</span>
@@ -510,9 +512,6 @@ textarea.f-in{min-height:130px; resize:vertical}
 
 <p class="skin-note">Skin tone changes how a laser should be set. We assess your Fitzpatrick type at consultation and adjust to match — which is why we treat the full range safely.</p>
 
-<div class="swap-note">
-<b>Image needs replacing.</b> This is the original file from the current Squarespace site — it's low resolution, sits on a plain white background, and doesn't show the full I–VI range clearly. Swap in a better version and this frame will use it as-is.
-</div>
 </div>
 </section>
 
@@ -657,20 +656,37 @@ textarea.f-in{min-height:130px; resize:vertical}
 
 <!-- ============================ ABOUT ============================ -->
 <section class="sec" id="about">
-<div class="wrap about-in">
-<div>
-<div class="eyebrow">About Precise</div>
-<h2 class="h2">A small studio that does this properly</h2>
-<p class="lede">Precise is a licensed esthetics studio on Deer Park Avenue in Babylon. Our mission is to provide quality client care in an attentive and compassionate environment, catering to every client's wants and needs, using state-of-the-art technology with proven results.</p>
-<p class="lede">That's the whole reason for the review record. Not marketing. People come back and tell other people.</p>
-<a class="btn btn-o" style="margin-top:10px" href="#" onclick="openOverlay('contact');return false;">Ask us a question</a>
+<div class="wrap">
+
+<!-- ===== OUR MISSION ===== -->
+<div class="mission">
+<h2 class="mission-title">Our Mission</h2>
+<div class="mission-body">
+<p>To provide quality client care in an attentive and compassionate environment,</p>
+<p>while catering to every client's wants and needs;</p>
+<p>using state-of-the-art technology with proven results.</p>
 </div>
+
+<!-- ===== BUSINESS SIGN PHOTO =====
+     Drop the storefront sign photo in this folder and set the src below,
+     e.g. src="sign.jpg". It will be cropped into the circle automatically. -->
+<div class="mission-photo">
+<img src="sign.jpg" alt="Precise Laser Hair Removal &amp; Esthetics — 626 Deer Park Ave, Babylon NY" loading="lazy"
+     onerror="this.closest('.mission-photo').style.display='none'">
+</div>
+</div>
+
 <div class="pillars">
 <div class="pillar"><div class="pillar-n">5.0</div><h4>Perfect rating</h4><p>Across 306 Google reviews, with no rating below five stars.</p></div>
 <div class="pillar"><div class="pillar-n">I–VI</div><h4>All skin types</h4><p>Equipment and settings suited to the full Fitzpatrick range.</p></div>
 <div class="pillar"><div class="pillar-n">18</div><h4>Treatments offered</h4><p>From laser and electrolysis to facials, PMU, and wellness.</p></div>
 <div class="pillar"><div class="pillar-n">$0</div><h4>Consultation</h4><p>Every treatment starts with a complimentary consult.</p></div>
 </div>
+
+<div style="text-align:center; margin-top:34px">
+<a class="btn btn-o" href="#" onclick="openOverlay('contact');return false;">Ask us a question</a>
+</div>
+
 </div>
 </section>
 
@@ -698,7 +714,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 
 <div class="info-row">
 <div class="info-ico"><svg width="19" height="19" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></div>
-<div><h4>Hours</h4><p style="color:var(--ink-soft); font-weight:500; font-size:14px">Add hours here — they're missing from the Google Business Profile too, which is the single highest-impact fix on that listing.</p></div>
+<div><h4>Hours</h4><p style="color:var(--ink-soft); font-weight:600; font-size:15px">Same-day appointments available.<br>Open seven days a week.</p></div>
 </div>
 
 <a class="btn btn-p" style="margin-top:8px" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book a Consultation</a>
@@ -985,7 +1001,7 @@ Change the special here. Nothing else in the file has to change.
 ═══════════════════════════════════════════════════════════════════════ */
 const PROMO = {
 
-enabled : true, // false = popup never shows
+enabled : false, // false = popup never shows
 
 badge : "This Month Only", // small pill at the top
 headline : "20% Off Your First Visit", // the big line

@@ -151,14 +151,15 @@ padding:clamp(14px,2.4vw,28px)}
 @media (max-width:1000px){ .ways-grid{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:600px){ .ways-grid{grid-template-columns:1fr; gap:26px} }
 .way{display:flex; flex-direction:column}
-.way-box{border:1px solid var(--teal); border-radius:4px; padding:18px 18px 26px; background:var(--paper); flex:1; display:flex; flex-direction:column; transition:box-shadow .2s, transform .2s}
-.way:hover .way-box{transform:translateY(-3px); box-shadow:0 18px 40px -18px rgba(20,97,93,.3)}
+/* whole card is the link — thicker teal frame, click anywhere */
+a.way{color:inherit; text-decoration:none; cursor:pointer}
+.way-box{border:3px solid var(--teal); border-radius:4px; padding:18px 18px 26px; background:var(--paper); flex:1; display:flex; flex-direction:column; transition:box-shadow .2s, transform .2s, border-color .2s}
+.way:hover .way-box{transform:translateY(-3px); box-shadow:0 18px 40px -18px rgba(20,97,93,.3); border-color:var(--teal-deep)}
+a.way:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; border-radius:6px}
 .way-img{aspect-ratio:1/1; border-radius:2px; overflow:hidden; margin-bottom:22px; background:var(--teal-light)}
 .way-img img{width:100%; height:100%; object-fit:cover}
 .way h3{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:25px; text-align:center; margin-bottom:12px; line-height:1.2}
 .way p{font-size:14px; color:var(--ink-soft); line-height:1.7; text-align:center; margin:0}
-.way-btn{display:block; text-align:center; margin-top:16px; padding:14px 18px; border-radius:4px; background:linear-gradient(135deg,var(--teal),var(--teal-deep)); color:#fff; font-size:12.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; box-shadow:0 8px 20px rgba(20,97,93,.26); transition:transform .16s, box-shadow .16s}
-.way-btn:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(20,97,93,.34)}
 
 /* assessment band */
 .assess-band{background:var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:74px 0}
@@ -525,41 +526,37 @@ textarea.f-in{min-height:130px; resize:vertical}
 </div>
 
 <div class="ways-grid">
-<div class="way">
+<a class="way" href="services-hair-removal.html">
 <div class="way-box">
 <div class="way-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/6c2dfd88-f3fe-41c2-b1d6-7c036fc5baa7/Electrolysis+images+face.jpg?format=1000w" alt="Electrolysis treatment on the face" loading="lazy"></div>
 <h3>Hair Removal Services</h3>
 <p>Up to 95% permanent reduction with medical-grade laser, plus electrolysis — the only FDA-approved method for permanently removing all unwanted hair, on every skin and hair type.</p>
 </div>
-<a class="way-btn" href="services-hair-removal.html">Click Here For More</a>
-</div>
+</a>
 
-<div class="way">
+<a class="way" href="services-detox.html">
 <div class="way-box">
 <div class="way-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/9a751fe2-deb1-4125-bc21-a00e22a526a0/City_Cave_July_15_of_61.jpg?format=1000w" alt="Infrared sauna room" loading="lazy"></div>
 <h3>Detoxification Services</h3>
 <p>Infrared sauna, colon hydrotherapy, and the FIT Bodywrap — supporting circulation, digestion, recovery, and how you feel day to day, not just how you look.</p>
 </div>
-<a class="way-btn" href="services-detox.html">Click Here For More</a>
-</div>
+</a>
 
-<div class="way">
+<a class="way" href="services-facials.html">
 <div class="way-box">
 <div class="way-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/818d412d-131a-4412-bbf9-a1b1496281a2/Ava_Treatment_Face_2518_1.png?format=1000w" alt="HydraFacial treatment in progress" loading="lazy"></div>
 <h3>Rejuvenating Facials</h3>
 <p>HydraFacial, chemical peels, microneedling, dermaplaning, and more — targeted at texture, tone, congestion, and fine lines rather than a one-size protocol.</p>
 </div>
-<a class="way-btn" href="services-facials.html">Click Here For More</a>
-</div>
+</a>
 
-<div class="way">
+<a class="way" href="services-beautification.html">
 <div class="way-box">
 <div class="way-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/5b5b2f4e-58e2-4523-83f8-e8970f72fb5b/teeth+whitening.jpg?format=1000w" alt="Teeth whitening before and after" loading="lazy"></div>
 <h3>Precise Beauty Enhancements</h3>
 <p>Lash lifts, lip blushing, teeth whitening, Swarovski tooth gems, and hyperpigmentation correction — the finishing details, done conservatively.</p>
 </div>
-<a class="way-btn" href="services-beautification.html">Click Here For More</a>
-</div>
+</a>
 </div>
 </div>
 </section>

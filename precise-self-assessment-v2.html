@@ -121,6 +121,11 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 .result-blurb{font-size:14px; color:var(--ink-soft); line-height:1.6; margin-bottom:12px}
 .result-expect{font-size:12.5px; color:var(--ink); background:var(--teal-light); border-radius:10px; padding:10px 14px; margin-bottom:14px; line-height:1.55}
 .result-expect b{color:var(--teal-deep)}
+.result-sub{margin:4px 0 16px}
+.result-sub-item{padding:14px 0; border-top:1px solid var(--line)}
+.result-sub-name{font-weight:700; font-size:14.5px; color:var(--ink); margin-bottom:4px}
+.result-sub-blurb{font-size:13.5px; color:var(--ink-soft); line-height:1.55; margin-bottom:10px}
+.result-sub-btn{padding:9px 17px; font-size:12.5px}
 .result-tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px}
 .result-tag{background:var(--sand); border:1px solid var(--line); color:var(--ink-soft); font-size:11.5px; font-weight:600; padding:5px 11px; border-radius:99px}
 .result-actions{display:flex; gap:10px; flex-wrap:wrap}
@@ -385,46 +390,36 @@ const TREATMENTS = [
   expect:'6–12 sessions typical, spaced a few weeks apart to catch hair in every growth cycle. No downtime.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
   tags:['hair','ingrown','chafing'] },
-{ id:'electrolysis', name:'Electrolysis', page:'services-hair-removal.html',
+{ id:'electrolysis', name:'Electrolysis', page:'services-hair-removal.html#electrolysis',
   blurb:'Reaches hair a laser can\'t — blonde, red, grey, fine — by sending current directly into the follicle. The only FDA-approved method for permanent removal of all hair types.',
   expect:'Multiple sessions over months, since hair grows in three separate cycles.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/VQT3OY4IK4KP4ITGJWXWGQ5Z',
   tags:['hair','ingrown','peach fuzz'] },
-{ id:'hydrafacial', name:'HydraFacial', page:'services-facials.html',
-  blurb:'A four-step medical-grade resurfacing treatment — cleanse, exfoliate, extract, hydrate — that detoxifies pores and infuses the skin with serums.',
-  expect:'About 30–45 minutes, no downtime, visible glow immediately after.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/RZI72QMTVG4DMSSC4562SXMI',
-  tags:['acne','breakout','dull','tired','pore','blackhead','uneven skin','redness','congestion'] },
-{ id:'peels', name:'Chemical Peels', page:'services-facials.html',
-  blurb:'A chemical solution exfoliates and peels the top layer of skin — used for age spots, fine lines and wrinkles, freckles, and moderate discoloration.',
-  expect:'Some visible peeling over the following days as new skin surfaces. Sun protection matters more than usual afterward.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y2EVHTJXMZDIKJFXQEHIT6KN',
-  tags:['wrinkle','fine line','hyperpigmentation','dark spot','dark patch','sun damage','age spot','freckle','discoloration','rough','dull','dry skin','uneven skin'] },
-{ id:'microneedling', name:'Microneedling', page:'services-facials.html',
-  blurb:'Generates new collagen and skin tissue for smoother, firmer, more toned skin.',
-  expect:'Mild redness for a day or so afterward, similar to a light sunburn, as the skin rebuilds collagen.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/K7OVRV2ARB7A66TDDDYUY2VQ',
-  tags:['wrinkle','fine line','rough','elasticity'] },
-{ id:'dermaplaning', name:'Dermaplaning', page:'services-facials.html',
-  blurb:'An exfoliating blade removes dead skin cells and peach fuzz, instantly brightening and smoothing the surface.',
-  expect:'Immediate results, no downtime — a popular pre-event treatment for flawless makeup application.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y72LAGIZQI2WA6U3O6EHYON4',
-  tags:['peach fuzz','dull','tired','rough'] },
-{ id:'acne-facial', name:'Acne Facial', page:'services-facials.html',
-  blurb:'Focuses on extractions for blocked pores, releasing built-up oil and clearing out congestion.',
-  expect:'Some redness immediately after extractions, settling within a day.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/USWYMBELIX5KWS2DG6MT63ZP',
-  tags:['acne','breakout','blackhead','pore','congestion'] },
-{ id:'anti-aging', name:'Anti-Aging Facial', page:'services-facials.html',
-  blurb:'Generates new collagen and skin tissue for smoother, firmer, more toned skin.',
-  expect:'A relaxing, non-invasive session with a visible glow immediately after.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/2U7OZUOMOFXK5T3B4OBJUCQC',
-  tags:['wrinkle','fine line','dull','tired'] },
-{ id:'back-facial', name:'Back Facial', page:'services-facials.html',
-  blurb:'A facial for your back — cleanses, exfoliates, and hydrates, leaving skin velvety smooth.',
-  expect:'No downtime; skin may look slightly flushed for a few hours after extractions.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/7FGWCAYW4NYGAHSJU4NYMSEF',
-  tags:['back acne','congestion','rough'] },
+/* All facials live under one result — facials address a wide range of skin
+   concerns, so this card opens to show every facial we offer. */
+{ id:'facials', name:'Facials', page:'services-facials.html',
+  blurb:'Facials cover a lot of ground — texture, tone, congestion, hydration, fine lines and wrinkles. Based on what you selected, one of these is likely the right fit, and we confirm which one at your free consultation.',
+  expect:'Most run 30–60 minutes with little to no downtime. Here is the full menu:',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
+  tags:['acne','breakout','dull','tired','pore','blackhead','uneven skin','redness','congestion',
+        'wrinkle','fine line','hyperpigmentation','dark spot','dark patch','sun damage','age spot',
+        'freckle','discoloration','rough','dry skin','elasticity','peach fuzz','back acne','texture'],
+  sub:[
+    { name:'HydraFacial', blurb:'A four-step medical-grade resurfacing treatment — cleanse, exfoliate, extract, hydrate — that detoxifies pores and infuses the skin with serums.',
+      bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/RZI72QMTVG4DMSSC4562SXMI' },
+    { name:'Chemical Peels', blurb:'A chemical solution exfoliates and peels the top layer of skin — used for age spots, fine lines and wrinkles, freckles, and moderate discoloration.',
+      bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y2EVHTJXMZDIKJFXQEHIT6KN' },
+    { name:'Microneedling', blurb:'Generates new collagen and skin tissue for smoother, firmer, more toned skin.',
+      bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/K7OVRV2ARB7A66TDDDYUY2VQ' },
+    { name:'Dermaplaning', blurb:'An exfoliating blade removes dead skin cells and vellus hair — peach fuzz — leaving the surface smooth, youthful, and radiant.',
+      bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y72LAGIZQI2WA6U3O6EHYON4' },
+    { name:'Acne Facial', blurb:'Focuses on extractions for blocked pores, releasing built-up oil and clearing out congestion.',
+      bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/USWYMBELIX5KWS2DG6MT63ZP' },
+    { name:'Anti-Aging Facial', blurb:'Generates new collagen and skin tissue for smoother, firmer, more toned skin.',
+      bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/2U7OZUOMOFXK5T3B4OBJUCQC' },
+    { name:'Back Facial', blurb:'A facial for your back — cleanses, exfoliates, and hydrates, leaving skin velvety smooth.',
+      bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/7FGWCAYW4NYGAHSJU4NYMSEF' }
+  ] },
 { id:'lash-lift', name:'Keratin Lash Lift', page:'services-beautification.html',
   blurb:'Curls, lifts, and tints your own lashes for a brighter, more open look — nothing attached, nothing extended.',
   expect:'Lasts 4–6 weeks, the natural life cycle of an eyelash. No mascara needed afterward.',
@@ -440,11 +435,6 @@ const TREATMENTS = [
   expect:'Touch-ups recommended every two years.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/QY7N47DI3HBAGCKQL7AWZ2N6',
   tags:['lip'] },
-{ id:'hyperpig', name:'Hyperpigmentation Correction', page:'services-beautification.html',
-  blurb:'Corrects uneven skin tone and diminishes hyperpigmentation anywhere on the body, including delicate areas, without disturbing natural pH.',
-  expect:'Gradual improvement over a short course of sessions.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/6HVGLGVJQM6YTWY5WWZUSVAK',
-  tags:['hyperpigmentation','dark spot','dark patch','discoloration','freckle','sun damage','uneven skin'] },
 { id:'sauna', name:'Infrared Sauna', page:'services-detox.html',
   blurb:'Infrared heat supports detoxification, circulation, pain relief, and stress reduction across six wellness programs.',
   expect:'A single session runs 30–45 minutes in a private room. Sweating is the point — hydrate well beforehand.',
@@ -486,7 +476,13 @@ results.forEach(t => {
 const tagsHtml = t.matches.map(m => `<span class="result-tag">${m.concern}</span>`).join('');
 const card = document.createElement('div');
 card.className = 'result-card';
-card.innerHTML = `<div class="result-name">${t.name}</div><div class="result-blurb">${t.blurb}</div><div class="result-expect"><b>What to expect:</b> ${t.expect}</div><div class="result-tags">${tagsHtml}</div><div class="result-actions"><a class="btn btn-primary" href="${t.bookUrl}" target="_blank" rel="noopener">Book ${t.name}</a><a class="btn btn-secondary" href="${t.page}">Learn more</a></div>`;
+let subHtml = '';
+if (t.sub && t.sub.length){
+subHtml = '<div class="result-sub">' + t.sub.map(s =>
+`<div class="result-sub-item"><div class="result-sub-name">${s.name}</div><div class="result-sub-blurb">${s.blurb}</div><a class="btn btn-primary result-sub-btn" href="${s.bookUrl}" target="_blank" rel="noopener">Book ${s.name}</a></div>`
+).join('') + '</div>';
+}
+card.innerHTML = `<div class="result-name">${t.name}</div><div class="result-blurb">${t.blurb}</div><div class="result-expect"><b>What to expect:</b> ${t.expect}</div>${subHtml}<div class="result-tags">${tagsHtml}</div><div class="result-actions">${t.sub ? '' : `<a class="btn btn-primary" href="${t.bookUrl}" target="_blank" rel="noopener">Book ${t.name}</a>`}<a class="btn btn-secondary" href="${t.page}">Learn more</a></div>`;
 list.appendChild(card);
 });
 }

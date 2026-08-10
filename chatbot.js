@@ -28,11 +28,18 @@ const TREATMENTS = [
   expect:'6–12 sessions typical, spaced a few weeks apart to catch hair in every growth cycle. No downtime.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
   tags:['laser hair','laser','unwanted hair','shaving','waxing','ingrown','facial hair'] },
-{ id:'electrolysis', name:'Electrolysis', page:'services-hair-removal.html',
+{ id:'electrolysis', name:'Electrolysis', page:'services-hair-removal.html#electrolysis',
   blurb:'Reaches hair a laser can\'t — blonde, red, grey, fine — by sending current directly into the follicle. The only FDA-approved method for permanent removal of all hair types.',
   expect:'Multiple sessions over months, since hair grows in three separate cycles.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/VQT3OY4IK4KP4ITGJWXWGQ5Z',
-  tags:['electrolysis','grey hair','gray hair','blonde hair','peach fuzz'] },
+  tags:['electrolysis','grey hair','gray hair','blonde hair'] },
+/* Dermaplaning listed a second time under Hair Removal as the temporary option.
+   It also appears in the Rejuvenating Facials category as a skin treatment. */
+{ id:'dermaplaning-hr', name:'Dermaplaning (temporary)', page:'services-facials.html',
+  blurb:'A skin treatment that uses an exfoliating blade to remove dead skin cells and vellus hair — "peach fuzz" — from your face. Dermaplaning aims to make your skin\'s surface smooth, youthful, and radiant.',
+  expect:'Immediate results with no downtime. Temporary, unlike laser and electrolysis.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y72LAGIZQI2WA6U3O6EHYON4',
+  tags:['temporary hair removal'] },
 { id:'hydrafacial', name:'HydraFacial', page:'services-facials.html',
   blurb:'A four-step medical-grade resurfacing treatment — cleanse, exfoliate, extract, hydrate — that detoxifies pores and infuses the skin with serums.',
   expect:'About 30–45 minutes, no downtime, visible glow immediately after.',
@@ -115,15 +122,15 @@ const TREATMENTS = [
    treatment in that category (pulled from TREATMENTS above) in one go. */
 const CATEGORIES = [
 { id:'hair-removal', label:'Hair Removal Services', page:'services-hair-removal.html',
-  intro:'Two ways to remove hair permanently, depending on your hair and skin — including the only FDA-approved method for every hair color.',
+  intro:'Two permanent options depending on your hair and skin — including the only FDA-approved method for every hair color — plus one temporary treatment.',
   triggers:['hair removal service','hair removal services','remove hair','hair removal'],
-  treatmentIds:['laser','electrolysis'] },
+  treatmentIds:['laser','electrolysis','dermaplaning-hr'] },
 { id:'detox', label:'Detoxification Services', page:'services-detox.html',
-  intro:'Three whole-body treatments supporting circulation, digestion, and recovery.',
+  intro:'Three whole-body treatments supporting circulation, digestion, hydration, and recovery.',
   triggers:['detox service','detox services','detoxification service','detoxification services'],
   treatmentIds:['sauna','colonics','bodywrap'] },
 { id:'facials', label:'Rejuvenating Facials', page:'services-facials.html',
-  intro:'Seven treatments aimed at texture, tone, congestion, and fine lines.',
+  intro:'Seven treatments aimed at texture, tone, congestion, hydration, and fine lines and wrinkles.',
   triggers:['rejuvenating facial','facial service','what facials','facials do you','facial menu','facial options'],
   treatmentIds:['hydrafacial','peels','microneedling','dermaplaning','acne-facial','anti-aging','back-facial'] },
 { id:'beauty', label:'Precise Beauty Enhancements', page:'services-beautification.html',
@@ -324,7 +331,19 @@ function addMsg(body, role, data){
     div.innerHTML = html;
   }
   body.appendChild(div);
-  body.scrollTop = body.scrollHeight;
+  if (role === 'bot'){
+    // Land on the TOP of the new reply so it reads from the beginning.
+    // Short replies that already fit stay put — only scroll if the message
+    // starts below the current view or overflows the bottom of it.
+    const top = div.offsetTop - body.offsetTop;
+    const fitsInView = div.offsetHeight <= body.clientHeight;
+    const overflowsBottom = top + div.offsetHeight > body.scrollTop + body.clientHeight;
+    if (!fitsInView || overflowsBottom){
+      body.scrollTo({ top: Math.max(0, top - 8), behavior:'smooth' });
+    }
+  } else {
+    body.scrollTop = body.scrollHeight;
+  }
 }
 
 const CHIPS = CATEGORIES.map(c => c.label);

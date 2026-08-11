@@ -81,6 +81,9 @@ transition:border-color .18s, box-shadow .18s, transform .18s}
 @media (max-width:1240px){ .rev-chip{padding:12px 18px; gap:12px} .rev-chip-score{font-size:42px} .rev-chip-txt{font-size:12.5px} .rev-chip-txt b{font-size:13.5px} }
 @media (max-width:1100px){ .nav,.hdr-right{display:none} .burger{display:flex} .hdr-call-mobile{display:flex} .hdr-logo img{height:114px} }
 
+/* Anchor targets land below the sticky header instead of underneath it */
+section[id]{scroll-margin-top:110px}
+
 /* ---------- page banner ---------- */
 .pbanner{position:relative; min-height:clamp(300px,42vh,420px); display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; background:var(--ink)}
 .pbanner-img{position:absolute; inset:0; background-size:cover; background-position:center; transform:scale(1.03)}

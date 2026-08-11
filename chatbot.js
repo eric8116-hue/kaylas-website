@@ -294,7 +294,7 @@ function buildPanel(){
           <path d="M9.4 14.1h5.2"/>
           <path d="M8.6 17.2v2.2M15.4 17.2v2.2"/>
         </svg></div>
-        <div><div class="cb-head-title">Chat with Precise</div><div class="cb-head-sub">Usually replies instantly</div></div>
+        <div><div class="cb-head-title">Chat with Precise</div></div>
       </div>
       <button class="cb-close" id="cbClose" aria-label="Close chat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>

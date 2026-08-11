@@ -253,7 +253,7 @@ const CSS = `
 .cb-head-sub{font-size:11.5px; opacity:.85; margin-top:1px}
 .cb-close{background:none; border:none; color:#fff; opacity:.85; cursor:pointer; padding:4px}
 .cb-close:hover{opacity:1}
-.cb-body{flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:var(--sand)}
+.cb-body{flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:var(--sand); position:relative}
 .cb-msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:13.5px; line-height:1.5}
 .cb-msg.bot{background:var(--paper); border:1px solid var(--line); color:var(--ink); align-self:flex-start; border-bottom-left-radius:4px}
 .cb-msg.user{background:linear-gradient(135deg,var(--teal-deep),var(--teal-darker)); color:#fff; align-self:flex-end; border-bottom-right-radius:4px}
@@ -333,14 +333,11 @@ function addMsg(body, role, data){
   body.appendChild(div);
   if (role === 'bot'){
     // Land on the TOP of the new reply so it reads from the beginning.
-    // Short replies that already fit stay put — only scroll if the message
-    // starts below the current view or overflows the bottom of it.
-    const top = div.offsetTop - body.offsetTop;
-    const fitsInView = div.offsetHeight <= body.clientHeight;
-    const overflowsBottom = top + div.offsetHeight > body.scrollTop + body.clientHeight;
-    if (!fitsInView || overflowsBottom){
-      body.scrollTo({ top: Math.max(0, top - 8), behavior:'smooth' });
-    }
+    // Instant jump (no smooth animation — it can be interrupted mid-flight
+    // and strand the view partway down the message).
+    // .cb-body is position:relative, so offsetTop is measured from the
+    // scroll container itself — no parent-offset guesswork.
+    body.scrollTop = Math.max(0, div.offsetTop - 8);
   } else {
     body.scrollTop = body.scrollHeight;
   }

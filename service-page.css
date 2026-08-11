@@ -63,6 +63,12 @@ transition:border-color .18s, box-shadow .18s, transform .18s}
 .burger-lines::before{top:-6.5px} .burger-lines::after{top:6.5px}
 .burger-label{font-size:14.5px; font-weight:700; color:var(--teal-deep)}
 
+/* Mobile-only tap-to-call icon — the full phone number and .hdr-right are
+   hidden below 1100px (folded into the burger drawer instead), so without
+   this the number isn't reachable without opening the menu. */
+.hdr-call-mobile{display:none; align-items:center; justify-content:center; width:46px; height:46px; border-radius:11px; background:var(--teal-light); border:1.5px solid var(--teal); color:var(--teal-deep); flex-shrink:0}
+.hdr-call-mobile svg{width:20px; height:20px; display:block}
+
 .drawer{position:fixed; inset:0; z-index:990; background:var(--paper); display:none; flex-direction:column; padding:18px 24px 40px; padding-top:calc(18px + env(safe-area-inset-top)); padding-bottom:calc(40px + env(safe-area-inset-bottom)); overflow-y:auto; -webkit-overflow-scrolling:touch}
 .drawer.open{display:flex}
 .drawer-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:22px}
@@ -73,7 +79,7 @@ transition:border-color .18s, box-shadow .18s, transform .18s}
 .drawer-foot{margin-top:28px; display:flex; flex-direction:column; gap:12px}
 @media (max-width:1420px){ .nav{gap:20px} .nav a{font-size:14.5px} .hdr-phone{display:none} }
 @media (max-width:1240px){ .rev-chip{padding:12px 18px; gap:12px} .rev-chip-score{font-size:42px} .rev-chip-txt{font-size:12.5px} .rev-chip-txt b{font-size:13.5px} }
-@media (max-width:1100px){ .nav,.hdr-right{display:none} .burger{display:flex} .hdr-logo img{height:114px} }
+@media (max-width:1100px){ .nav,.hdr-right{display:none} .burger{display:flex} .hdr-call-mobile{display:flex} .hdr-logo img{height:114px} }
 
 /* ---------- page banner ---------- */
 .pbanner{position:relative; min-height:clamp(300px,42vh,420px); display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; background:var(--ink)}

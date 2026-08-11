@@ -249,6 +249,9 @@ const CSS = `
 .cb-panel.open{display:flex; animation:cbFade .22s ease}
 @keyframes cbFade{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}
 .cb-head{background:linear-gradient(135deg,var(--teal),var(--teal-deep)); color:#fff; padding:16px 18px; display:flex; align-items:center; justify-content:space-between}
+.cb-head-left{display:flex; align-items:center; gap:10px}
+.cb-head-icon{width:34px; height:34px; border-radius:10px; background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; flex-shrink:0}
+.cb-head-icon svg{width:19px; height:19px; display:block}
 .cb-head-title{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:19px}
 .cb-head-sub{font-size:11.5px; opacity:.85; margin-top:1px}
 .cb-close{background:none; border:none; color:#fff; opacity:.85; cursor:pointer; padding:4px}
@@ -280,7 +283,19 @@ function buildPanel(){
   panel.id = 'cbPanel';
   panel.innerHTML = `
     <div class="cb-head">
-      <div><div class="cb-head-title">Chat with Precise</div><div class="cb-head-sub">Usually replies instantly</div></div>
+      <div class="cb-head-left">
+        <div class="cb-head-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2.4v2.4"/>
+          <circle cx="12" cy="1.9" r="1.1" fill="#fff" stroke="none"/>
+          <rect x="4" y="4.8" width="16" height="12.4" rx="3.6"/>
+          <path d="M4 9.6H2.4v3.2H4M20 9.6h1.6v3.2H20"/>
+          <circle cx="9.2" cy="10.4" r="1.35" fill="#fff" stroke="none"/>
+          <circle cx="14.8" cy="10.4" r="1.35" fill="#fff" stroke="none"/>
+          <path d="M9.4 14.1h5.2"/>
+          <path d="M8.6 17.2v2.2M15.4 17.2v2.2"/>
+        </svg></div>
+        <div><div class="cb-head-title">Chat with Precise</div><div class="cb-head-sub">Usually replies instantly</div></div>
+      </div>
       <button class="cb-close" id="cbClose" aria-label="Close chat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="cb-body" id="cbBody"></div>
@@ -330,13 +345,24 @@ function addMsg(body, role, data){
     }
     div.innerHTML = html;
   }
-  body.appendChild(div);
+  // Keep a spacer as the permanent last child so short replies can still
+  // be scrolled all the way to the top. Without it, once enough content
+  // has piled up above, the browser clamps scrollTop at the bottom of the
+  // scrollable range and a short new message gets stranded low in view
+  // (this is what broke on the 2nd+ category click).
+  const spacer = body.querySelector('#cbSpacer');
+  if (spacer){ body.insertBefore(div, spacer); } else { body.appendChild(div); }
+
   if (role === 'bot'){
-    // Land on the TOP of the new reply so it reads from the beginning.
+    if (spacer){
+      // Reset first so clientHeight/offsetTop below reflect true content
+      // height, not the previous spacer's leftover size.
+      spacer.style.height = '0px';
+      body.scrollTop = Math.max(0, div.offsetTop - 8);
+      spacer.style.height = body.clientHeight + 'px';
+    }
     // Instant jump (no smooth animation — it can be interrupted mid-flight
     // and strand the view partway down the message).
-    // .cb-body is position:relative, so offsetTop is measured from the
-    // scroll container itself — no parent-offset guesswork.
     body.scrollTop = Math.max(0, div.offsetTop - 8);
   } else {
     body.scrollTop = body.scrollHeight;
@@ -376,6 +402,13 @@ function init(){
   const body = panel.querySelector('#cbBody');
   const chips = panel.querySelector('#cbChips');
   const input = panel.querySelector('#cbInput');
+
+  // Permanent trailing spacer — see addMsg() for why this exists.
+  const spacer = document.createElement('div');
+  spacer.id = 'cbSpacer';
+  spacer.style.flexShrink = '0';
+  spacer.style.width = '100%';
+  body.appendChild(spacer);
 
   function renderChips(){
     chips.innerHTML = '';

@@ -264,7 +264,7 @@ document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFu
   function goHash(){
     if (!location.hash) return;
     const el = document.getElementById(location.hash.slice(1));
-    if (el) el.scrollIntoView();
+    if (el) el.scrollIntoView({behavior:'instant', block:'start'});
   }
   if (document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', goHash); } else { goHash(); }
   window.addEventListener('load', function(){ goHash(); setTimeout(goHash, 350); });

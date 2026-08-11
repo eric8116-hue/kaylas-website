@@ -256,7 +256,7 @@ const CSS = `
 .cb-head-sub{font-size:11.5px; opacity:.85; margin-top:1px}
 .cb-close{background:none; border:none; color:#fff; opacity:.85; cursor:pointer; padding:4px}
 .cb-close:hover{opacity:1}
-.cb-body{flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:var(--sand); position:relative}
+.cb-body{flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:var(--sand); position:relative; overflow-anchor:none; scroll-behavior:auto}
 .cb-msg{max-width:86%; padding:10px 14px; border-radius:14px; font-size:13.5px; line-height:1.5}
 .cb-msg.bot{background:var(--paper); border:1px solid var(--line); color:var(--ink); align-self:flex-start; border-bottom-left-radius:4px}
 .cb-msg.user{background:linear-gradient(135deg,var(--teal-deep),var(--teal-darker)); color:#fff; align-self:flex-end; border-bottom-right-radius:4px}
@@ -354,16 +354,17 @@ function addMsg(body, role, data){
   if (spacer){ body.insertBefore(div, spacer); } else { body.appendChild(div); }
 
   if (role === 'bot'){
-    if (spacer){
-      // Reset first so clientHeight/offsetTop below reflect true content
-      // height, not the previous spacer's leftover size.
-      spacer.style.height = '0px';
-      body.scrollTop = Math.max(0, div.offsetTop - 8);
-      spacer.style.height = body.clientHeight + 'px';
-    }
-    // Instant jump (no smooth animation — it can be interrupted mid-flight
-    // and strand the view partway down the message).
-    body.scrollTop = Math.max(0, div.offsetTop - 8);
+    // Grow the trailing spacer to a full viewport so even a short reply can
+    // sit at the very top of the scroll area, then pin the reply's top edge.
+    // (.cb-body has overflow-anchor:none so Chrome's scroll anchoring can't
+    // re-adjust the position behind our back, and scroll-behavior:auto so
+    // the jump is instant and can't be interrupted mid-animation.)
+    if (spacer){ spacer.style.height = body.clientHeight + 'px'; }
+    const pin = () => { body.scrollTop = Math.max(0, div.offsetTop - 8); };
+    pin();
+    requestAnimationFrame(pin);
+    // Re-pin after render settles: fonts, layout, slower devices.
+    [50, 150, 300, 600].forEach(ms => setTimeout(pin, ms));
   } else {
     body.scrollTop = body.scrollHeight;
   }

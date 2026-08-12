@@ -355,16 +355,18 @@ function addMsg(body, role, data){
 
   if (role === 'bot'){
     // Grow the trailing spacer to a full viewport so even a short reply can
-    // sit at the very top of the scroll area, then pin the reply's top edge.
-    // (.cb-body has overflow-anchor:none so Chrome's scroll anchoring can't
-    // re-adjust the position behind our back, and scroll-behavior:auto so
-    // the jump is instant and can't be interrupted mid-animation.)
+    // sit at the very top of the scroll area.
     if (spacer){ spacer.style.height = body.clientHeight + 'px'; }
-    const pin = () => { body.scrollTop = Math.max(0, div.offsetTop - 8); };
-    pin();
-    requestAnimationFrame(pin);
-    // Re-pin after render settles: fonts, layout, slower devices.
-    [50, 150, 300, 600].forEach(ms => setTimeout(pin, ms));
+    // ENFORCEMENT LOOP: lock the top of the new reply into view every ~33ms
+    // for 700ms. Anything that tries to move the scroll position during that
+    // window (scroll anchoring, layout shifts, font loads, focus side-effects)
+    // gets overwritten on the next tick. Timer-based (not requestAnimationFrame)
+    // so it also survives background-tab throttling.
+    const until = performance.now() + 700;
+    (function enforce(){
+      body.scrollTop = Math.max(0, div.offsetTop - 8);
+      if (performance.now() < until) setTimeout(enforce, 33);
+    })();
   } else {
     body.scrollTop = body.scrollHeight;
   }

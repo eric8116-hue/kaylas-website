@@ -192,7 +192,7 @@ a.way:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; bord
 .revsec-stars svg{fill:#FFD37A; stroke:none}
 .revsec-count{font-size:16px}
 .revsec-count b{font-weight:700}
-.quotes{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); max-width:760px; margin:0 auto; gap:16px}
+.quotes{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
 @media (max-width:900px){ .quotes{grid-template-columns:1fr} }
 .quote{background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.22); border-radius:16px; padding:22px 24px}
 .quote-stars{display:flex; gap:3px; margin-bottom:11px}
@@ -614,10 +614,9 @@ textarea.f-in{min-height:130px; resize:vertical}
 </div>
 
 <!-- REVIEW STAT CARD — pulls the same numbers already used above/below, just presented as a scannable trio -->
-<div class="revsec-stats">
+<div class="revsec-stats" style="grid-template-columns:repeat(2,1fr); max-width:560px">
 <div class="revsec-stat"><div class="revsec-stat-n">100%</div><div class="revsec-stat-l">Five-Star Satisfaction Rate</div></div>
 <div class="revsec-stat"><div class="revsec-stat-n">306+</div><div class="revsec-stat-l">Verified Client Reviews</div></div>
-<div class="revsec-stat"><div class="revsec-stat-n">0</div><div class="revsec-stat-l">Ratings Below 5 Stars</div></div>
 </div>
 
 <!-- REAL GOOGLE REVIEWS -->
@@ -882,6 +881,18 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 
 <div class="rev-pane on" id="paneRead">
+<div class="rev-card">
+<div class="rev-card-top"><div class="rev-av">S</div><div><div class="rev-name">Sneha C.</div><div class="rev-meta"><svg width="13" height="13" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg>5.0 · June 2026</div></div></div>
+<p class="rev-body">Hands down recommend getting your hair removal done here. I had laser hair before and the hair kept growing back. I came to precise laser asking about electrolysis. They explained to me all the options and I ultimately went with laser - which was amazing. They have laser that caters to every skin shade and I had excellent results. I also got electrolysis on my stubborn chin hairs which also went away.</p>
+</div>
+<div class="rev-card">
+<div class="rev-card-top"><div class="rev-av">B</div><div><div class="rev-name">Belinda</div><div class="rev-meta"><svg width="13" height="13" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg>5.0 · May 2026</div></div></div>
+<p class="rev-body">BEST laser hair removal on the island! I've been going here for 2 years now and Ami and Kayla are the best laser technicians. They are patient, flexible, and incredibly kind. Every area I've had treated has shown amazing results, and I've been extremely satisfied with my experience. I highly recommend!!</p>
+</div>
+<div class="rev-card">
+<div class="rev-card-top"><div class="rev-av">L</div><div><div class="rev-name">Laura Herzog</div><div class="rev-meta"><svg width="13" height="13" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg>5.0 · November 2025</div></div></div>
+<p class="rev-body">I've had such an amazing experience here! As a Middle Eastern woman with naturally thick, stubborn hair, I wasn't expecting dramatic results right away. But after just one laser session, I'm already seeing incredible improvement on both my underarms and face. Kayla, who did my treatment, has been absolutely wonderful. She's so kind, knowledgeable, and made me feel completely comfortable throughout the whole process. I'm so excited to continue my sessions and couldn't recommend this place more.</p>
+</div>
 <div class="rev-card">
 <div class="rev-card-top"><div class="rev-av">M</div><div><div class="rev-name">Mary Baratta</div><div class="rev-meta"><svg width="13" height="13" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg>5.0 · November 2025</div></div></div>
 <p class="rev-body">I love this place! Staff is so friendly and helpful. The dermaplaning I get is amazing! My complexion is amazing and entire treatment lasts a long time. I highly recommend Precise Laser! Been coming here for many years.</p>

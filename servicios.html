@@ -49,7 +49,15 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 .lang-link{font-size:13.5px; font-weight:600; color:var(--ink-soft); padding:8px 12px; border:1px solid var(--line); border-radius:99px}
 .lang-link:hover{color:var(--teal-deep); border-color:var(--teal)}
 
-.hero{background:linear-gradient(160deg,var(--teal-darker),var(--teal-deep)); color:#fff; padding:72px 0 64px; text-align:center}
+.hero{position:relative; color:#fff; padding:96px 0 88px; text-align:center; overflow:hidden}
+.kb{position:absolute; inset:0}
+.kb-slide{position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; animation:kbFade 24s infinite}
+.kb-slide:nth-child(1){animation-delay:0s}
+.kb-slide:nth-child(2){animation-delay:8s}
+.kb-slide:nth-child(3){animation-delay:16s}
+@keyframes kbFade{0%{opacity:0; transform:scale(1)} 8%{opacity:1} 33%{opacity:1; transform:scale(1.08)} 41%{opacity:0} 100%{opacity:0}}
+.kb-veil{position:absolute; inset:0; background:linear-gradient(160deg,rgba(13,62,59,.88),rgba(20,97,93,.82))}
+.hero .wrap{position:relative; z-index:2}
 .hero .eyebrow{color:#9BD4CE}
 .hero h1{font-size:clamp(34px,5.5vw,54px); max-width:800px; margin:14px auto 18px}
 .hero h1 em{font-style:italic; color:#A9E0DA}
@@ -64,7 +72,10 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 .h2{font-size:clamp(28px,4vw,40px); margin-top:10px}
 
 .svc-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px}
-.svc{background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:28px 26px; display:flex; flex-direction:column; gap:12px}
+.svc{background:var(--paper); border:1px solid var(--line); border-radius:18px; overflow:hidden; display:flex; flex-direction:column}
+.svc-img{height:170px; overflow:hidden}
+.svc-img img{width:100%; height:100%; object-fit:cover}
+.svc-body{padding:24px 26px; display:flex; flex-direction:column; gap:12px; flex:1}
 .svc h3{font-size:24px}
 .svc p{font-size:14.5px; color:var(--ink-soft); flex:1}
 .svc-acts{display:flex; gap:10px; flex-wrap:wrap; margin-top:6px}
@@ -128,6 +139,12 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 </header>
 
 <section class="hero">
+<div class="kb" aria-hidden="true">
+<div class="kb-slide" style="background-image:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/1027a4a5-39a9-4aca-af58-3dcb8a128b9c/1000_F_109337580_dBbFtED3zK9ES9icDMv4paWB3EiDlbGF.jpg?format=2500w')"></div>
+<div class="kb-slide" style="background-image:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/47378cae-a8fc-4bac-9348-dd84dc9d61f1/legs+for+days.jpg?format=2500w')"></div>
+<div class="kb-slide" style="background-image:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/18fe34f4-0493-42fa-a34d-9c4f239977f2/beach+body+laser+%282%29.jpg?format=2500w')"></div>
+</div>
+<div class="kb-veil"></div>
 <div class="wrap">
 <div class="eyebrow">Babylon, Nueva York · Se Habla Español</div>
 <h1>Resultados comprobados para <em>todo tipo de piel</em></h1>
@@ -153,6 +170,8 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 
 <div class="svc-grid">
 <div class="svc">
+<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/47378cae-a8fc-4bac-9348-dd84dc9d61f1/legs+for+days.jpg?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-body">
 <h3>Depilación Láser</h3>
 <p>Reducción permanente del vello de hasta un 95% con láser de grado médico. Contamos con equipos que tratan de forma segura todos los tonos de piel, desde el más claro hasta el más oscuro. La mayoría de los clientes ven resultados duraderos en 6 a 8 sesiones.</p>
 <div class="svc-acts">
@@ -160,8 +179,11 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 <a class="btn btn-o" href="sms:9176177596">Enviar texto</a>
 </div>
 </div>
+</div>
 
 <div class="svc">
+<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/6c2dfd88-f3fe-41c2-b1d6-7c036fc5baa7/Electrolysis+images+face.jpg?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-body">
 <h3>Electrólisis</h3>
 <p>El único método reconocido por la FDA para eliminar el vello de forma permanente, folículo por folículo. Ideal para áreas pequeñas, vello hormonal, o cabello claro o canoso que el láser no puede tratar. Funciona en todo tipo de piel y color de vello.</p>
 <div class="svc-acts">
@@ -169,8 +191,11 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 <a class="btn btn-o" href="sms:9176177596">Enviar texto</a>
 </div>
 </div>
+</div>
 
 <div class="svc">
+<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/818d412d-131a-4412-bbf9-a1b1496281a2/Ava_Treatment_Face_2518_1.png?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-body">
 <h3>Faciales Rejuvenecedores</h3>
 <p>HydraFacial, peelings químicos, microneedling, dermaplaning y más — tratamientos dirigidos a la textura, el tono, la congestión, la hidratación y las líneas de expresión. Nuestras esteticistas evalúan su piel antes de cada tratamiento.</p>
 <div class="svc-acts">
@@ -178,8 +203,11 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 <a class="btn btn-o" href="sms:9176177596">Enviar texto</a>
 </div>
 </div>
+</div>
 
 <div class="svc">
+<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/9a751fe2-deb1-4125-bc21-a00e22a526a0/City_Cave_July_15_of_61.jpg?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-body">
 <h3>Desintoxicación y Bienestar</h3>
 <p>Sauna infrarrojo, hidroterapia de colon y FIT Bodywrap — tres tratamientos de cuerpo completo que apoyan la circulación, la digestión, la hidratación y la recuperación.</p>
 <div class="svc-acts">
@@ -187,8 +215,11 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 <a class="btn btn-o" href="sms:9176177596">Enviar texto</a>
 </div>
 </div>
+</div>
 
 <div class="svc">
+<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/5b5b2f4e-58e2-4523-83f8-e8970f72fb5b/teeth+whitening.jpg?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-body">
 <h3>Realce de Belleza</h3>
 <p>Lifting de pestañas, lip blushing (maquillaje permanente de labios), blanqueamiento dental y gemas dentales Swarovski — los detalles finales, hechos con un enfoque conservador y profesional.</p>
 <div class="svc-acts">
@@ -196,13 +227,17 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 <a class="btn btn-o" href="sms:9176177596">Enviar texto</a>
 </div>
 </div>
+</div>
 
 <div class="svc">
+<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/1027a4a5-39a9-4aca-af58-3dcb8a128b9c/1000_F_109337580_dBbFtED3zK9ES9icDMv4paWB3EiDlbGF.jpg?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-body">
 <h3>Depilación con Cera</h3>
 <p>Depilación con cera para cara, brazos, piernas, espalda y área del bikini. Una opción confiable entre sesiones de láser o para quienes prefieren la depilación tradicional.</p>
 <div class="svc-acts">
 <a class="btn btn-p" href="tel:6319231174">Llamar para una consulta gratis</a>
 <a class="btn btn-o" href="sms:9176177596">Enviar texto</a>
+</div>
 </div>
 </div>
 </div>

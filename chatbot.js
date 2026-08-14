@@ -19,6 +19,30 @@ const CUSTOM_INSTRUCTIONS = [
   // { triggers:['gift card','gift certificate'], reply:'Yes — gift cards are available in any amount. Call us at (631) 923-1174 and we can set one up for you.' }
 ];
 
+/* ═══════════════════ KAYLA'S ANSWERS (added via chatbot-admin.html) ═══════════════════
+   Loaded from the Cloudflare Worker at page load and checked BEFORE the
+   hardcoded list above. If the Worker is unreachable the chat still works
+   normally — it just falls back to what's written in this file. */
+const QA_API = 'https://chatbot-api.preciselaserspa.workers.dev/qa';
+let ADMIN_QA = [];
+
+function loadAdminQA(){
+  if (!window.fetch) return;
+  const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  if (ctrl) setTimeout(() => ctrl.abort(), 4000);   // never let a slow API stall the widget
+
+  fetch(QA_API, ctrl ? { signal: ctrl.signal } : undefined)
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data || !Array.isArray(data.qa)) return;
+      ADMIN_QA = data.qa.filter(x =>
+        x && typeof x.reply === 'string' && x.reply.trim() &&
+        Array.isArray(x.triggers) && x.triggers.length
+      );
+    })
+    .catch(() => { /* offline or Worker down — hardcoded answers still apply */ });
+}
+
 /* ═══════════════════ EDITABLE: TREATMENT KNOWLEDGE BASE ═══════════════════
    Same data as the self-assessment tool. "tags" are the words/phrases
    that trigger this treatment when someone mentions them in chat. */
@@ -197,7 +221,12 @@ function tagHits(text, tags){
 function findReply(message){
   const text = norm(message);
 
-  // 1. custom instructions always win
+  // 1a. Kayla's answers from the admin page win above everything
+  for (const qa of ADMIN_QA){
+    if (tagHits(text, qa.triggers) > 0) return { text: qa.reply };
+  }
+
+  // 1b. custom instructions written directly in this file
   for (const ci of CUSTOM_INSTRUCTIONS){
     if (tagHits(text, ci.triggers) > 0) return { text: ci.reply };
   }
@@ -458,6 +487,8 @@ function init(){
   panel.querySelector('#cbSend').addEventListener('click', () => sendMessage());
   input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
 }
+
+loadAdminQA();
 
 if (document.readyState === 'loading'){
   document.addEventListener('DOMContentLoaded', init);

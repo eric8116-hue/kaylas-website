@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /chatbot-admin.html
 
 Sitemap: https://preciselaserspa.com/sitemap.xml

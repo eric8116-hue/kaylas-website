@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Chatbot Answers — Precise Laser</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--teal:#1E8A85; --teal-deep:#14615D; --teal-darker:#0D3E3B; --teal-light:#E4F4F2;
+--paper:#FFFFFF; --sand:#FAF8F5; --ink:#16302E; --ink-soft:#5A716F; --line:#E3E8E7;
+--danger:#B3261E; --danger-light:#FDECEA; --ok:#1B7F3B; --ok-light:#E8F5EC;
+}
+*{margin:0; padding:0; box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif; background:var(--sand); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased}
+button{font-family:inherit; cursor:pointer; border:none; background:none}
+input,textarea{font-family:inherit; font-size:16px}
+.wrap{max-width:820px; margin:0 auto; padding:0 20px}
+
+/* ---------- header ---------- */
+.top{background:var(--paper); border-bottom:1px solid var(--line); padding:18px 0; position:sticky; top:0; z-index:20}
+.top-in{display:flex; align-items:center; justify-content:space-between; gap:14px}
+.top h1{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:26px; line-height:1.1}
+.top p{font-size:13px; color:var(--ink-soft); margin-top:2px}
+.logout{font-size:13.5px; font-weight:600; color:var(--ink-soft); text-decoration:underline; text-underline-offset:3px}
+.logout:hover{color:var(--ink)}
+
+/* ---------- login ---------- */
+.login-wrap{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px}
+.login-card{background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:38px 32px; width:100%; max-width:400px; box-shadow:0 18px 44px -22px rgba(20,97,93,.3)}
+.login-card h1{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:30px; text-align:center; line-height:1.15}
+.login-card .sub{font-size:14px; color:var(--ink-soft); text-align:center; margin:10px 0 26px; line-height:1.6}
+.field{width:100%; padding:15px 16px; border:1.5px solid var(--line); border-radius:11px; background:var(--sand); transition:border-color .15s, box-shadow .15s}
+.field:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 3px rgba(30,138,133,.14); background:var(--paper)}
+.btn-main{display:block; width:100%; padding:15px; border-radius:11px; color:#fff; font-size:15px; font-weight:600; background:linear-gradient(135deg,var(--teal),var(--teal-deep)); box-shadow:0 10px 24px rgba(20,97,93,.26); transition:transform .15s, opacity .15s; margin-top:14px}
+.btn-main:hover{transform:translateY(-1px)}
+.btn-main:disabled{opacity:.55; cursor:default; transform:none}
+
+/* ---------- messages ---------- */
+.msg{padding:12px 15px; border-radius:11px; font-size:14px; font-weight:500; margin-top:14px; line-height:1.5; display:none}
+.msg.show{display:block}
+.msg.err{background:var(--danger-light); color:var(--danger)}
+.msg.ok{background:var(--ok-light); color:var(--ok)}
+
+/* ---------- app ---------- */
+#app{display:none; padding:26px 0 120px}
+.intro{background:var(--teal-light); border:1px solid #C9E6E3; border-radius:14px; padding:18px 20px; margin-bottom:24px}
+.intro h2{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:21px; margin-bottom:6px}
+.intro p{font-size:13.5px; color:var(--teal-darker); line-height:1.65}
+.intro p + p{margin-top:8px}
+
+.list-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px}
+.list-head h2{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:23px}
+.count{font-size:13px; color:var(--ink-soft); font-weight:500}
+
+.card{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:14px; transition:border-color .15s, box-shadow .15s}
+.card:focus-within{border-color:var(--teal); box-shadow:0 0 0 3px rgba(30,138,133,.1)}
+.card-top{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px}
+.card-n{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:22px; color:var(--teal); line-height:1}
+.del{font-size:13px; font-weight:600; color:var(--danger); padding:6px 12px; border-radius:8px; background:var(--danger-light); transition:background .15s}
+.del:hover{background:#FADCD8}
+
+label{display:block; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px}
+.hint{font-size:12.5px; color:var(--ink-soft); margin:6px 0 0; line-height:1.55; font-weight:400; text-transform:none; letter-spacing:0}
+.grp{margin-bottom:16px}
+.grp:last-child{margin-bottom:0}
+textarea.field{min-height:96px; resize:vertical; line-height:1.6}
+
+.add{display:flex; align-items:center; justify-content:center; gap:9px; width:100%; padding:16px; border-radius:12px; border:1.5px dashed var(--teal); color:var(--teal-deep); font-size:14.5px; font-weight:600; background:var(--paper); transition:background .15s}
+.add:hover{background:var(--teal-light)}
+
+.empty{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:40px 24px; text-align:center; margin-bottom:14px}
+.empty p{font-size:14px; color:var(--ink-soft); line-height:1.65}
+
+/* ---------- sticky save bar ---------- */
+.savebar{position:fixed; left:0; right:0; bottom:0; background:var(--paper); border-top:1px solid var(--line); padding:14px 0; box-shadow:0 -8px 28px -14px rgba(0,0,0,.16); z-index:30}
+.savebar-in{display:flex; align-items:center; justify-content:space-between; gap:14px}
+.savebar-status{font-size:13.5px; font-weight:600; color:var(--ink-soft)}
+.savebar-status.dirty{color:var(--danger)}
+.savebar-status.saved{color:var(--ok)}
+.btn-save{padding:14px 30px; border-radius:11px; color:#fff; font-size:15px; font-weight:600; background:linear-gradient(135deg,var(--teal),var(--teal-deep)); box-shadow:0 8px 20px rgba(20,97,93,.26); transition:transform .15s, opacity .15s; flex-shrink:0}
+.btn-save:hover{transform:translateY(-1px)}
+.btn-save:disabled{opacity:.5; cursor:default; transform:none}
+
+@media(max-width:600px){
+  .top h1{font-size:22px}
+  .card{padding:16px}
+  .savebar-in{flex-direction:column; align-items:stretch}
+  .btn-save{width:100%}
+  .savebar-status{text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div class="login-wrap" id="loginView">
+  <div class="login-card">
+    <h1>Chatbot Answers</h1>
+    <p class="sub">Sign in to add or edit the questions your website chat can answer.</p>
+    <form id="loginForm">
+      <input class="field" type="password" id="pw" placeholder="Password" autocomplete="current-password" required>
+      <button class="btn-main" type="submit" id="loginBtn">Sign in</button>
+    </form>
+    <div class="msg err" id="loginMsg"></div>
+  </div>
+</div>
+
+<!-- ══════════════ APP ══════════════ -->
+<div id="app">
+  <div class="top">
+    <div class="wrap top-in">
+      <div>
+        <h1>Chatbot Answers</h1>
+        <p>Precise Laser Hair Removal &amp; Esthetics</p>
+      </div>
+      <button class="logout" id="logoutBtn">Sign out</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="intro">
+      <h2>How this works</h2>
+      <p>Each card below is one thing the chat can answer. Put the words a customer might type into <strong>Trigger words</strong>, and what you want the chat to say into <strong>Answer</strong>.</p>
+      <p>These answers come first — before anything else the chat knows — so whatever you write here is exactly what a customer sees. Changes go live about a minute after you save.</p>
+    </div>
+
+    <div class="list-head">
+      <h2>Your answers</h2>
+      <span class="count" id="count"></span>
+    </div>
+
+    <div id="cards"></div>
+
+    <button class="add" id="addBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      Add another answer
+    </button>
+
+    <div class="msg" id="appMsg"></div>
+  </div>
+
+  <div class="savebar">
+    <div class="wrap savebar-in">
+      <span class="savebar-status" id="status">All changes saved</span>
+      <button class="btn-save" id="saveBtn" disabled>Save changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ════════ SET THIS to your deployed Worker URL (no trailing slash) ════════ */
+const API = 'https://chatbot-api.preciselaserspa.workers.dev';
+
+const $ = id => document.getElementById(id);
+let password = '';
+let items = [];
+let dirty = false;
+
+/* ---------------- login ---------------- */
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const pw = $('pw').value;
+  const btn = $('loginBtn');
+  const msg = $('loginMsg');
+  msg.classList.remove('show');
+  btn.disabled = true;
+  btn.textContent = 'Checking…';
+
+  try {
+    const r = await fetch(API + '/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    const data = await r.json();
+    if (!data.ok) throw new Error(data.error || 'Incorrect password.');
+    password = pw;
+    sessionStorage.setItem('cb_pw', pw);
+    await enterApp();
+  } catch (err) {
+    msg.textContent = err.message === 'Failed to fetch'
+      ? 'Could not reach the server. Check your internet connection and try again.'
+      : err.message;
+    msg.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Sign in';
+  }
+});
+
+$('logoutBtn').addEventListener('click', () => {
+  if (dirty && !confirm('You have unsaved changes. Sign out anyway?')) return;
+  sessionStorage.removeItem('cb_pw');
+  location.reload();
+});
+
+async function enterApp(){
+  $('loginView').style.display = 'none';
+  $('app').style.display = 'block';
+  await load();
+}
+
+/* ---------------- load ---------------- */
+async function load(){
+  try {
+    const r = await fetch(API + '/qa?t=' + Date.now());
+    const data = await r.json();
+    items = Array.isArray(data.qa) ? data.qa : [];
+  } catch {
+    items = [];
+    showMsg('Could not load your saved answers. Check your connection before making changes.', 'err');
+  }
+  render();
+  setDirty(false);
+}
+
+/* ---------------- render ---------------- */
+function render(){
+  const box = $('cards');
+  box.innerHTML = '';
+
+  if (!items.length){
+    box.innerHTML = '<div class="empty"><p>No answers yet. Tap <strong>Add another answer</strong> below to create your first one.</p></div>';
+  }
+
+  items.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="card-n">${i + 1}</span>
+        <button class="del" data-del="${i}">Delete</button>
+      </div>
+      <div class="grp">
+        <label for="label-${i}">Name it (just for you)</label>
+        <input class="field" id="label-${i}" data-f="label" data-i="${i}" placeholder="e.g. Gift cards">
+        <p class="hint">A short note so you can find this later. Customers never see it.</p>
+      </div>
+      <div class="grp">
+        <label for="trig-${i}">Trigger words</label>
+        <input class="field" id="trig-${i}" data-f="triggers" data-i="${i}" placeholder="gift card, gift certificate, gift">
+        <p class="hint">Separate with commas. If a customer types any of these, they get the answer below.</p>
+      </div>
+      <div class="grp">
+        <label for="reply-${i}">Answer</label>
+        <textarea class="field" id="reply-${i}" data-f="reply" data-i="${i}" placeholder="Yes — gift cards are available in any amount. Call us at (631) 923-1174 and we'll set one up."></textarea>
+        <p class="hint">Word this exactly how you'd want a customer to read it.</p>
+      </div>`;
+    box.appendChild(card);
+
+    card.querySelector(`#label-${i}`).value = item.label || '';
+    card.querySelector(`#trig-${i}`).value  = (item.triggers || []).join(', ');
+    card.querySelector(`#reply-${i}`).value = item.reply || '';
+  });
+
+  $('count').textContent = items.length === 1 ? '1 answer' : items.length + ' answers';
+}
+
+/* ---------------- edits ---------------- */
+$('cards').addEventListener('input', e => {
+  const f = e.target.dataset.f;
+  if (!f) return;
+  const i = +e.target.dataset.i;
+  const v = e.target.value;
+  if (f === 'triggers') items[i].triggers = v.split(',').map(s => s.trim()).filter(Boolean);
+  else items[i][f] = v;
+  setDirty(true);
+});
+
+$('cards').addEventListener('click', e => {
+  const d = e.target.dataset.del;
+  if (d === undefined) return;
+  const name = items[+d].label || items[+d].reply.slice(0, 40) + '…';
+  if (!confirm('Delete "' + name + '"?')) return;
+  items.splice(+d, 1);
+  render();
+  setDirty(true);
+});
+
+$('addBtn').addEventListener('click', () => {
+  items.push({ label:'', triggers:[], reply:'' });
+  render();
+  setDirty(true);
+  const last = document.querySelector('.card:last-of-type input');
+  if (last){ last.focus(); last.scrollIntoView({ behavior:'smooth', block:'center' }); }
+});
+
+function setDirty(v){
+  dirty = v;
+  $('saveBtn').disabled = !v;
+  const s = $('status');
+  s.className = 'savebar-status' + (v ? ' dirty' : ' saved');
+  s.textContent = v ? 'Unsaved changes' : 'All changes saved';
+}
+
+/* ---------------- save ---------------- */
+$('saveBtn').addEventListener('click', async () => {
+  const bad = items.find(x => !x.reply.trim() || !x.triggers.length);
+  if (bad){
+    showMsg('Every answer needs at least one trigger word and some answer text. Fill in the blanks or delete the empty card.', 'err');
+    return;
+  }
+
+  const btn = $('saveBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  try {
+    const r = await fetch(API + '/qa', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Password': password },
+      body: JSON.stringify({ qa: items })
+    });
+    const data = await r.json();
+    if (!data.ok) throw new Error(data.error || 'Save failed.');
+    setDirty(false);
+    showMsg('Saved. Your changes will appear on the website within about a minute.', 'ok');
+  } catch (err) {
+    showMsg(err.message === 'Failed to fetch'
+      ? 'Could not reach the server. Your changes are still here — check your connection and try saving again.'
+      : err.message, 'err');
+    btn.disabled = false;
+  } finally {
+    btn.textContent = 'Save changes';
+  }
+});
+
+function showMsg(text, kind){
+  const m = $('appMsg');
+  m.textContent = text;
+  m.className = 'msg show ' + kind;
+  clearTimeout(showMsg._t);
+  showMsg._t = setTimeout(() => m.classList.remove('show'), 7000);
+  m.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+window.addEventListener('beforeunload', e => {
+  if (dirty){ e.preventDefault(); e.returnValue = ''; }
+});
+
+/* resume session if the password is still in this tab */
+const saved = sessionStorage.getItem('cb_pw');
+if (saved){ password = saved; enterApp(); }
+
+})();
+</script>
+</body>
+</html>

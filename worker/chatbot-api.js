@@ -19,7 +19,8 @@ const KV_KEY = 'custom_qa';
 const ALLOWED_ORIGINS = [
   'https://preciselaserspa.com',
   'https://www.preciselaserspa.com',
-  'https://precise-laser-spa.pages.dev'
+  'https://precise-laser-spa.pages.dev',
+  'https://precise-laser-crm.pages.dev'
 ];
 
 function corsHeaders(request) {

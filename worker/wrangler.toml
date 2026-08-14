@@ -11,7 +11,11 @@ main = "chatbot-api.js"
 compatibility_date = "2026-08-14"
 
 [vars]
-NOTIFY_TO = "Preciselaserspa@gmail.com"
+# TEMPORARY: pointed at Eric's inbox because Kayla's address
+# (Preciselaserspa@gmail.com) is still Pending verification in Cloudflare
+# Email Routing. Flip this back to hers once she clicks the verification
+# link, then redeploy. Cloudflare refuses to send to unverified addresses.
+NOTIFY_TO = "eric8116@gmail.com"
 
 [[kv_namespaces]]
 binding = "CHATBOT_KV"

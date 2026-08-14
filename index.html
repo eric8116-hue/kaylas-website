@@ -190,7 +190,7 @@ padding:clamp(14px,2.4vw,28px)}
 .sec-head .h2{margin:12px 0 14px}
 
 /* service boxes */
-.ways-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px}
+.ways-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px; scroll-margin-top:96px}
 @media (max-width:1000px){ .ways-grid{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:600px){ .ways-grid{grid-template-columns:1fr; gap:26px} }
 .way{display:flex; flex-direction:column}
@@ -446,7 +446,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 </a>
 
 <nav class="nav">
-<a href="#services">Services</a>
+<a href="#servicesGrid">Services</a>
 <a href="#reviews">Reviews</a>
 <a href="#about">About</a>
 <a href="#" onclick="openOverlay('contact');return false;">Contact</a>
@@ -500,7 +500,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 <span class="rev-chip-txt"><b>306</b> Google reviews</span>
 </span>
 </a>
-<a class="dlink" href="#services" onclick="closeDrawer()">Services</a>
+<a class="dlink" href="#servicesGrid" onclick="closeDrawer()">Services</a>
 <a class="dlink" href="#reviews" onclick="closeDrawer()">Reviews</a>
 <a class="dlink" href="#about" onclick="closeDrawer()">About</a>
 <a class="dlink" href="#" onclick="closeDrawer();openOverlay('contact');return false;">Contact</a>
@@ -573,7 +573,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 <h2 class="h2">Our Services</h2>
 </div>
 
-<div class="ways-grid">
+<div class="ways-grid" id="servicesGrid">
 <a class="way" href="services-hair-removal.html">
 <div class="way-box">
 <div class="way-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/6c2dfd88-f3fe-41c2-b1d6-7c036fc5baa7/Electrolysis+images+face.jpg?format=1000w" alt="Electrolysis treatment on the face" loading="lazy"></div>

@@ -100,6 +100,26 @@ wrangler pages deploy .
 
 ## This project specifically (Precise Laser Spa)
 
+The live Pages project is named **`kaylas-website`** (not "precise-laser-spa"
+— that was a guess based on an old CORS reference; `wrangler pages project list`
+is what confirmed the real name). It already holds `preciselaserspa.com` and
+`www.preciselaserspa.com` as custom domains, so `wrangler.toml`'s `name` field
+is already set correctly — nothing to change there.
+
+**One-time fix needed first:** `kaylas-website` is Git-connected (`Git Provider: Yes`
+in the project list), meaning it currently auto-deploys on every `git push` to
+`main`. That defeats the "nothing goes live until I run the command" model —
+right now a push would beat the CLI command to production. Turn that off once:
+
+1. **dash.cloudflare.com** → **Workers & Pages** → **kaylas-website**
+2. **Settings** → **Builds & deployments** (or **Build** → **Branch control**)
+3. Turn **off** "Enable automatic production branch deployments"
+4. Set the preview branch setting to **None** / disable automatic preview deployments too
+5. Save
+
+The GitHub connection itself can stay — this just stops it from *deploying*
+on push. From then on:
+
 ```
 # Static site
 wrangler pages deploy .
@@ -108,7 +128,9 @@ wrangler pages deploy .
 wrangler deploy --config worker/wrangler.toml
 ```
 
-One thing to fix before the Worker deploy will work: `worker/wrangler.toml`
+are the only two things that ever put something live.
+
+One more thing to fix before the Worker deploy will work: `worker/wrangler.toml`
 has a placeholder KV namespace ID. Run this once to find the real one
 (it already exists — created back when the chatbot admin page was set up):
 

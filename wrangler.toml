@@ -1,6 +1,6 @@
 # Cloudflare Pages config — the static site (this repo root).
 # Deploy command (same for every project, every time):
 #   npx wrangler pages deploy .
-name = "precise-laser-spa"
+name = "kaylas-website"
 pages_build_output_dir = "."
 compatibility_date = "2026-08-14"

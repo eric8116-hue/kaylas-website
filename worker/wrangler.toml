@@ -1,0 +1,21 @@
+# Cloudflare Worker config — chatbot-api (Q&A storage + form delivery).
+# Deploy command (same for every project, every time):
+#   npx wrangler deploy --config worker/wrangler.toml
+#
+# Secrets (ADMIN_PASSWORD) are NOT set here — never put secrets in a file
+# that's committed to git. Set them once with:
+#   npx wrangler secret put ADMIN_PASSWORD --config worker/wrangler.toml
+
+name = "chatbot-api"
+main = "chatbot-api.js"
+compatibility_date = "2026-08-14"
+
+[vars]
+NOTIFY_TO = "Preciselaserspa@gmail.com"
+
+[[kv_namespaces]]
+binding = "CHATBOT_KV"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"   # see DEPLOY.md Step 4
+
+[[send_email]]
+name = "SEND_EMAIL"

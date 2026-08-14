@@ -23,7 +23,7 @@ const CUSTOM_INSTRUCTIONS = [
    Loaded from the Cloudflare Worker at page load and checked BEFORE the
    hardcoded list above. If the Worker is unreachable the chat still works
    normally — it just falls back to what's written in this file. */
-const QA_API = 'https://chatbot-api.preciselaserspa.workers.dev/qa';
+const QA_API = 'https://chatbot-api.eric8116.workers.dev/qa';
 let ADMIN_QA = [];
 
 function loadAdminQA(){

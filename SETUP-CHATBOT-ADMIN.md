@@ -63,17 +63,14 @@ One-time setup, about 10 minutes. After this, Kayla manages chatbot answers hers
 
 ## Step 5 — Confirm the Worker URL
 
-The Worker's address appears at the top of its page. It should be:
+The Worker's address is:
 
 ```
-https://chatbot-api.preciselaserspa.workers.dev
+https://chatbot-api.eric8116.workers.dev
 ```
 
-If your subdomain differs (Cloudflare assigns it per account), update the URL in **two** files
-and redeploy the site:
-
-- `chatbot-admin.html` → the `const API = '...'` line near the bottom
-- `chatbot.js` → the `const QA_API = '...'` line near the top (keep the `/qa` on the end)
+This is already set in `chatbot-admin.html` and `chatbot.js` — no changes needed unless the
+Worker is ever renamed or recreated under a different account.
 
 ---
 

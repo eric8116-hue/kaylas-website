@@ -1054,9 +1054,11 @@ showAgainDays : 7 // if dismissed, don't show again for this many days
 
 /* Other editable values */
 const CONFIG = {
-// Once the Google Business Profile is claimed, swap both for:
-// https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID
-googleWriteReview : 'https://www.google.com/maps/search/?api=1&query=Precise+Laser+Hair+Removal+%26+Esthetics+626+Deer+Park+Ave+Babylon+NY',
+// Direct "write a review" composer for the Business Profile (place ID
+// ChIJ672a9s0o6IkRq2rrf_v_490 — sourced from a third-party geocode tied to
+// this exact address; Eric: click it once live and confirm it opens Kayla's
+// listing before treating this as final).
+googleWriteReview : 'https://search.google.com/local/writereview?placeid=ChIJ672a9s0o6IkRq2rrf_v_490',
 googleReadReviews : 'https://www.google.com/maps/search/?api=1&query=Precise+Laser+Hair+Removal+%26+Esthetics+626+Deer+Park+Ave+Babylon+NY'
 };
 

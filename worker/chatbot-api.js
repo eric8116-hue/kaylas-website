@@ -2,18 +2,28 @@
    PRECISE — CHATBOT Q&A API (Cloudflare Worker)
 
    Stores Kayla's custom chatbot questions & answers in Cloudflare KV.
+   Also relays the website contact form and text-widget to a real inbox.
 
    ENDPOINTS
      GET  /qa      → public. Returns the current Q&A list as JSON.
      POST /qa      → protected. Saves a new Q&A list. Requires password.
      POST /login   → protected. Checks a password, returns ok/fail.
+     POST /notify  → public. Emails a contact-form or text-widget submission
+                     to a monitored inbox. See NOTIFY-SETUP.md.
 
-   BINDINGS REQUIRED (set up in Cloudflare dashboard — see SETUP-CHATBOT-ADMIN.md)
+   BINDINGS REQUIRED (set up in Cloudflare dashboard — see SETUP-CHATBOT-ADMIN.md
+   and NOTIFY-SETUP.md)
      KV namespace binding name : CHATBOT_KV
      Secret (environment var)  : ADMIN_PASSWORD
+     Send Email binding        : SEND_EMAIL   (for /notify — see NOTIFY-SETUP.md)
+     Variable (environment var): NOTIFY_TO    (verified destination address)
    ═══════════════════════════════════════════════════════════════════ */
 
+import { EmailMessage } from 'cloudflare:email';
+
 const KV_KEY = 'custom_qa';
+const NOTIFY_FROM = 'website@preciselaserspa.com';
+const NOTIFY_FALLBACK_TO = 'Preciselaserspa@gmail.com';
 
 // Allow the live site (and local file testing) to call this Worker.
 const ALLOWED_ORIGINS = [
@@ -82,6 +92,95 @@ function sanitize(list) {
   return out;
 }
 
+/* ---------- /notify helpers ---------- */
+
+function trimStr(v, max) {
+  return typeof v === 'string' ? v.trim().slice(0, max) : '';
+}
+
+function sanitizeContact(body) {
+  if (!body || typeof body !== 'object') return null;
+  if (trimStr(body.hp, 50)) return null; // honeypot tripped — treat as spam
+  const firstName = trimStr(body.firstName, 80);
+  const email = trimStr(body.email, 200);
+  const phone = trimStr(body.phone, 40);
+  if (!firstName || !email || !phone) return null;
+  if (!/^\S+@\S+\.\S+$/.test(email)) return null;
+  const interests = Array.isArray(body.interests)
+    ? body.interests.filter(x => typeof x === 'string').slice(0, 25).map(x => x.trim().slice(0, 100))
+    : [];
+  return {
+    firstName, lastName: trimStr(body.lastName, 80), email, phone,
+    heardVia: trimStr(body.heardVia, 100), interests,
+    message: trimStr(body.message, 2000)
+  };
+}
+
+function sanitizeTextWidget(body) {
+  if (!body || typeof body !== 'object') return null;
+  if (trimStr(body.hp, 50)) return null;
+  const name = trimStr(body.name, 80);
+  const phone = trimStr(body.phone, 40);
+  const message = trimStr(body.message, 2000);
+  if (!name || !phone || !message) return null;
+  return { name, phone, message };
+}
+
+function renderContactBody(d) {
+  return [
+    'New contact form submission -- preciselaserspa.com',
+    '',
+    `Name: ${d.firstName} ${d.lastName}`.trim(),
+    `Email: ${d.email}`,
+    `Phone: ${d.phone}`,
+    `Heard about us via: ${d.heardVia || '(not specified)'}`,
+    `Interested in: ${d.interests.length ? d.interests.join(', ') : '(not specified)'}`,
+    '',
+    'Message:',
+    d.message || '(none)'
+  ].join('\n');
+}
+
+function renderTextWidgetBody(d) {
+  return [
+    'New "Text us" widget submission -- preciselaserspa.com',
+    '',
+    `Name: ${d.name}`,
+    `Mobile: ${d.phone}`,
+    '',
+    'Message:',
+    d.message
+  ].join('\n');
+}
+
+/* Base64-encode a UTF-8 string (btoa() alone chokes on non-Latin1 chars,
+   which matters here since guests write in Spanish too), then wrap to
+   76-char lines per RFC 2045. */
+function encodeBodyBase64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  for (const b of bytes) bin += String.fromCharCode(b);
+  const b64 = btoa(bin);
+  return b64.match(/.{1,76}/g).join('\r\n');
+}
+
+/* Hand-build a minimal RFC 822 message. Subject stays fixed/ASCII —
+   all guest-supplied text (which may include accents) lives in the
+   base64-encoded body instead, so there's nothing to escape in headers. */
+function buildRawEmail({ from, to, subject, body }) {
+  return [
+    `From: Precise Laser Website <${from}>`,
+    `To: ${to}`,
+    `Subject: ${subject}`,
+    'MIME-Version: 1.0',
+    'Content-Type: text/plain; charset="UTF-8"',
+    'Content-Transfer-Encoding: base64',
+    '',
+    encodeBodyBase64(body),
+    ''
+  ].join('\r\n');
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -131,6 +230,43 @@ export default {
 
       await env.CHATBOT_KV.put(KV_KEY, JSON.stringify(clean));
       return json({ ok: true, count: clean.length }, request);
+    }
+
+    /* ---------- Public: contact form + text widget delivery ---------- */
+    if (path === '/notify' && request.method === 'POST') {
+      let body;
+      try { body = await request.json(); } catch { return json({ ok: false, error: 'Bad request.' }, request, 400); }
+
+      const kind = body.kind === 'contact' || body.kind === 'text' ? body.kind : null;
+      if (!kind) return json({ ok: false, error: 'Unknown form type.' }, request, 400);
+
+      const clean = kind === 'contact' ? sanitizeContact(body) : sanitizeTextWidget(body);
+      if (!clean) return json({ ok: false, error: 'Missing or invalid fields.' }, request, 400);
+
+      if (!env.SEND_EMAIL) {
+        // Binding not set up yet — see NOTIFY-SETUP.md. Fail loudly instead
+        // of silently pretending the message went somewhere.
+        return json({ ok: false, error: 'Notifications are not configured yet.' }, request, 503);
+      }
+
+      const to = String(env.NOTIFY_TO || NOTIFY_FALLBACK_TO);
+      const subject = kind === 'contact'
+        ? 'New contact form submission — Precise Laser website'
+        : 'New text-widget message — Precise Laser website';
+      const raw = buildRawEmail({
+        from: NOTIFY_FROM,
+        to,
+        subject,
+        body: kind === 'contact' ? renderContactBody(clean) : renderTextWidgetBody(clean)
+      });
+
+      try {
+        await env.SEND_EMAIL.send(new EmailMessage(NOTIFY_FROM, to, raw));
+      } catch (err) {
+        return json({ ok: false, error: 'Could not send notification.' }, request, 502);
+      }
+
+      return json({ ok: true }, request);
     }
 
     return json({ ok: false, error: 'Not found.' }, request, 404);

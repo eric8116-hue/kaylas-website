@@ -494,7 +494,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 </div>
 
 <a class="hdr-call-mobile" href="tel:6319231174" aria-label="Call (631) 923-1174"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
-<a class="hdr-call-mobile" href="sms:9176177596" aria-label="Text us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></a>
+<button class="hdr-call-mobile" onclick="openTextPanel()" type="button" aria-label="Text us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
 <a class="hdr-call-mobile" style="background:#E7F8EC; border-color:#25D366; color:#128C4B" href="https://wa.me/19179023870" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5l-1.4 5.12 5.24-1.38a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91.01-5.46-4.44-9.95-9.91-9.95Zm5.8 14.05c-.24.68-1.39 1.3-1.92 1.35-.49.05-1.11.07-1.79-.11-.41-.11-.94-.29-1.62-.57-2.84-1.23-4.7-4.1-4.84-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.37c.26-.29.56-.36.75-.36.19 0 .38 0 .54.01.17.01.4-.07.63.48.24.57.81 1.98.88 2.12.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.61-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36Z"/></svg></a>
 <a class="hdr-call-mobile" href="servicios.html" lang="es" aria-label="Español" style="font-size:13px; font-weight:800; letter-spacing:.02em">ES</a>
 <button class="burger" onclick="openDrawer()" aria-label="Open menu"><span class="burger-lines"></span><span class="burger-label">Menu</span></button>
@@ -891,8 +891,10 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <div class="opt-grid" id="interestGrid"></div>
 <div class="f-legend">Anything else we should know?</div>
 <textarea class="f-in" id="cMsg" placeholder="Tell us about your goals, questions, or scheduling preferences (optional)"></textarea>
+<input type="text" id="cHp" name="company" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0" aria-hidden="true">
 <p class="trust-line">Join 300+ happy clients in Babylon. Zero pressure, 100% personalized care.</p>
-<button class="btn-main" onclick="submitContact()">Send message</button>
+<button class="btn-main" id="cSendBtn" onclick="submitContact()">Send message</button>
+<p class="fine" id="cErr" style="display:none; color:#B3261E">Something went wrong sending your message — please call or text us instead.</p>
 <p class="fine">We'll get back to you within one business day. Your information is kept private and only shared with Precise.</p>
 </div>
 <div class="ov-success" id="contactSuccess">
@@ -999,15 +1001,15 @@ Write a review on Google
 
 <!-- ============================ TEXT WIDGET ============================ -->
 <div class="text-dock" id="textDock">
-<div class="text-teaser" id="textTeaser" onclick="location.href='sms:9176177596'">
+<div class="text-teaser" id="textTeaser" onclick="openTextPanel()">
 <button class="teaser-close" onclick="dismissTeaser(event)" aria-label="Dismiss">&times;</button>
 <div class="teaser-avatar">P</div>
 <div class="teaser-text">Hi there — have a question? Text us here.</div>
 </div>
-<a class="text-pill" href="sms:9176177596">
+<button class="text-pill" onclick="openTextPanel()" type="button">
 <svg width="19" height="19" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M11 18h2"/></svg>
 Text us
-</a>
+</button>
 </div>
 
 <div class="text-panel" id="textPanel" role="dialog" aria-label="Text us">
@@ -1020,7 +1022,9 @@ Text us
 <input type="text" id="txName" placeholder="Your name" autocomplete="name">
 <input type="tel" id="txPhone" placeholder="Mobile number" autocomplete="tel">
 <textarea id="txMsg" placeholder="How can we help?"></textarea>
-<button class="panel-send" onclick="sendText()">Send message</button>
+<input type="text" id="txHp" name="company" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0" aria-hidden="true">
+<button class="panel-send" id="txSendBtn" onclick="sendText()">Send message</button>
+<p class="fine" id="txErr" style="display:none; margin-top:8px; font-size:11.5px; color:#B3261E">Something went wrong sending your message — please call or text (631) 923-1174 directly.</p>
 <p class="fine" style="margin-top:11px; font-size:11.5px">By sending, you agree to receive text messages from Precise at the number provided. Message &amp; data rates may apply. Reply STOP to opt out.</p>
 </div>
 <div class="panel-success" id="panelSuccess">
@@ -1051,6 +1055,9 @@ thanks : "Check your inbox — your coupon is on the way. Mention it when you bo
 delaySec : 45, // seconds before it appears
 showAgainDays : 7 // if dismissed, don't show again for this many days
 };
+
+/* Where the contact form + text widget actually deliver to. */
+const NOTIFY_API = 'https://chatbot-api.eric8116.workers.dev/notify';
 
 /* Other editable values */
 const CONFIG = {
@@ -1173,7 +1180,7 @@ el.classList.add('sel');
 function pickMany(el){ el.classList.toggle('sel'); }
 
 /* ---------- contact form ---------- */
-function submitContact(){
+async function submitContact(){
 const first = document.getElementById('cFirst').value.trim();
 const email = document.getElementById('cEmail').value.trim();
 const phone = document.getElementById('cPhone').value.trim();
@@ -1185,16 +1192,36 @@ if (!/^\S+@\S+\.\S+$/.test(email)){ alert('Please enter a valid email address.')
 if (!hear){ alert('Please let us know how you heard about us.'); return; }
 if (!interests.length){ alert('Please select at least one service you\'re interested in.'); return; }
 
-/* ====== FORM DELIVERY HOOK ====== */
-console.log('[Contact form — not yet wired]', {
-firstName:first, lastName:document.getElementById('cLast').value.trim(),
-email, phone, heardVia:hear.textContent.trim(), interests,
-message:document.getElementById('cMsg').value.trim()
+const btn = document.getElementById('cSendBtn');
+const errEl = document.getElementById('cErr');
+errEl.style.display = 'none';
+btn.disabled = true;
+const originalLabel = btn.textContent;
+btn.textContent = 'Sending…';
+
+try {
+const res = await fetch(NOTIFY_API, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+kind: 'contact',
+firstName: first, lastName: document.getElementById('cLast').value.trim(),
+email, phone, heardVia: hear.textContent.trim(), interests,
+message: document.getElementById('cMsg').value.trim(),
+hp: document.getElementById('cHp').value
+})
 });
+if (!res.ok) throw new Error('notify failed');
 
 document.getElementById('contactForm').style.display = 'none';
 document.getElementById('contactSuccess').classList.add('show');
 document.querySelector('#ov-contact .ov-scroll').scrollTop = 0;
+} catch (err) {
+errEl.style.display = 'block';
+} finally {
+btn.disabled = false;
+btn.textContent = originalLabel;
+}
 }
 
 /* ---------- reviews ---------- */
@@ -1233,18 +1260,37 @@ function closeTextPanel(){
 document.getElementById('textPanel').classList.remove('open');
 document.getElementById('textDock').style.display = 'flex';
 }
-function sendText(){
+async function sendText(){
 const name = document.getElementById('txName').value.trim();
 const phone = document.getElementById('txPhone').value.trim();
 const msg = document.getElementById('txMsg').value.trim();
 if (!name || !phone || !msg){ alert('Please add your name, mobile number, and a short message.'); return; }
 if (phone.replace(/\D/g,'').length < 10){ alert('Please enter a valid 10-digit mobile number.'); return; }
 
-/* ====== SMS PROVIDER HOOK ====== */
-console.log('[Text widget — not yet wired]', { name, phone, msg });
+const btn = document.getElementById('txSendBtn');
+const errEl = document.getElementById('txErr');
+errEl.style.display = 'none';
+btn.disabled = true;
+const originalLabel = btn.textContent;
+btn.textContent = 'Sending…';
+
+try {
+const res = await fetch(NOTIFY_API, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ kind: 'text', name, phone, message: msg, hp: document.getElementById('txHp').value })
+});
+if (!res.ok) throw new Error('notify failed');
+
 document.getElementById('panelForm').style.display = 'none';
 document.getElementById('panelSuccess').classList.add('show');
 setTimeout(closeTextPanel, 3200);
+} catch (err) {
+errEl.style.display = 'block';
+} finally {
+btn.disabled = false;
+btn.textContent = originalLabel;
+}
 }
 
 document.addEventListener('keydown', e => {

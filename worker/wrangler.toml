@@ -15,7 +15,7 @@ NOTIFY_TO = "Preciselaserspa@gmail.com"
 
 [[kv_namespaces]]
 binding = "CHATBOT_KV"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"   # see DEPLOY.md Step 4
+id = "211ddb63142f486ab8907d2d6ca7348e"   # chatbot-qa
 
 [[send_email]]
 name = "SEND_EMAIL"

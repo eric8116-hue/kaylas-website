@@ -15,14 +15,21 @@
    and NOTIFY-SETUP.md)
      KV namespace binding name : CHATBOT_KV
      Secret (environment var)  : ADMIN_PASSWORD
-     Send Email binding        : SEND_EMAIL   (for /notify — see NOTIFY-SETUP.md)
-     Variable (environment var): NOTIFY_TO    (verified destination address)
-   ═══════════════════════════════════════════════════════════════════ */
+     Variable (environment var): NOTIFY_TO    (destination inbox)
 
-import { EmailMessage } from 'cloudflare:email';
+   EMAIL DELIVERY — two supported paths, tried in this order:
+     1. RESEND_API_KEY secret set  → sends via Resend's HTTP API. Preferred.
+        Resend verifies your SENDING DOMAIN once; after that you can email
+        ANY address. No per-recipient verification, ever.
+     2. SEND_EMAIL binding present → sends via Cloudflare Email Routing.
+        Free, but Cloudflare refuses to send to any address that hasn't been
+        individually verified in the same account first — which is why this
+        is now the fallback rather than the primary path.
+   ═══════════════════════════════════════════════════════════════════ */
 
 const KV_KEY = 'custom_qa';
 const NOTIFY_FROM = 'website@preciselaserspa.com';
+const NOTIFY_FROM_NAME = 'Precise Laser Website';
 const NOTIFY_FALLBACK_TO = 'Preciselaserspa@gmail.com';
 
 // Allow the live site (and local file testing) to call this Worker.
@@ -167,18 +174,62 @@ function encodeBodyBase64(str) {
 /* Hand-build a minimal RFC 822 message. Subject stays fixed/ASCII —
    all guest-supplied text (which may include accents) lives in the
    base64-encoded body instead, so there's nothing to escape in headers. */
-function buildRawEmail({ from, to, subject, body }) {
-  return [
-    `From: Precise Laser Website <${from}>`,
+function buildRawEmail({ from, to, subject, body, replyTo }) {
+  const lines = [
+    `From: ${NOTIFY_FROM_NAME} <${from}>`,
     `To: ${to}`,
-    `Subject: ${subject}`,
+    `Subject: ${subject}`
+  ];
+  if (replyTo) lines.push(`Reply-To: ${replyTo}`);
+  lines.push(
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset="UTF-8"',
     'Content-Transfer-Encoding: base64',
     '',
     encodeBodyBase64(body),
     ''
-  ].join('\r\n');
+  );
+  return lines.join('\r\n');
+}
+
+/* ---------- delivery: Resend first, Cloudflare binding as fallback ---------- */
+
+/* Resend's HTTP API. Verifies the SENDING domain once (DNS records), then
+   sends to anyone — no per-recipient verification. This is the path that
+   makes client handoffs painless. Docs: resend.com/docs */
+async function sendViaResend({ apiKey, to, subject, body, replyTo }) {
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from: `${NOTIFY_FROM_NAME} <${NOTIFY_FROM}>`,
+      to: [to],
+      subject,
+      text: body,
+      ...(replyTo ? { reply_to: replyTo } : {})
+    })
+  });
+
+  if (!res.ok) {
+    // Surface Resend's own message in the Worker log so `wrangler tail`
+    // shows the real reason (bad key, unverified sending domain, etc.)
+    let detail = '';
+    try { detail = await res.text(); } catch {}
+    throw new Error(`Resend ${res.status}: ${detail.slice(0, 300)}`);
+  }
+  return true;
+}
+
+/* Cloudflare Email Routing binding. Kept as a fallback for accounts where
+   the destination address IS verified and no Resend key is configured. */
+async function sendViaCloudflare({ env, to, subject, body, replyTo }) {
+  const { EmailMessage } = await import('cloudflare:email');
+  const raw = buildRawEmail({ from: NOTIFY_FROM, to, subject, body, replyTo });
+  await env.SEND_EMAIL.send(new EmailMessage(NOTIFY_FROM, to, raw));
+  return true;
 }
 
 export default {
@@ -243,9 +294,9 @@ export default {
       const clean = kind === 'contact' ? sanitizeContact(body) : sanitizeTextWidget(body);
       if (!clean) return json({ ok: false, error: 'Missing or invalid fields.' }, request, 400);
 
-      if (!env.SEND_EMAIL) {
-        // Binding not set up yet — see NOTIFY-SETUP.md. Fail loudly instead
-        // of silently pretending the message went somewhere.
+      if (!env.RESEND_API_KEY && !env.SEND_EMAIL) {
+        // Neither delivery path configured — see NOTIFY-SETUP.md. Fail loudly
+        // instead of silently pretending the message went somewhere.
         return json({ ok: false, error: 'Notifications are not configured yet.' }, request, 503);
       }
 
@@ -253,16 +304,20 @@ export default {
       const subject = kind === 'contact'
         ? 'New contact form submission — Precise Laser website'
         : 'New text-widget message — Precise Laser website';
-      const raw = buildRawEmail({
-        from: NOTIFY_FROM,
-        to,
-        subject,
-        body: kind === 'contact' ? renderContactBody(clean) : renderTextWidgetBody(clean)
-      });
+      const emailBody = kind === 'contact' ? renderContactBody(clean) : renderTextWidgetBody(clean);
+      // Replying to the notification should reach the guest directly.
+      const replyTo = kind === 'contact' ? clean.email : undefined;
 
       try {
-        await env.SEND_EMAIL.send(new EmailMessage(NOTIFY_FROM, to, raw));
+        if (env.RESEND_API_KEY) {
+          await sendViaResend({ apiKey: env.RESEND_API_KEY, to, subject, body: emailBody, replyTo });
+        } else {
+          await sendViaCloudflare({ env, to, subject, body: emailBody, replyTo });
+        }
       } catch (err) {
+        // Logged so `wrangler tail` shows the real cause; the visitor still
+        // gets a generic message.
+        console.error('notify send failed:', err && err.message ? err.message : err);
         return json({ ok: false, error: 'Could not send notification.' }, request, 502);
       }
 

@@ -2,9 +2,10 @@
 # Deploy command (same for every project, every time):
 #   npx wrangler deploy --config worker/wrangler.toml
 #
-# Secrets (ADMIN_PASSWORD) are NOT set here — never put secrets in a file
-# that's committed to git. Set them once with:
-#   npx wrangler secret put ADMIN_PASSWORD --config worker/wrangler.toml
+# Secrets are NOT set here — never put secrets in a file that's committed
+# to git. Set them once with:
+#   npx wrangler secret put ADMIN_PASSWORD  --config worker/wrangler.toml
+#   npx wrangler secret put RESEND_API_KEY  --config worker/wrangler.toml
 
 name = "chatbot-api"
 main = "chatbot-api.js"
@@ -21,5 +22,10 @@ NOTIFY_TO = "eric8116@gmail.com"
 binding = "CHATBOT_KV"
 id = "211ddb63142f486ab8907d2d6ca7348e"   # chatbot-qa
 
-[[send_email]]
-name = "SEND_EMAIL"
+# Cloudflare Email Routing binding — now only a FALLBACK. Left commented
+# because it requires every recipient to be individually verified in the
+# same Cloudflare account, which is what blocked delivery to Kayla's inbox.
+# Delivery goes through Resend instead (set RESEND_API_KEY as a secret).
+# Uncomment only if you deliberately want the Cloudflare path.
+# [[send_email]]
+# name = "SEND_EMAIL"

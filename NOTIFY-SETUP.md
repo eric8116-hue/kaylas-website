@@ -1,110 +1,110 @@
-# Contact Form & Text Widget — Cloudflare Setup
+# Contact Form & Text Widget — Email Delivery Setup
 
-One-time setup, about 10 minutes. After this, the website's contact form and
-the floating "Text us" widget both email a real, monitored inbox the moment
-someone submits — instead of silently going nowhere (which is what they were
-doing until now).
+The website's contact form and floating "Text us" widget both POST to the
+`chatbot-api` Worker's `/notify` endpoint, which emails the submission to a
+real inbox.
 
-Uses the same `chatbot-api` Worker that already runs the chatbot admin page —
-no new services, no new accounts.
+**Delivery goes through Resend**, not Cloudflare Email Routing. The reason
+matters, so it's worth stating plainly:
 
----
+> Cloudflare's Email Routing send binding refuses to send to any address that
+> hasn't been individually verified inside the same Cloudflare account. That's
+> fine for your own address; it's a wall when the recipient is a client who
+> can't find the verification email. Resend verifies your **sending domain**
+> once — after that you can email **any** address forever, including new staff
+> or a changed inbox, with zero further setup.
 
-## What gets built
-
-| Piece | What it does |
-|---|---|
-| **Email Routing** | Cloudflare feature that lets a Worker send mail "from" your domain. |
-| **Send Email binding** | Lets the `chatbot-api` Worker actually send. |
-| **`/notify` endpoint** (already in `worker/chatbot-api.js`) | Receives the contact form / text widget submission, emails it. |
+The Cloudflare path is still in the code as a fallback, but it's off by default.
 
 ---
 
-## Step 1 — Turn on Email Routing
+## Setup — about 15 minutes, once
 
-1. **dash.cloudflare.com** → select the `preciselaserspa.com` zone
-2. Left sidebar → **Email** → **Email Routing**
-3. If it's not already on, click **Enable Email Routing** (Cloudflare adds the
-   required MX/TXT records to the zone automatically — no action needed if
-   the domain's nameservers are already pointed at Cloudflare, which they are
-   for Pages to work)
+### Step 1 — Create a Resend account
+
+1. **resend.com** → sign up (free tier: 3,000 emails/month, 100/day — far more
+   than this site will use)
+
+### Step 2 — Verify the sending domain
+
+1. Resend dashboard → **Domains** → **Add Domain**
+2. Enter `preciselaserspa.com`
+3. Resend shows a set of DNS records (DKIM, SPF, usually a `MX` for bounces)
+4. Add each one in **Cloudflare → DNS → Records** for the `preciselaserspa.com` zone
+   - Set each to **DNS only** (grey cloud), not proxied
+5. Back in Resend, click **Verify**. Usually confirms within a few minutes.
+
+> This is what replaces per-recipient verification. Do it once, send to anyone.
+
+### Step 3 — Create an API key
+
+1. Resend → **API Keys** → **Create API Key**
+2. Name it something like `precise-website`
+3. Permission: **Sending access** is enough
+4. Copy the key — it's shown only once
+
+### Step 4 — Give the key to the Worker
+
+In the project folder:
+
+```
+wrangler secret put RESEND_API_KEY --config worker/wrangler.toml
+```
+
+Paste the key when prompted. It's stored encrypted and never written to a file.
+
+### Step 5 — Set the destination inbox
+
+Edit `worker/wrangler.toml`:
+
+```toml
+[vars]
+NOTIFY_TO = "Preciselaserspa@gmail.com"
+```
+
+No verification needed on this address anymore — that's the whole point.
+
+### Step 6 — Deploy and test
+
+```
+wrangler deploy --config worker/wrangler.toml
+```
+
+Then submit the contact form on the live site. The email should arrive within
+seconds, titled *"New contact form submission — Precise Laser website"*.
+
+Replying to it goes straight back to the guest — the Worker sets `Reply-To`
+to whatever email they entered.
 
 ---
 
-## Step 2 — Verify the destination address
+## If something fails
 
-This is the real inbox that should get the emails — probably
-`Preciselaserspa@gmail.com`, the one already used everywhere else on the site.
+Run this, then submit the form again:
 
-1. Same **Email Routing** page → **Destination addresses** tab
-2. **Add destination address** → type the inbox → **Send verification email**
-3. Open that inbox, click the verification link Cloudflare sends
-4. It should now show **Verified** in the dashboard
+```
+wrangler tail --config worker/wrangler.toml
+```
 
-*(Skip this step if that address is already verified from earlier chatbot setup.)*
-
----
-
-## Step 3 — Add the Send Email binding to the Worker
-
-1. **Compute (Workers)** → **Workers & Pages** → open **chatbot-api**
-2. **Settings** → **Bindings** → **Add binding**
-3. Choose **Send Email**
-4. Variable name: `SEND_EMAIL` ← must match exactly, case-sensitive
-5. Leave the destination address restriction **off** (so the address can be
-   changed later via the variable in Step 4 without re-deploying the binding)
-6. **Save** / **Deploy**
-
----
-
-## Step 4 — Set the destination variable
-
-1. Same **Settings** → **Variables and Secrets**
-2. **Add** → type: **Text** (plain variable, not a secret — it's not sensitive)
-3. Variable name: `NOTIFY_TO` ← exact, case-sensitive
-4. Value: the verified address from Step 2, e.g. `Preciselaserspa@gmail.com`
-5. **Deploy**
-
----
-
-## Step 5 — Deploy the updated Worker code
-
-1. In the `chatbot-api` Worker → **Edit code**
-2. Select all the existing code, delete it
-3. Open `worker/chatbot-api.js` from the website folder (already updated with
-   the `/notify` endpoint), copy the whole file, paste it in
-4. **Deploy**
-
----
-
-## Step 6 — Test it
-
-1. Open the live site, click **Contact**, fill out the form, **Send message**
-2. Check the inbox from Step 2 — an email titled *"New contact form
-   submission — Precise Laser website"* should arrive within a few seconds
-3. Repeat with the floating **Text us** widget — should arrive titled
-   *"New text-widget message — Precise Laser website"*
-4. If either shows an on-page error instead of the success screen, the
-   binding or variable name is probably mistyped — double-check Steps 3–4
+The Worker now logs Resend's own error text, so the terminal will say exactly
+what's wrong — bad API key, unverified sending domain, malformed address —
+instead of a generic failure. The visitor still sees a friendly message
+telling them to call instead.
 
 ---
 
 ## Notes
 
-**If this setup isn't done yet,** the form and text widget now fail loudly
-with an on-page error message ("Something went wrong sending your message —
-please call or text us instead") instead of quietly pretending the message
-was sent. That's intentional — better a visitor knows to call than everyone
-assuming Kayla is ignoring them.
+**Nothing fails silently.** If delivery isn't configured or breaks, the form
+shows an on-page error directing the visitor to call. It never fakes a
+success screen — a visitor who thinks they've reached Kayla when they
+haven't is worse than one who knows to phone.
 
-**The "from" address** (`website@preciselaserspa.com`) doesn't need to be a
-real inbox — Cloudflare just needs the domain itself on Email Routing to send
-as that address. Replies should go to the destination inbox directly, not
-back through this address.
+**Spam guard:** both forms include an invisible honeypot field. Humans never
+fill it in; simple bots often do. Those submissions are dropped server-side.
 
-**Basic spam guard:** both forms include an invisible honeypot field. A
-human never fills it in; simple bots often do. Submissions with it filled in
-are silently dropped server-side.
+**Cost:** free at this volume. If the site ever exceeds 3,000 submissions a
+month, that's a very good problem and Resend's next tier is $20/month.
 
-**Cost:** Free. Cloudflare Email Routing has no meaningful usage limit for a
-site this size.
+**If the site moves to Kayla's own Cloudflare account,** the Resend account
+and API key can move with it, or she can create her own — see `HANDOFF.md`.

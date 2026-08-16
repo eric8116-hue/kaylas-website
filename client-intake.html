@@ -1068,6 +1068,53 @@ function draftAgeText(savedAt) {
   window.addEventListener("pagehide", saveDraft);
 })();
 
+/* ===========================================================================
+   TEST FILL — visit this page with ?testfill=1 on the end of the URL to
+   auto-populate every field with obvious dummy data and jump straight to the
+   Submit button. Purely a convenience for testing the CRM connection without
+   re-typing the whole form; it does nothing at all unless that exact URL
+   parameter is present, so normal visitors never see it.
+
+   Safe to delete this whole block once testing is finished.
+=========================================================================== */
+function testFill() {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+
+  set("first_name", "TEST"); set("last_name", "DELETEME");
+  set("birth_month", "01"); set("birth_day", "01"); set("birth_year", "1990");
+  set("address", "123 Test St"); set("city", "Babylon"); set("state", "NY"); set("zip", "11702");
+  set("phone", "(631) 555-0100"); set("email", "test@example.com");
+  set("emergency_contact_name", "Test Contact"); set("emergency_contact_phone", "(631) 555-0101");
+  set("referral_source", "Referral");
+  set("areas_to_treat", "TEST RECORD — safe to delete");
+  set("accutane_detail", ""); set("hormonal_detail", ""); set("chemical_peel_detail", ""); set("light_sensitive_detail", "");
+  set("medications", "none"); set("allergies", "none");
+  set("last_treatment_before_us", "2026-01-01");
+  set("skin_type", "III");
+  set("client_signature", "TEST DELETEME");
+
+  ["accutane","hormonal","chemical_peel","light_sensitive"].forEach(k => state.yn[k] = false);
+  ynQuestions.forEach(([field]) => state.yn[field] = false);
+  state.yn.marketing_optin = false;
+  state.adult = true;
+  state.freq = "Weekly";
+  state.methods = ["Shaving"];
+  state.consentDone = state.consentDone.map(() => true);
+
+  const photoLine = document.getElementById("photoConsentLine");
+  if (photoLine) photoLine.classList.remove("on");
+
+  renderYNGrid();
+  renderConsent();
+  syncConditionalFields();
+  goStep(5);
+  showToast("Test data filled — just click Submit.");
+}
+
+if (new URLSearchParams(window.location.search).get("testfill") === "1") {
+  setTimeout(testFill, 100);
+}
+
 function val(id) { const el = document.getElementById(id); return el ? el.value : ""; }
 function yn(field) { return state.yn[field] === true ? "Y" : state.yn[field] === false ? "N" : ""; }
 function showToast(msg) {

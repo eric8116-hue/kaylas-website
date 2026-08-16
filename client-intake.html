@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1E8A85">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Client Intake Form | Precise Laser Hair Removal &amp; Esthetics — Babylon, NY</title>
+<meta name="description" content="Fill out your Precise Laser Hair Removal &amp; Esthetics client intake form online before your visit — contact info, medical history, and consent, all on file before you arrive.">
+<link rel="canonical" href="https://preciselaserspa.com/client-intake">
+<meta name="robots" content="noindex, follow">
+<meta property="og:title" content="Client Intake Form | Precise Laser Hair Removal &amp; Esthetics — Babylon, NY">
+<meta property="og:description" content="Complete your intake form online before your appointment.">
+<meta property="og:url" content="https://preciselaserspa.com/client-intake">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="service-page.css">
+<style>
+/* ================= CLIENT INTAKE FORM — scoped styles ================= */
+/* Prefixed "ic-" throughout so nothing collides with service-page.css or chatbot.js. */
+
+.ic-section{padding:48px 0 80px}
+.ic-card{max-width:760px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(24px,4vw,48px); box-shadow:0 10px 40px rgba(20,97,93,.08)}
+
+.ic-lang{display:none; justify-content:center; gap:0; margin:0 0 22px}
+.ic-lang.on{display:flex}
+.ic-lang button{border:1.5px solid var(--teal); background:#fff; color:var(--teal); font-size:14px; font-weight:600; padding:9px 22px; cursor:pointer; font-family:inherit}
+.ic-lang button:first-child{border-radius:10px 0 0 10px}
+.ic-lang button:last-child{border-radius:0 10px 10px 0; border-left:none}
+.ic-lang button.sel{background:var(--teal); color:#fff}
+
+.ic-steplabel{font-size:12.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--teal-deep); margin-bottom:10px}
+.ic-progress{height:6px; border-radius:99px; background:var(--teal-light); overflow:hidden; margin-bottom:30px}
+.ic-progress-bar{height:100%; background:linear-gradient(135deg,var(--teal),var(--teal-deep)); transition:width .25s}
+
+.ic-step{display:none}
+.ic-step.active{display:block}
+
+.ic-card label{display:block; font-size:13.5px; font-weight:600; color:var(--ink); margin:18px 0 6px}
+.ic-card label:first-child{margin-top:0}
+.ic-card input[type=text], .ic-card input[type=tel], .ic-card input[type=email], .ic-card input[type=date], .ic-card select{
+  width:100%; padding:13px 14px; border:1.5px solid var(--line); border-radius:10px; font-size:15px; font-family:inherit; color:var(--ink); background:#fff; -webkit-appearance:none; appearance:none;
+}
+.ic-card input:focus, .ic-card select:focus{outline:none; border-color:var(--teal)}
+.ic-row{display:flex; gap:14px; flex-wrap:wrap}
+.ic-row > div{flex:1; min-width:120px}
+
+.ic-card h2{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:23px; color:var(--teal-deep); margin:32px 0 12px}
+.ic-card h2:first-of-type{margin-top:0}
+.ic-sub{font-size:14px; color:var(--ink-soft); margin-bottom:14px; line-height:1.6}
+
+.ic-yn-block{margin-top:16px}
+.ic-yn-row{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px 0; border-bottom:1px solid var(--line)}
+.ic-yn-row .ic-q{font-size:14.5px; color:var(--ink); flex:1}
+.ic-yn-toggle{display:flex; gap:8px; flex-shrink:0}
+.ic-yn-toggle button{padding:8px 18px; border-radius:8px; border:1.5px solid var(--line); background:#fff; font-size:13.5px; font-weight:600; color:var(--ink-soft); cursor:pointer; font-family:inherit}
+.ic-yn-toggle button.sel-y.sel{background:var(--teal); border-color:var(--teal); color:#fff}
+.ic-yn-toggle button.sel-n.sel{background:#B4433A; border-color:#B4433A; color:#fff}
+.ic-followup{display:none; margin-top:8px}
+.ic-followup.show{display:block}
+
+.ic-chip-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+.ic-chip{padding:9px 16px; border-radius:99px; border:1.5px solid var(--line); font-size:13.5px; font-weight:600; color:var(--ink-soft); cursor:pointer; user-select:none}
+.ic-chip.sel{background:var(--teal); border-color:var(--teal); color:#fff}
+
+.ic-fitz{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:16px 14px 12px}
+.ic-fitz-title{text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:19px; font-weight:600; color:var(--teal-deep); margin:0 0 14px}
+.ic-fitz-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:7px}
+.ic-fitz-col{text-align:center}
+.ic-fitz-sw{height:56px; border-radius:9px; border:1px solid rgba(0,0,0,.08)}
+.ic-fitz-t{font-size:10.5px; font-weight:700; color:var(--teal); margin:7px 0 3px; letter-spacing:.02em}
+.ic-fitz-b{font-size:10.5px; font-weight:700; color:var(--ink); line-height:1.25}
+.ic-fitz-d{font-size:9.5px; color:var(--ink-soft); line-height:1.25; margin-top:3px}
+.ic-fitz-cap{font-size:12.5px; color:var(--ink-soft); margin-top:12px; text-align:center}
+@media (max-width:560px){ .ic-fitz-grid{grid-template-columns:repeat(3,1fr); gap:9px} .ic-fitz-sw{height:48px} }
+
+.ic-consent-item{display:flex; gap:14px; align-items:flex-start; padding:14px 0; border-bottom:1px solid var(--line); cursor:pointer}
+.ic-consent-item:last-child{border-bottom:none}
+.ic-initial-box{flex-shrink:0; width:48px; height:38px; border:1.5px solid var(--line); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; color:var(--teal-deep); background:var(--sand)}
+.ic-consent-item.done .ic-initial-box{background:var(--teal-light); border-color:var(--teal)}
+.ic-consent-item .ic-txt{font-size:14px; line-height:1.55; color:var(--ink); padding-top:8px}
+
+.ic-check-line{display:flex; gap:14px; align-items:flex-start; padding:14px 0; cursor:pointer}
+.ic-check-line .ic-box{flex-shrink:0; width:26px; height:26px; border:1.5px solid var(--line); border-radius:7px; margin-top:2px}
+.ic-check-line.on .ic-box{background:var(--teal); border-color:var(--teal)}
+.ic-check-line .ic-txt{font-size:14.5px; color:var(--ink); line-height:1.55}
+
+.ic-req{color:#B4433A}
+.ic-req-note{font-size:12px; color:var(--ink-soft); font-weight:500}
+
+.ic-btn-row{display:flex; gap:12px; margin-top:32px}
+.ic-card .ic-btn{flex:1; text-align:center; padding:15px 24px; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer; border:none; font-family:inherit; transition:transform .15s, box-shadow .15s, opacity .15s}
+.ic-card .ic-btn.primary{background:linear-gradient(135deg,var(--teal-deep),var(--teal-darker)); color:#fff; box-shadow:0 10px 26px rgba(13,62,59,.35)}
+.ic-card .ic-btn.primary:hover{transform:translateY(-1px)}
+.ic-card .ic-btn.primary:disabled{opacity:.4; cursor:not-allowed; transform:none}
+.ic-card .ic-btn.secondary{background:#fff; border:1.5px solid var(--line); color:var(--ink)}
+
+.ic-draft-banner{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; background:#FFF6E0; border:1px solid #E8C97A; color:#6B4E00; border-radius:12px; padding:14px 16px; margin-bottom:22px}
+.ic-draft-banner .ic-dtext{font-size:14.5px}
+.ic-draft-banner .ic-dwhen{display:block; font-size:12.5px; opacity:.8; margin-top:2px}
+.ic-draft-banner .ic-dactions{display:flex; gap:8px}
+.ic-draft-banner button{padding:9px 16px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; border:1.5px solid #6B4E00; background:#fff; color:#6B4E00}
+.ic-draft-banner button.primary{background:#6B4E00; color:#fff}
+
+.ic-thanks{text-align:center; padding:40px 12px}
+.ic-thanks h2{margin-top:0}
+.ic-toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:var(--ink); color:#fff; padding:12px 20px; border-radius:10px; font-size:14px; display:none; z-index:900}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+<div class="hdr-in">
+<a href="index.html" class="hdr-logo"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/eb48d30a-5911-49dd-afa3-bc3109029475/Precise+LASER+HAIR+LOGO-1+Blue.png?format=1500w" alt="Precise Laser Hair Removal &amp; Esthetics"></a>
+<nav class="nav">
+<a href="index.html#services">Services</a>
+<a href="index.html#reviews">Reviews</a>
+<a href="index.html#about">About</a>
+<a href="index.html?open=contact">Contact</a>
+<a href="precise-self-assessment-v2.html">Self-Assessment</a>
+<a href="client-intake.html" class="on">Client Intake</a>
+</nav>
+<div class="hdr-right">
+<a class="hdr-phone" href="tel:6319231174">(631) 923-1174</a>
+<a class="btn btn-p" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book Now</a>
+</div>
+<a class="hdr-call-mobile" href="tel:6319231174" aria-label="Call (631) 923-1174"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+<button class="burger" onclick="openDrawer()" aria-label="Open menu"><span class="burger-lines"></span><span class="burger-label">Menu</span></button>
+</div>
+</header>
+
+<div class="drawer" id="drawer">
+<div class="drawer-top">
+<img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/eb48d30a-5911-49dd-afa3-bc3109029475/Precise+LASER+HAIR+LOGO-1+Blue.png?format=1500w" alt="Precise">
+<button class="drawer-x" onclick="closeDrawer()" aria-label="Close"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<a class="dlink" href="index.html">Home</a>
+<a class="dlink" href="index.html#services">Services</a>
+<a class="dlink" href="index.html#reviews">Reviews</a>
+<a class="dlink" href="index.html#about">About</a>
+<a class="dlink" href="index.html?open=contact">Contact</a>
+<a class="dlink" href="precise-self-assessment-v2.html">Self-Assessment</a>
+<a class="dlink" href="client-intake.html">Client Intake</a>
+<div class="drawer-foot">
+<a class="btn btn-p" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book Now</a>
+<a class="btn btn-o" href="tel:6319231174">Call (631) 923-1174</a>
+</div>
+</div>
+
+<section class="pbanner" style="min-height:260px">
+<div class="pbanner-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/cab5f536-af0c-4767-a71a-eccaff518dc8/image0+%281%29.png?format=2500w')"></div>
+<div class="pbanner-veil"></div>
+<div class="pbanner-in">
+<div class="crumb"><a href="index.html">Home</a> · Client Intake</div>
+<h1 class="pbanner-title" data-i18n="pageH1">New &amp; Returning Client Intake</h1>
+<p class="pbanner-sub" data-i18n="pageSub">Fill this out before your appointment — contact info, medical history, and consent, all on file when you walk in.</p>
+</div>
+</section>
+
+<section class="ic-section">
+<div class="wrap">
+<div class="ic-card">
+
+  <div class="ic-lang" id="icLangSwitch">
+    <button id="icLangEn" onclick="setLang('en')">English</button>
+    <button id="icLangEs" onclick="setLang('es')">Español</button>
+  </div>
+
+  <div id="icDraftBanner" class="ic-draft-banner" style="display:none">
+    <div class="ic-dtext">
+      <strong data-i18n="draftTitle">Unfinished form found</strong>
+      <span id="icDraftWhen" class="ic-dwhen"></span>
+    </div>
+    <div class="ic-dactions">
+      <button type="button" class="primary" id="icDraftResume" data-i18n="draftResume">Resume it</button>
+      <button type="button" id="icDraftDiscard" data-i18n="draftDiscard">Start fresh</button>
+    </div>
+  </div>
+
+  <div class="ic-steplabel" id="icStepLabel">Step 1 of 5 — Contact Info</div>
+  <div class="ic-progress"><div class="ic-progress-bar" id="icProgressBar" style="width:20%"></div></div>
+
+  <!-- STEP 1: CONTACT -->
+  <div class="ic-step active" data-step="1">
+    <div class="ic-row">
+      <div><label style="margin-top:0" data-i18n="firstName">First Name</label><input type="text" id="first_name" data-i18n-ph="phFirst" placeholder="Jane"></div>
+      <div><label style="margin-top:0" data-i18n="lastName">Last Name</label><input type="text" id="last_name" data-i18n-ph="phLast" placeholder="Client"></div>
+    </div>
+
+    <label data-i18n="birthday">Birthday</label>
+    <div class="ic-row">
+      <div style="flex:2">
+        <select id="birth_month">
+          <option value="" data-i18n="month">Month</option>
+          <option value="01" data-i18n="m1">January</option><option value="02" data-i18n="m2">February</option><option value="03" data-i18n="m3">March</option>
+          <option value="04" data-i18n="m4">April</option><option value="05" data-i18n="m5">May</option><option value="06" data-i18n="m6">June</option>
+          <option value="07" data-i18n="m7">July</option><option value="08" data-i18n="m8">August</option><option value="09" data-i18n="m9">September</option>
+          <option value="10" data-i18n="m10">October</option><option value="11" data-i18n="m11">November</option><option value="12" data-i18n="m12">December</option>
+        </select>
+      </div>
+      <div><select id="birth_day"><option value="" data-i18n="day">Day</option></select></div>
+      <div><input type="text" inputmode="numeric" maxlength="4" id="birth_year" data-i18n-ph="year" placeholder="Year"></div>
+    </div>
+
+    <label data-i18n="address">Address</label>
+    <input type="text" id="address" data-i18n-ph="phStreet" placeholder="Street address">
+
+    <div class="ic-row" style="margin-top:14px">
+      <div style="flex:2"><label style="margin-top:0" data-i18n="city">City</label><input type="text" id="city"></div>
+      <div><label style="margin-top:0" data-i18n="stateLbl">State</label>
+        <select id="state">
+          <option value="">--</option>
+          <option>NY</option><option>NJ</option><option>CT</option><option>PA</option>
+          <option>FL</option><option data-i18n="other">Other</option>
+        </select>
+      </div>
+      <div><label style="margin-top:0" data-i18n="zip">Zip</label><input type="text" id="zip"></div>
+    </div>
+
+    <label data-i18n="phone">Phone</label>
+    <input type="tel" id="phone" placeholder="(555) 555-5555" inputmode="numeric" oninput="formatPhone(this)">
+    <label data-i18n="email">Email</label>
+    <input type="email" id="email" placeholder="name@email.com">
+
+    <label data-i18n="emergName">Emergency Contact Name</label>
+    <input type="text" id="emergency_contact_name">
+    <label data-i18n="emergPhone">Emergency Contact Number</label>
+    <input type="tel" id="emergency_contact_phone" placeholder="(555) 555-5555" inputmode="numeric" oninput="formatPhone(this)">
+
+    <label data-i18n="referral">How did you hear about us?</label>
+    <select id="referral_source">
+      <option value="" data-i18n="selectOne">Select one</option>
+      <option data-i18n="refReferral">Referral</option><option data-i18n="refSocial">Social Media</option><option data-i18n="refGoogle">Google / Search</option>
+      <option data-i18n="refWalkin">Walk-in</option><option data-i18n="other">Other</option>
+    </select>
+
+    <div class="ic-btn-row"><button class="ic-btn primary" onclick="goStep(2)" data-i18n="continue">Continue</button></div>
+  </div>
+
+  <!-- STEP 2: MEDICAL HISTORY -->
+  <div class="ic-step" data-step="2">
+    <label style="margin-top:0" data-i18n="areas">What areas are to be treated?</label>
+    <input type="text" id="areas_to_treat" data-i18n-ph="phAreas" placeholder="e.g. underarms, bikini, legs">
+
+    <h2 data-i18n="quickYN">A few quick yes/no questions</h2>
+
+    <div class="ic-yn-block" id="ynAccutane">
+      <div class="ic-yn-row"><div class="ic-q" data-i18n="qAccutane">Have you ever been on Accutane?</div>
+        <div class="ic-yn-toggle"><button class="sel-y" onclick="setYN('accutane',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('accutane',false,this)" data-i18n="no">No</button></div></div>
+      <div class="ic-followup" id="accutane_detail_wrap"><input type="text" id="accutane_detail" data-i18n-ph="phHowLong" placeholder="If yes, how long?"></div>
+    </div>
+
+    <div class="ic-yn-block" id="ynHormonal">
+      <div class="ic-yn-row"><div class="ic-q" data-i18n="qHormonal">Hormonal problem you've been treated for?</div>
+        <div class="ic-yn-toggle"><button class="sel-y" onclick="setYN('hormonal',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('hormonal',false,this)" data-i18n="no">No</button></div></div>
+      <div class="ic-followup" id="hormonal_detail_wrap"><input type="text" id="hormonal_detail" data-i18n-ph="phTreatment" placeholder="If yes, what treatment?"></div>
+    </div>
+
+    <div class="ic-yn-block" id="ynPeel">
+      <div class="ic-yn-row"><div class="ic-q" data-i18n="qPeel">Chemical peel or scars in treatment area?</div>
+        <div class="ic-yn-toggle"><button class="sel-y" onclick="setYN('chemical_peel',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('chemical_peel',false,this)" data-i18n="no">No</button></div></div>
+      <div class="ic-followup" id="chemical_peel_detail_wrap"><input type="text" id="chemical_peel_detail" data-i18n-ph="phExplain" placeholder="If yes, explain"></div>
+    </div>
+
+    <div class="ic-yn-block" id="ynLight">
+      <div class="ic-yn-row"><div class="ic-q" data-i18n="qLight">Medications that make you sensitive to light?</div>
+        <div class="ic-yn-toggle"><button class="sel-y" onclick="setYN('light_sensitive',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('light_sensitive',false,this)" data-i18n="no">No</button></div></div>
+      <div class="ic-followup" id="light_sensitive_detail_wrap"><input type="text" id="light_sensitive_detail" data-i18n-ph="phExplain" placeholder="If yes, explain"></div>
+    </div>
+
+    <label data-i18n="meds">Medications / herbal supplements / topical creams you use</label>
+    <input type="text" id="medications">
+    <label data-i18n="allergies">Any allergies?</label>
+    <input type="text" id="allergies">
+
+    <label data-i18n="howOften">How often do you remove your hair?</label>
+    <div class="ic-chip-row" id="freqChips">
+      <div class="ic-chip" data-v="Daily" data-i18n="fDaily">Daily</div>
+      <div class="ic-chip" data-v="Twice Daily" data-i18n="fTwice">Twice Daily</div>
+      <div class="ic-chip" data-v="Weekly" data-i18n="fWeekly">Weekly</div>
+      <div class="ic-chip" data-v="Other" data-i18n="other">Other</div>
+    </div>
+
+    <label data-i18n="methods">Current hair removal methods (tap all that apply)</label>
+    <div class="ic-chip-row" id="methodChips">
+      <div class="ic-chip" data-v="Waxing" data-i18n="mWax">Waxing</div>
+      <div class="ic-chip" data-v="Shaving" data-i18n="mShave">Shaving</div>
+      <div class="ic-chip" data-v="Sugaring" data-i18n="mSugar">Sugaring</div>
+      <div class="ic-chip" data-v="Creams" data-i18n="mCream">Creams</div>
+      <div class="ic-chip" data-v="Tweezing" data-i18n="mTweeze">Tweezing</div>
+      <div class="ic-chip" data-v="Electrolysis" data-i18n="mElectro">Electrolysis</div>
+    </div>
+
+    <label data-i18n="lastTx">When was your last treatment?</label>
+    <input type="date" id="last_treatment_before_us">
+
+    <h2 data-i18n="moreHistory">Medical history — a few more</h2>
+    <div id="ynGrid"></div>
+
+    <label data-i18n="skinTypeLbl">Skin Type <span style="font-weight:400; color:var(--ink-soft)">(provider will confirm)</span></label>
+    <select id="skin_type">
+      <option value="" data-i18n="selectOne">Select one</option>
+      <option value="I" data-i18n="st1">I — Light, pale white. Always burns, never tans</option>
+      <option value="II" data-i18n="st2">II — White, fair. Usually burns, tans with difficulty</option>
+      <option value="III" data-i18n="st3">III — Medium, white to olive. Sometimes mild burn, gradually tans to olive</option>
+      <option value="IV" data-i18n="st4">IV — Olive, moderate brown. Rarely burns, tans with ease to a moderate brown</option>
+      <option value="V" data-i18n="st5">V — Brown, dark brown. Very rarely burns, tans very easily</option>
+      <option value="VI" data-i18n="st6">VI — Black, very dark brown to black. Never burns, tans very easily, deeply pigmented</option>
+    </select>
+
+    <div class="ic-fitz">
+      <p class="ic-fitz-title" data-i18n="fitzTitle">The Fitzpatrick Scale</p>
+      <div class="ic-fitz-grid" id="fitzGrid"></div>
+      <p class="ic-fitz-cap" data-i18n="fitzCap">Not sure? Find the closest match above — your provider will confirm it at your visit.</p>
+    </div>
+
+    <div class="ic-btn-row">
+      <button class="ic-btn secondary" onclick="goStep(1)" data-i18n="back">Back</button>
+      <button class="ic-btn primary" onclick="goStep(3)" data-i18n="continue">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: CONSENT -->
+  <div class="ic-step" data-step="3">
+    <h2 style="margin-top:0" data-i18n="consentTitle">Laser Hair Removal Consent</h2>
+    <p class="ic-sub" id="consentIntro"></p>
+    <div id="consentList"></div>
+    <div class="ic-btn-row">
+      <button class="ic-btn secondary" onclick="goStep(2)" data-i18n="back">Back</button>
+      <button class="ic-btn primary" id="toStep4Btn" onclick="goStep(4)" disabled data-i18n="continue">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: PHOTO / MARKETING / AGE -->
+  <div class="ic-step" data-step="4">
+    <h2 style="margin-top:0" data-i18n="photoTitle">Photo Consent</h2>
+    <div class="ic-check-line" id="photoConsentLine" onclick="toggleCheck('photoConsentLine')">
+      <div class="ic-box"></div>
+      <div class="ic-txt" data-i18n="photoText">I consent to clinical before/after photos being taken and stored in my file for treatment tracking.</div>
+    </div>
+
+    <h2 data-i18n="specialsTitle">Specials, Promotions &amp; Gift Certificates</h2>
+    <p class="ic-sub" data-i18n="specialsSub">We run specials throughout the year, including birthday offers, promotions, gift certificates, and discounts.</p>
+    <div class="ic-yn-row"><div class="ic-q"><span data-i18n="marketingQ">May we send you birthday specials, promotions, gift certificates, and discounts by text and/or email?</span> <span class="ic-req">*</span> <span class="ic-req-note" data-i18n="required">Required</span></div>
+      <div class="ic-yn-toggle"><button class="sel-y" onclick="setYN('marketing_optin',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('marketing_optin',false,this)" data-i18n="no">No</button></div></div>
+
+    <h2 data-i18n="ageTitle">Age</h2>
+    <div class="ic-yn-row"><div class="ic-q"><span data-i18n="ageQ">Are you 18 or over?</span> <span class="ic-req">*</span> <span class="ic-req-note" data-i18n="required">Required</span></div>
+      <div class="ic-yn-toggle"><button class="sel-y" onclick="setAdult(true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setAdult(false,this)" data-i18n="no">No</button></div></div>
+    <div id="guardianWrap" style="display:none">
+      <p class="ic-sub" style="margin-top:14px" data-i18n="guardianNote">Because the client is under 18, a parent or guardian must provide their name and signature.</p>
+      <label data-i18n="guardianName">Parent/Guardian Name</label>
+      <input type="text" id="guardian_name">
+    </div>
+
+    <div class="ic-btn-row">
+      <button class="ic-btn secondary" onclick="goStep(3)" data-i18n="back">Back</button>
+      <button class="ic-btn primary" id="toStep5Btn" onclick="goStep(5)" disabled data-i18n="continue">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: SIGNATURE -->
+  <div class="ic-step" data-step="5">
+    <h2 style="margin-top:0" data-i18n="signTitle">Sign &amp; Submit</h2>
+    <p class="ic-sub" data-i18n="signSub">Type your name below as your signature.</p>
+    <label style="margin-top:0" data-i18n="clientSig">Client Signature (type full name)</label>
+    <input type="text" id="client_signature">
+    <div id="guardianSigWrap" style="display:none">
+      <label data-i18n="guardianSig">Parent/Guardian Signature (type full name)</label>
+      <input type="text" id="guardian_signature">
+    </div>
+    <div class="ic-btn-row">
+      <button class="ic-btn secondary" onclick="goStep(4)" data-i18n="back">Back</button>
+      <button class="ic-btn primary" id="submitBtn" onclick="submitIntake()" data-i18n="submit">Submit</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: THANK YOU -->
+  <div class="ic-step" data-step="6">
+    <div class="ic-thanks">
+      <h2><span data-i18n="thanks">Thank you</span><span id="thanksName"></span>!</h2>
+      <p style="font-size:16px; color:var(--ink-soft)" data-i18n="thanksSub">You're all set. We'll have this on file for your appointment.</p>
+      <a class="btn btn-p" style="margin-top:24px; display:inline-flex" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener" data-i18n="bookNow">Book Your Appointment</a>
+      <div style="margin-top:14px"><button class="ic-btn secondary" style="padding:10px 20px; display:inline-flex; width:auto" onclick="window.location.reload()" data-i18n="newForm">Start a new form</button></div>
+    </div>
+  </div>
+
+</div>
+</div>
+</section>
+
+<!-- ===================== CONTACT · BRAND · LOCATION · MAP ===================== -->
+<section class="prefoot">
+<div class="wrap">
+<div class="prefoot-grid">
+<div>
+<div class="pf-h">Contact</div>
+<ul class="pf-list">
+<li><a href="mailto:Preciselaserspa@gmail.com">Preciselaserspa@gmail.com</a></li>
+<li><a href="tel:6319231174">(631) 923-1174</a></li>
+</ul>
+<div class="socials">
+<a class="social" href="https://www.instagram.com/precise_laser/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.2 1 .5 1.4 1 .5.4.8.8 1 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-1 1.4-.4.5-.8.8-1.4 1-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-1-.5-.4-.8-.8-1-1.4-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c0-1.2.2-1.8.4-2.2.2-.6.5-1 1-1.4.4-.5.8-.8 1.4-1 .4-.2 1-.4 2.2-.4 1.3-.07 1.7-.07 4.9-.07Zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4Zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3Zm6.9-11.1a1.5 1.5 0 1 1-1.6-1.5 1.5 1.5 0 0 1 1.6 1.5Z"/></svg></a>
+<a class="social" href="https://www.facebook.com/Preciselaser/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z"/></svg></a>
+</div>
+</div>
+<div class="pf-brand">
+<img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/eb48d30a-5911-49dd-afa3-bc3109029475/Precise+LASER+HAIR+LOGO-1+Blue.png?format=1500w" alt="Precise Laser Hair Removal &amp; Esthetics">
+<p class="pf-tag">The Most Trusted Name With Proven Results In Laser Hair Removal</p>
+</div>
+<div>
+<div class="pf-h">Location</div>
+<ul class="pf-list">
+<li><a href="https://www.google.com/maps/search/?api=1&query=626+Deer+Park+Ave+Babylon+NY+11702" target="_blank" rel="noopener">626 Deer Park Ave<br>Babylon, NY 11702</a></li>
+</ul>
+<a class="btn btn-p" style="margin-top:18px" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book Now</a>
+</div>
+</div>
+<div class="prefoot-map">
+<iframe title="Precise Laser Hair Removal &amp; Esthetics location"
+src="https://www.google.com/maps?q=626+Deer+Park+Ave,+Babylon,+NY+11702&output=embed"
+loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+</section>
+
+<footer class="foot">
+<div class="wrap">
+<div class="foot-in">
+<div>
+<div class="foot-logo"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/eb48d30a-5911-49dd-afa3-bc3109029475/Precise+LASER+HAIR+LOGO-1+Blue.png?format=1500w" alt="Precise"></div>
+<p style="line-height:1.7; max-width:34ch">Licensed laser hair removal, electrolysis, esthetics, and wellness treatments in Babylon, New York.</p>
+</div>
+<div>
+<h5>Services</h5>
+<ul>
+<li><a href="services-hair-removal.html">Hair Removal</a></li>
+<li><a href="services-detox.html">Detoxification</a></li>
+<li><a href="services-facials.html">Rejuvenating Facials</a></li>
+<li><a href="services-beautification.html">Beauty Enhancements</a></li>
+</ul>
+</div>
+<div>
+<h5>Visit</h5>
+<ul>
+<li><a href="https://www.google.com/maps/search/?api=1&query=626+Deer+Park+Ave+Babylon+NY+11702" target="_blank" rel="noopener">626 Deer Park Ave<br>Babylon, NY 11702</a></li>
+<li><a href="tel:6319231174">(631) 923-1174</a></li>
+<li><a href="mailto:Preciselaserspa@gmail.com">Preciselaserspa@gmail.com</a></li>
+<li><a href="index.html?open=contact">Contact Us</a></li>
+<li><a href="index.html#reviews">Reviews</a></li>
+</ul>
+</div>
+</div>
+<div class="foot-bottom">
+<span>&copy; <span class="yr"></span> Precise Laser Hair Removal &amp; Esthetics</span>
+<span>Babylon, NY</span>
+</div>
+</div>
+</footer>
+
+<div class="ic-toast" id="toast"></div>
+
+<script>
+function openDrawer(){ document.getElementById('drawer').classList.add('open'); document.body.classList.add('locked'); }
+function closeDrawer(){ document.getElementById('drawer').classList.remove('open'); document.body.classList.remove('locked'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
+
+// =============================================================================
+// SUBMISSION DESTINATION
+//
+// Posts to the SAME endpoint the in-office iPad intake form uses on the CRM
+// (precise-laser-crm.pages.dev/submit-intake), so a client who fills this out
+// at home lands in the exact same client/intake records staff see in the CRM.
+//
+// KNOWN OPEN ITEM: this is a cross-origin request (marketing site -> CRM
+// domain). It will only succeed once the CRM's /submit-intake function sends
+// an Access-Control-Allow-Origin header permitting this site's domain. That's
+// a one-line change on the CRM side — flag it to Caleb/whoever owns that
+// Worker before this goes live. Until then, submitting from this page will
+// fail with a CORS error in the browser console, not silently.
+// =============================================================================
+const INTAKE_SUBMIT_URL = "https://precise-laser-crm.pages.dev/submit-intake";
+
+// ---------------------------------------------------------------------------
+// SPANISH TOGGLE
+//
+// Enabled: the Spanish text below was checked word-for-word against Precise's
+// own official printed form (Precise-Laser-Intake-ES.pdf) on 2026-08-16 and
+// matches exactly, including all 13 consent statements. Flip back to false to
+// hide the toggle again if you'd rather hold off.
+// ---------------------------------------------------------------------------
+const SPANISH_ENABLED = true;
+
+let lang = "en";
+
+const T = {
+  pageH1: ["New &amp; Returning Client Intake", "Admisión de Clientes Nuevos y Recurrentes"],
+  pageSub: ["Fill this out before your appointment — contact info, medical history, and consent, all on file when you walk in.",
+            "Complete esto antes de su cita — información de contacto, historial médico y consentimiento, todo listo cuando llegue."],
+  formTitle: ["Client Intake Form", "Formulario de Admisión"],
+
+  firstName: ["First Name", "Nombre"],
+  lastName: ["Last Name", "Apellido"],
+  phFirst: ["Jane", "María"],
+  phLast: ["Client", "Apellido"],
+  birthday: ["Birthday", "Fecha de nacimiento"],
+  month: ["Month", "Mes"], day: ["Day", "Día"], year: ["Year", "Año"],
+  m1: ["January","Enero"], m2: ["February","Febrero"], m3: ["March","Marzo"],
+  m4: ["April","Abril"], m5: ["May","Mayo"], m6: ["June","Junio"],
+  m7: ["July","Julio"], m8: ["August","Agosto"], m9: ["September","Septiembre"],
+  m10: ["October","Octubre"], m11: ["November","Noviembre"], m12: ["December","Diciembre"],
+  address: ["Address", "Dirección"],
+  phStreet: ["Street address", "Calle y número"],
+  city: ["City", "Ciudad"], stateLbl: ["State", "Estado"], zip: ["Zip", "Código postal"],
+  phone: ["Phone", "Teléfono"], email: ["Email", "Correo electrónico"],
+  emergName: ["Emergency Contact Name", "Nombre del contacto de emergencia"],
+  emergPhone: ["Emergency Contact Number", "Teléfono del contacto de emergencia"],
+  referral: ["How did you hear about us?", "¿Cómo se enteró de nosotros?"],
+  selectOne: ["Select one", "Seleccione una opción"],
+  refReferral: ["Referral", "Recomendación"],
+  refSocial: ["Social Media", "Redes sociales"],
+  refGoogle: ["Google / Search", "Google / Búsqueda"],
+  refWalkin: ["Walk-in", "Vine sin cita"],
+  other: ["Other", "Otro"],
+
+  areas: ["What areas are to be treated?", "¿Qué áreas se van a tratar?"],
+  phAreas: ["e.g. underarms, bikini, legs", "p. ej. axilas, bikini, piernas"],
+  quickYN: ["A few quick yes/no questions", "Unas preguntas rápidas de sí o no"],
+  qAccutane: ["Have you ever been on Accutane?", "¿Ha tomado alguna vez Accutane (isotretinoína)?"],
+  phHowLong: ["If yes, how long?", "Si contestó sí, ¿por cuánto tiempo?"],
+  qHormonal: ["Hormonal problem you've been treated for?", "¿Ha recibido tratamiento por algún problema hormonal?"],
+  phTreatment: ["If yes, what treatment?", "Si contestó sí, ¿qué tratamiento?"],
+  qPeel: ["Chemical peel or scars in treatment area?", "¿Peeling químico o cicatrices en el área a tratar?"],
+  phExplain: ["If yes, explain", "Si contestó sí, explique"],
+  qLight: ["Medications that make you sensitive to light?", "¿Toma medicamentos que la hagan sensible a la luz?"],
+  meds: ["Medications / herbal supplements / topical creams you use",
+         "Medicamentos, suplementos herbales o cremas que usa"],
+  allergies: ["Any allergies?", "¿Tiene alguna alergia?"],
+  howOften: ["How often do you remove your hair?", "¿Con qué frecuencia se depila?"],
+  fDaily: ["Daily", "A diario"], fTwice: ["Twice Daily", "Dos veces al día"], fWeekly: ["Weekly", "Semanalmente"],
+  methods: ["Current hair removal methods (tap all that apply)",
+            "Métodos de depilación que usa actualmente (marque todos los que apliquen)"],
+  mWax: ["Waxing", "Cera"], mShave: ["Shaving", "Rasurado"], mSugar: ["Sugaring", "Azúcar"],
+  mCream: ["Creams", "Cremas"], mTweeze: ["Tweezing", "Pinzas"], mElectro: ["Electrolysis", "Electrólisis"],
+  lastTx: ["When was your last treatment?", "¿Cuándo fue su último tratamiento?"],
+  moreHistory: ["Medical history — a few more", "Historial médico — algunas más"],
+
+  skinTypeLbl: ["Skin Type", "Tipo de piel"],
+  st1: ["I — Light, pale white. Always burns, never tans",
+        "I — Clara, blanca pálida. Siempre se quema, nunca se broncea"],
+  st2: ["II — White, fair. Usually burns, tans with difficulty",
+        "II — Blanca. Casi siempre se quema, se broncea con dificultad"],
+  st3: ["III — Medium, white to olive. Sometimes mild burn, gradually tans to olive",
+        "III — Media, de blanca a olivácea. A veces se quema levemente, se broncea poco a poco"],
+  st4: ["IV — Olive, moderate brown. Rarely burns, tans with ease to a moderate brown",
+        "IV — Olivácea, morena clara. Rara vez se quema, se broncea con facilidad"],
+  st5: ["V — Brown, dark brown. Very rarely burns, tans very easily",
+        "V — Morena, morena oscura. Muy rara vez se quema, se broncea muy fácilmente"],
+  st6: ["VI — Black, very dark brown to black. Never burns, tans very easily, deeply pigmented",
+        "VI — Muy oscura, de café muy oscuro a negro. Nunca se quema, muy pigmentada"],
+  fitzTitle: ["The Fitzpatrick Scale", "La Escala de Fitzpatrick"],
+  fitzCap: ["Not sure? Find the closest match above — your provider will confirm it at your visit.",
+            "¿No está segura? Elija la más parecida — su proveedora lo confirmará en su cita."],
+
+  consentTitle: ["Laser Hair Removal Consent", "Consentimiento para Depilación Láser"],
+  consentIntro: ["Tap each statement to initial it. Your initials ({i}) come from your name on step 1.",
+                 "Toque cada declaración para poner sus iniciales. Sus iniciales ({i}) vienen de su nombre en el paso 1."],
+
+  photoTitle: ["Photo Consent", "Consentimiento para Fotografías"],
+  photoText: ["I consent to clinical before/after photos being taken and stored in my file for treatment tracking.",
+              "Doy mi consentimiento para que se tomen fotografías clínicas de antes y después y se guarden en mi expediente para dar seguimiento al tratamiento."],
+  specialsTitle: ["Specials, Promotions & Gift Certificates", "Ofertas, Promociones y Certificados de Regalo"],
+  specialsSub: ["We run specials throughout the year, including birthday offers, promotions, gift certificates, and discounts.",
+                "Tenemos ofertas durante todo el año, incluyendo promociones de cumpleaños, certificados de regalo y descuentos."],
+  marketingQ: ["May we send you birthday specials, promotions, gift certificates, and discounts by text and/or email?",
+               "¿Podemos enviarle ofertas de cumpleaños, promociones, certificados de regalo y descuentos por mensaje de texto y/o correo electrónico?"],
+  required: ["Required", "Obligatorio"],
+  ageTitle: ["Age", "Edad"],
+  ageQ: ["Are you 18 or over?", "¿Tiene 18 años o más?"],
+  guardianNote: ["Because the client is under 18, a parent or guardian must provide their name and signature.",
+                 "Como la clienta es menor de 18 años, su padre, madre o tutor debe dar su nombre y firma."],
+  guardianName: ["Parent/Guardian Name", "Nombre del padre, madre o tutor"],
+
+  signTitle: ["Sign & Submit", "Firmar y Enviar"],
+  signSub: ["Type your name below as your signature.", "Escriba su nombre abajo como firma."],
+  draftTitle: ["Unfinished form found", "Se encontró un formulario sin terminar"],
+  draftResume: ["Resume it", "Continuar"],
+  draftDiscard: ["Start fresh", "Empezar de nuevo"],
+  draftSavedAgo: ["Saved ", "Guardado "],
+  draftJustNow: ["just now", "hace un momento"],
+  draftMinsAgo: [" minutes ago", " minutos atrás"],
+  clientSig: ["Client Signature (type full name)", "Firma de la clienta (escriba su nombre completo)"],
+  guardianSig: ["Parent/Guardian Signature (type full name)",
+                "Firma del padre, madre o tutor (escriba el nombre completo)"],
+  submit: ["Submit", "Enviar"],
+  submitting: ["Submitting…", "Enviando…"],
+  thanks: ["Thank you", "Gracias"],
+  thanksSub: ["You're all set. We'll have this on file for your appointment.",
+              "Todo listo. Tendremos esto en su expediente para su cita."],
+  bookNow: ["Book Your Appointment", "Reservar Su Cita"],
+  newForm: ["Start a new form", "Comenzar un formulario nuevo"],
+
+  yes: ["Yes", "Sí"], no: ["No", "No"],
+  back: ["Back", "Atrás"], continue: ["Continue", "Continuar"],
+  stepWord: ["Step", "Paso"], ofWord: ["of", "de"], complete: ["Complete", "Completado"],
+  errGeneric: ["Something went wrong: ", "Algo salió mal: "],
+};
+
+const STEP_LABELS = [
+  ["Contact Info", "Datos de contacto"],
+  ["Medical History", "Historial médico"],
+  ["Consent", "Consentimiento"],
+  ["Preferences", "Preferencias"],
+  ["Sign & Submit", "Firmar y enviar"],
+];
+
+const FITZ = [
+  ["#F4CFB4", ["TYPE I","TIPO I"], ["Light,<br>pale white","Clara,<br>blanca pálida"], ["Always burns,<br>never tans","Siempre se quema,<br>nunca se broncea"]],
+  ["#E7B48F", ["TYPE II","TIPO II"], ["White, fair","Blanca"], ["Usually burns,<br>tans with difficulty","Casi siempre se quema,<br>se broncea con dificultad"]],
+  ["#D29E7C", ["TYPE III","TIPO III"], ["Medium,<br>white to olive","Media,<br>blanca a olivácea"], ["Sometimes mild burn,<br>gradually tans","A veces se quema levemente,<br>se broncea poco a poco"]],
+  ["#C67F55", ["TYPE IV","TIPO IV"], ["Olive,<br>moderate brown","Olivácea,<br>morena clara"], ["Rarely burns,<br>tans with ease","Rara vez se quema,<br>se broncea con facilidad"]],
+  ["#A55D2B", ["TYPE V","TIPO V"], ["Brown,<br>dark brown","Morena,<br>morena oscura"], ["Very rarely burns,<br>tans very easily","Muy rara vez se quema,<br>se broncea muy fácil"]],
+  ["#371B1B", ["TYPE VI","TIPO VI"], ["Black, very dark<br>brown to black","Muy oscura,<br>café oscuro a negro"], ["Never burns,<br>deeply pigmented","Nunca se quema,<br>muy pigmentada"]],
+];
+
+const ynQuestions = [
+  ["q_headaches", ["Do you ever get light-triggered headaches?", "¿Le dan dolores de cabeza provocados por la luz?"]],
+  ["q_testosterone", ["Have you had your testosterone levels checked?", "¿Se ha hecho analizar sus niveles de testosterona?"]],
+  ["q_laser_resurfacing", ["Have you ever had laser resurfacing?", "¿Se ha hecho alguna vez un rejuvenecimiento con láser?"]],
+  ["q_skin_infection", ["Do you have any current skin infections?", "¿Tiene actualmente alguna infección en la piel?"]],
+  ["q_sensitive_skin", ["Do you have sensitive skin?", "¿Tiene la piel sensible?"]],
+  ["q_genital_herpes", ["Have you ever had genital herpes?", "¿Ha tenido alguna vez herpes genital?"]],
+  ["q_microdermabrasion", ["Have you ever had Microdermabrasion?", "¿Se ha hecho alguna vez microdermoabrasión?"]],
+  ["q_hirsutism_family", ["Do you have a family history of Hirsutism?", "¿Tiene antecedentes familiares de hirsutismo?"]],
+  ["q_cold_sores", ["Do you get cold sores?", "¿Le salen fuegos labiales (herpes labial)?"]],
+];
+
+// The 13 consent statements — verbatim, verified against Precise's own PDFs.
+const consentItems = [
+  ["I confirm I am at least 18 years of age, or have parental permission.",
+   "Confirmo que tengo al menos 18 años de edad, o que cuento con el permiso de mi padre, madre o tutor."],
+  ["I have elected, by my own decision, to have laser hair removal performed.",
+   "He decidido, por mi propia voluntad, someterme a la depilación láser."],
+  ["The procedure, including the process and objective, has been explained to me before undergoing laser hair removal.",
+   "Se me ha explicado el procedimiento, incluyendo el proceso y su objetivo, antes de someterme a la depilación láser."],
+  ["I have been given the opportunity to ask questions regarding any benefits, risks, or possible complications of the procedure.",
+   "He tenido la oportunidad de hacer preguntas sobre los beneficios, riesgos y posibles complicaciones del procedimiento."],
+  ["I understand my provider has taken measures to minimize any risks or negative reactions, and I acknowledge any reaction or complications associated with the procedure as they have been explained to me.",
+   "Entiendo que mi proveedora ha tomado medidas para minimizar cualquier riesgo o reacción negativa, y reconozco las reacciones o complicaciones asociadas con el procedimiento tal como me han sido explicadas."],
+  ["I have followed all pre-procedure care instructions as they have been explained to me.",
+   "He seguido todas las instrucciones de cuidado previas al procedimiento tal como me fueron explicadas."],
+  ["I understand it is important to provide feedback during my treatment, and will inform my provider of any pain or discomfort during the session.",
+   "Entiendo que es importante comunicarme durante mi tratamiento, e informaré a mi proveedora de cualquier dolor o molestia durante la sesión."],
+  ["I understand that a range of skin discolorations can occur, including permanent lightening or darkening, pigmented lesions, pinpoint bleeding and scarring.",
+   "Entiendo que pueden ocurrir diversas alteraciones en el color de la piel, incluyendo aclaramiento u oscurecimiento permanente, lesiones pigmentadas, sangrado puntiforme y cicatrices."],
+  ["I understand protective eyewear will be provided and must be kept on at all times during treatment to protect my eyes from accidental laser exposure.",
+   "Entiendo que se me proporcionarán gafas protectoras y que debo mantenerlas puestas en todo momento durante el tratamiento para proteger mis ojos de la exposición accidental al láser."],
+  ["I understand that more than 6-12 treatments may be needed and results are not guaranteed; hormonal changes, pregnancy, medications, menopause, or steroids can trigger new hair growth.",
+   "Entiendo que pueden necesitarse más de 6 a 12 tratamientos y que los resultados no están garantizados; los cambios hormonales, el embarazo, los medicamentos, la menopausia o los esteroides pueden provocar nuevo crecimiento de vello."],
+  ["I understand tanning (sun, tanning beds, self-tanners) during treatment is not recommended, and I must inform the provider if my skin is darker than at my last treatment.",
+   "Entiendo que broncearme (sol, camas de bronceado, autobronceadores) durante el tratamiento no es recomendable, y que debo informar a mi proveedora si mi piel está más oscura que en mi último tratamiento."],
+  ["I understand I should avoid sun/tanning beds 4-6 weeks before and 2 weeks after treatment, and use SPF 30+ on the treated area.",
+   "Entiendo que debo evitar el sol y las camas de bronceado de 4 a 6 semanas antes y 2 semanas después del tratamiento, y usar protector solar SPF 30 o superior en el área tratada."],
+  ["I confirm I have given an accurate account of my medical history, including allergies and medications I take or intend to take.",
+   "Confirmo que he dado un relato veraz de mi historial médico, incluyendo alergias y medicamentos que tomo o que pienso tomar."],
+];
+
+let state = { yn: {}, adult: null, freq: null, methods: [], consentDone: new Array(consentItems.length).fill(false) };
+let currentStep = 1;
+
+function t(key) {
+  const e = T[key];
+  return e ? e[lang === "es" ? 1 : 0] : key;
+}
+
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  try { localStorage.setItem("precise_intake_lang", l); } catch (e) {}
+
+  document.getElementById("icLangEn").classList.toggle("sel", l === "en");
+  document.getElementById("icLangEs").classList.toggle("sel", l === "es");
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const v = t(el.getAttribute("data-i18n"));
+    if (v.indexOf("<") !== -1) el.innerHTML = v; else el.textContent = v;
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+    el.placeholder = t(el.getAttribute("data-i18n-ph"));
+  });
+
+  renderFitz();
+  renderYNGrid();
+  renderConsent();
+  updateStepLabel();
+}
+
+function renderFitz() {
+  const g = document.getElementById("fitzGrid");
+  const i = lang === "es" ? 1 : 0;
+  g.innerHTML = FITZ.map(f =>
+    '<div class="ic-fitz-col">' +
+      '<div class="ic-fitz-sw" style="background:' + f[0] + '"></div>' +
+      '<div class="ic-fitz-t">' + f[1][i] + '</div>' +
+      '<div class="ic-fitz-b">' + f[2][i] + '</div>' +
+      '<div class="ic-fitz-d">' + f[3][i] + '</div>' +
+    '</div>'
+  ).join("");
+}
+
+(function initDayDropdown() {
+  const sel = document.getElementById("birth_day");
+  for (let d = 1; d <= 31; d++) {
+    const opt = document.createElement("option");
+    opt.value = String(d).padStart(2, "0");
+    opt.textContent = d;
+    sel.appendChild(opt);
+  }
+})();
+
+function formatPhone(input) {
+  let digits = input.value.replace(/\D/g, "").slice(0, 10);
+  let out = digits;
+  if (digits.length > 6) out = "(" + digits.slice(0,3) + ") " + digits.slice(3,6) + "-" + digits.slice(6);
+  else if (digits.length > 3) out = "(" + digits.slice(0,3) + ") " + digits.slice(3);
+  else if (digits.length > 0) out = "(" + digits;
+  input.value = out;
+}
+
+function updateStepLabel() {
+  const el = document.getElementById("icStepLabel");
+  if (currentStep > 5) { el.textContent = t("complete"); return; }
+  const name = STEP_LABELS[currentStep - 1][lang === "es" ? 1 : 0];
+  el.textContent = t("stepWord") + " " + currentStep + " " + t("ofWord") + " 5 — " + name;
+}
+
+function goStep(n) {
+  document.querySelectorAll(".ic-step").forEach(s => s.classList.remove("active"));
+  document.querySelector('.ic-step[data-step="' + n + '"]').classList.add("active");
+  currentStep = n;
+  updateStepLabel();
+  document.getElementById("icProgressBar").style.width = (n * 20) + "%";
+  window.scrollTo({top: document.querySelector('.ic-card').offsetTop - 100, behavior: "instant"});
+  if (n === 3) renderConsent();
+  if (n === 5) {
+    document.getElementById("guardianSigWrap").style.display = state.adult === false ? "block" : "none";
+  }
+}
+
+function setYN(field, val, btn) {
+  state.yn[field] = val;
+  const row = btn.closest(".ic-yn-row");
+  row.querySelectorAll("button").forEach(b => b.classList.remove("sel"));
+  btn.classList.add("sel");
+  const followup = document.getElementById(field + "_detail_wrap");
+  if (followup) followup.classList.toggle("show", val === true);
+  if (field === "marketing_optin") refreshStep4Gate();
+}
+
+function setAdult(isAdult, btn) {
+  state.adult = isAdult;
+  const row = btn.closest(".ic-yn-row");
+  row.querySelectorAll("button").forEach(b => b.classList.remove("sel"));
+  btn.classList.add("sel");
+  document.getElementById("guardianWrap").style.display = isAdult ? "none" : "block";
+  if (isAdult) document.getElementById("guardian_name").value = "";
+  refreshStep4Gate();
+}
+
+function refreshStep4Gate() {
+  const answered = state.yn.marketing_optin !== undefined && state.adult !== null;
+  document.getElementById("toStep5Btn").disabled = !answered;
+}
+
+function renderYNGrid() {
+  const grid = document.getElementById("ynGrid");
+  const i = lang === "es" ? 1 : 0;
+  grid.innerHTML = "";
+  ynQuestions.forEach(([field, text]) => {
+    const row = document.createElement("div");
+    row.className = "ic-yn-row";
+    const cur = state.yn[field];
+    row.innerHTML = '<div class="ic-q">' + text[i] + '</div><div class="ic-yn-toggle">' +
+      '<button class="sel-y' + (cur === true ? " sel" : "") + '" onclick="setYN(\'' + field + '\',true,this)">' + t("yes") + '</button>' +
+      '<button class="sel-n' + (cur === false ? " sel" : "") + '" onclick="setYN(\'' + field + '\',false,this)">' + t("no") + '</button></div>';
+    grid.appendChild(row);
+  });
+}
+
+document.getElementById("freqChips").addEventListener("click", (e) => {
+  if (!e.target.classList.contains("ic-chip")) return;
+  document.querySelectorAll("#freqChips .ic-chip").forEach(c => c.classList.remove("sel"));
+  e.target.classList.add("sel");
+  state.freq = e.target.dataset.v;
+});
+document.getElementById("methodChips").addEventListener("click", (e) => {
+  if (!e.target.classList.contains("ic-chip")) return;
+  e.target.classList.toggle("sel");
+  state.methods = [...document.querySelectorAll("#methodChips .ic-chip.sel")].map(c => c.dataset.v);
+});
+
+function getInitials() {
+  const first = (document.getElementById("first_name").value || "").trim();
+  const last = (document.getElementById("last_name").value || "").trim();
+  if (!first && !last) return "--";
+  return [first, last].filter(Boolean).map(w => w[0].toUpperCase()).join("");
+}
+
+function renderConsent() {
+  const initials = getInitials();
+  const i = lang === "es" ? 1 : 0;
+  document.getElementById("consentIntro").textContent = t("consentIntro").replace("{i}", initials);
+  const list = document.getElementById("consentList");
+  list.innerHTML = "";
+  consentItems.forEach((pair, idx) => {
+    const div = document.createElement("div");
+    div.className = "ic-consent-item" + (state.consentDone[idx] ? " done" : "");
+    div.innerHTML = '<div class="ic-initial-box">' + (state.consentDone[idx] ? initials : "") + '</div>' +
+      '<div class="ic-txt">' + (idx+1) + '. ' + pair[i] + '</div>';
+    div.onclick = () => {
+      state.consentDone[idx] = !state.consentDone[idx];
+      renderConsent();
+    };
+    list.appendChild(div);
+  });
+  document.getElementById("toStep4Btn").disabled = !state.consentDone.every(Boolean);
+}
+
+function toggleCheck(elId) {
+  document.getElementById(elId).classList.toggle("on");
+}
+
+// ---- boot ----
+if (SPANISH_ENABLED) {
+  document.getElementById("icLangSwitch").classList.add("on");
+  let saved = "en";
+  try { saved = localStorage.getItem("precise_intake_lang") || "en"; } catch (e) {}
+  setLang(saved);
+} else {
+  setLang("en");
+}
+
+async function submitIntake() {
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true; btn.textContent = t("submitting");
+
+  const payload = {
+    first_name: val("first_name"), last_name: val("last_name"),
+    birth_month: val("birth_month"), birth_day: val("birth_day"), birth_year: val("birth_year"),
+    address: val("address"),
+    city: val("city"), state: val("state"), zip: val("zip"), phone: val("phone"), email: val("email"),
+    emergency_contact_name: val("emergency_contact_name"),
+    emergency_contact_phone: val("emergency_contact_phone"),
+    referral_source: val("referral_source"),
+    areas_to_treat: val("areas_to_treat"),
+    accutane: state.yn.accutane === true ? "Y" : state.yn.accutane === false ? "N" : "",
+    accutane_detail: val("accutane_detail"),
+    hormonal: state.yn.hormonal === true ? "Y" : state.yn.hormonal === false ? "N" : "",
+    hormonal_detail: val("hormonal_detail"),
+    chemical_peel: state.yn.chemical_peel === true ? "Y" : state.yn.chemical_peel === false ? "N" : "",
+    chemical_peel_detail: val("chemical_peel_detail"),
+    medications: val("medications"),
+    light_sensitive: state.yn.light_sensitive === true ? "Y" : state.yn.light_sensitive === false ? "N" : "",
+    light_sensitive_detail: val("light_sensitive_detail"),
+    allergies: val("allergies"),
+    removal_frequency: state.freq || "",
+    removal_methods: state.methods.join(", "),
+    last_treatment_before_us: val("last_treatment_before_us"),
+    q_headaches: yn("q_headaches"), q_testosterone: yn("q_testosterone"),
+    q_laser_resurfacing: yn("q_laser_resurfacing"), q_skin_infection: yn("q_skin_infection"),
+    q_sensitive_skin: yn("q_sensitive_skin"), q_genital_herpes: yn("q_genital_herpes"),
+    q_microdermabrasion: yn("q_microdermabrasion"), q_hirsutism_family: yn("q_hirsutism_family"),
+    q_cold_sores: yn("q_cold_sores"),
+    skin_type: val("skin_type"),
+    consent_initials: getInitials(),
+    consent_items: state.consentDone,
+    photo_consent: document.getElementById("photoConsentLine").classList.contains("on"),
+    marketing_optin: state.yn.marketing_optin === true,
+    is_adult: state.adult === true,
+    guardian_name: val("guardian_name"),
+    guardian_signature: val("guardian_signature"),
+    client_signature: val("client_signature"),
+    form_language: lang,
+    signed_at: new Date().toISOString(),
+    // New vs. the iPad version: lets the CRM tell a pre-visit web submission
+    // apart from an in-office one, in case that distinction matters on intake.
+    submission_source: "website",
+  };
+
+  try {
+    const res = await fetch(INTAKE_SUBMIT_URL, {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || "Submit failed");
+
+    if (res.status === 201) clearDraft();
+
+    document.getElementById("thanksName").textContent = payload.first_name ? ", " + payload.first_name : "";
+    document.querySelectorAll(".ic-step").forEach(s => s.classList.remove("active"));
+    document.querySelector('.ic-step[data-step="6"]').classList.add("active");
+    currentStep = 6;
+    updateStepLabel();
+    document.getElementById("icProgressBar").style.width = "100%";
+    window.scrollTo({top: document.querySelector('.ic-card').offsetTop - 100, behavior: "instant"});
+  } catch (err) {
+    showToast(t("errGeneric") + err.message);
+    btn.disabled = false; btn.textContent = t("submit");
+  }
+}
+
+/* ===========================================================================
+   DRAFT RECOVERY — survives an accidental reload or a dropped connection
+   mid-form. sessionStorage (not localStorage): scoped to this one tab, gone
+   when the tab closes, so nothing sensitive lingers on a shared or public
+   computer. Never auto-restores — always requires an explicit "Resume it"
+   click — and clears itself the moment a submission is accepted (201).
+=========================================================================== */
+
+const DRAFT_KEY = "precise_intake_draft";
+const DRAFT_MAX_AGE_MS = 60 * 60 * 1000;
+
+function draftFieldIds() {
+  return Array.from(document.querySelectorAll(".ic-card input, .ic-card select, .ic-card textarea"))
+    .filter(el => el.id && el.type !== "file" && el.type !== "button")
+    .map(el => el.id);
+}
+
+function saveDraft() {
+  try {
+    const fields = {};
+    draftFieldIds().forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.value !== "") fields[id] = el.value;
+    });
+
+    const photoLine = document.getElementById("photoConsentLine");
+
+    const draft = {
+      v: 1, savedAt: Date.now(), lang: lang, currentStep: currentStep, fields: fields,
+      state: { yn: state.yn, adult: state.adult, freq: state.freq, methods: state.methods, consentDone: state.consentDone },
+      photoConsent: photoLine ? photoLine.classList.contains("on") : false,
+    };
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } catch (e) {}
+}
+
+function clearDraft() {
+  try { sessionStorage.removeItem(DRAFT_KEY); } catch (e) {}
+}
+
+function readDraft() {
+  try {
+    const raw = sessionStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    if (!d || d.v !== 1 || !d.savedAt) return null;
+    if (Date.now() - d.savedAt > DRAFT_MAX_AGE_MS) { clearDraft(); return null; }
+    return d;
+  } catch (e) { return null; }
+}
+
+function applyDraft(d) {
+  if (d.lang && d.lang !== lang) setLang(d.lang);
+
+  Object.keys(d.fields || {}).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = d.fields[id];
+  });
+
+  if (d.state) {
+    state.yn = d.state.yn || {};
+    state.adult = d.state.adult === undefined ? null : d.state.adult;
+    state.freq = d.state.freq || null;
+    state.methods = Array.isArray(d.state.methods) ? d.state.methods : [];
+    if (Array.isArray(d.state.consentDone) && d.state.consentDone.length === consentItems.length) {
+      state.consentDone = d.state.consentDone;
+    }
+  }
+
+  const photoLine = document.getElementById("photoConsentLine");
+  if (photoLine) photoLine.classList.toggle("on", !!d.photoConsent);
+
+  renderYNGrid();
+  renderConsent();
+  renderFitz();
+  syncConditionalFields();
+
+  const step = Math.min(Math.max(parseInt(d.currentStep, 10) || 1, 1), 5);
+  document.querySelectorAll(".ic-step").forEach(s => s.classList.remove("active"));
+  const target = document.querySelector('.ic-step[data-step="' + step + '"]');
+  if (target) target.classList.add("active");
+  currentStep = step;
+  updateStepLabel();
+  const bar = document.getElementById("icProgressBar");
+  if (bar) bar.style.width = (step * 20) + "%";
+}
+
+function syncConditionalFields() {
+  [["accutane","accutane_detail_wrap"],
+   ["hormonal","hormonal_detail_wrap"],
+   ["chemical_peel","chemical_peel_detail_wrap"],
+   ["light_sensitive","light_sensitive_detail_wrap"]].forEach(([key, wrapId]) => {
+    const wrap = document.getElementById(wrapId);
+    if (wrap) wrap.classList.toggle("show", state.yn[key] === true);
+  });
+
+  const markRow = (row, val) => {
+    if (!row) return;
+    const btns = row.querySelectorAll("button");
+    btns.forEach(b => b.classList.remove("sel"));
+    if (val === true && btns[0]) btns[0].classList.add("sel");
+    if (val === false && btns[1]) btns[1].classList.add("sel");
+  };
+  const optinBtn = document.querySelector('[onclick*="marketing_optin"]');
+  markRow(optinBtn ? optinBtn.closest(".ic-yn-toggle") : null, state.yn.marketing_optin);
+  const adultBtn = document.querySelector('[onclick*="setAdult"]');
+  markRow(adultBtn ? adultBtn.closest(".ic-yn-toggle") : null, state.adult);
+
+  const gw = document.getElementById("guardianWrap");
+  if (gw) gw.style.display = state.adult === false ? "block" : "none";
+
+  document.querySelectorAll("#freqChips .ic-chip").forEach(c =>
+    c.classList.toggle("sel", !!state.freq && c.dataset.v === state.freq));
+  document.querySelectorAll("#methodChips .ic-chip").forEach(c =>
+    c.classList.toggle("sel", state.methods.indexOf(c.dataset.v) !== -1));
+
+  if (typeof refreshStep4Gate === "function") refreshStep4Gate();
+}
+
+function draftAgeText(savedAt) {
+  const mins = Math.floor((Date.now() - savedAt) / 60000);
+  return t("draftSavedAgo") + (mins < 1 ? t("draftJustNow") : mins + t("draftMinsAgo"));
+}
+
+(function initDraftRecovery() {
+  const banner = document.getElementById("icDraftBanner");
+  const d = readDraft();
+
+  if (d && banner) {
+    document.getElementById("icDraftWhen").textContent = draftAgeText(d.savedAt);
+    banner.style.display = "flex";
+    document.getElementById("icDraftResume").addEventListener("click", () => {
+      applyDraft(d);
+      banner.style.display = "none";
+    });
+    document.getElementById("icDraftDiscard").addEventListener("click", () => {
+      clearDraft();
+      banner.style.display = "none";
+    });
+  }
+
+  document.addEventListener("blur", (e) => {
+    const el = e.target;
+    if (el && (el.tagName === "INPUT" || el.tagName === "SELECT" || el.tagName === "TEXTAREA")) saveDraft();
+  }, true);
+
+  let clickTimer;
+  document.addEventListener("click", () => {
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(saveDraft, 250);
+  }, true);
+
+  window.addEventListener("pagehide", saveDraft);
+})();
+
+function val(id) { const el = document.getElementById(id); return el ? el.value : ""; }
+function yn(field) { return state.yn[field] === true ? "Y" : state.yn[field] === false ? "N" : ""; }
+function showToast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg; el.style.display = "block";
+  setTimeout(() => el.style.display = "none", 4000);
+}
+</script>
+<script src="chatbot.js?v=21" defer></script>
+
+</body>
+</html>

@@ -51,7 +51,7 @@ const TREATMENTS = [
   blurb:'A concentrated beam of light targets pigment in the hair follicle, damaging it so future growth slows — up to 95% permanent reduction on most skin types.',
   expect:'6–12 sessions typical, spaced a few weeks apart to catch hair in every growth cycle. No downtime.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
-  tags:['laser hair','laser','unwanted hair','shaving','waxing','ingrown','facial hair'] },
+  tags:['laser hair','laser','unwanted hair','shaving','ingrown','facial hair'] },
 { id:'electrolysis', name:'Electrolysis', page:'services-hair-removal.html#electrolysis',
   blurb:'Reaches hair a laser can\'t — blonde, red, grey, fine — by sending current directly into the follicle. The only FDA-approved method for permanent removal of all hair types.',
   expect:'Multiple sessions over months, since hair grows in three separate cycles.',

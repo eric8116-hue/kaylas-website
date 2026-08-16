@@ -106,6 +106,11 @@
 .ic-draft-banner button{padding:9px 16px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; border:1.5px solid #6B4E00; background:#fff; color:#6B4E00}
 .ic-draft-banner button.primary{background:#6B4E00; color:#fff}
 
+/* Honeypot — a real field, positioned off-screen. Bots fill in every input
+   they find; a human never sees this one. Deliberately NOT display:none,
+   because the better scrapers skip hidden fields and would dodge the trap. */
+.ic-hp{position:absolute; left:-9999px; top:0; width:1px; height:1px; overflow:hidden}
+
 .ic-thanks{text-align:center; padding:40px 12px}
 .ic-thanks h2{margin-top:0}
 .ic-toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:var(--ink); color:#fff; padding:12px 20px; border-radius:10px; font-size:14px; display:none; z-index:900}
@@ -179,6 +184,11 @@
       <button type="button" class="primary" id="icDraftResume" data-i18n="draftResume">Resume it</button>
       <button type="button" id="icDraftDiscard" data-i18n="draftDiscard">Start fresh</button>
     </div>
+  </div>
+
+  <div class="ic-hp" aria-hidden="true">
+    <label for="company_url">Leave this field blank</label>
+    <input type="text" id="company_url" name="company_url" tabindex="-1" autocomplete="off">
   </div>
 
   <div class="ic-steplabel" id="icStepLabel">Step 1 of 5 — Contact Info</div>
@@ -484,6 +494,9 @@ document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFu
 // fail with a CORS error in the browser console, not silently.
 // =============================================================================
 const INTAKE_SUBMIT_URL = "https://precise-laser-crm.pages.dev/submit-intake";
+
+// When this page was opened, used to measure how long the form took to fill.
+const FORM_OPENED_AT = Date.now();
 
 // ---------------------------------------------------------------------------
 // SPANISH TOGGLE
@@ -886,6 +899,12 @@ async function submitIntake() {
     client_signature: val("client_signature"),
     form_language: lang,
     signed_at: new Date().toISOString(),
+    // Spam signals — see submit-intake.js on the CRM for how these are used.
+    // company_url is the honeypot: a real person leaves it empty because they
+    // never see it. form_elapsed_ms is how long the form was open; a human
+    // filling five pages of medical history cannot do it in three seconds.
+    company_url: val("company_url"),
+    form_elapsed_ms: Date.now() - FORM_OPENED_AT,
     // New vs. the iPad version: lets the CRM tell a pre-visit web submission
     // apart from an in-office one, in case that distinction matters on intake.
     submission_source: "website",
@@ -1067,53 +1086,6 @@ function draftAgeText(savedAt) {
 
   window.addEventListener("pagehide", saveDraft);
 })();
-
-/* ===========================================================================
-   TEST FILL — visit this page with ?testfill=1 on the end of the URL to
-   auto-populate every field with obvious dummy data and jump straight to the
-   Submit button. Purely a convenience for testing the CRM connection without
-   re-typing the whole form; it does nothing at all unless that exact URL
-   parameter is present, so normal visitors never see it.
-
-   Safe to delete this whole block once testing is finished.
-=========================================================================== */
-function testFill() {
-  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
-
-  set("first_name", "TEST"); set("last_name", "DELETEME");
-  set("birth_month", "01"); set("birth_day", "01"); set("birth_year", "1990");
-  set("address", "123 Test St"); set("city", "Babylon"); set("state", "NY"); set("zip", "11702");
-  set("phone", "(631) 555-0100"); set("email", "test@example.com");
-  set("emergency_contact_name", "Test Contact"); set("emergency_contact_phone", "(631) 555-0101");
-  set("referral_source", "Referral");
-  set("areas_to_treat", "TEST RECORD — safe to delete");
-  set("accutane_detail", ""); set("hormonal_detail", ""); set("chemical_peel_detail", ""); set("light_sensitive_detail", "");
-  set("medications", "none"); set("allergies", "none");
-  set("last_treatment_before_us", "2026-01-01");
-  set("skin_type", "III");
-  set("client_signature", "TEST DELETEME");
-
-  ["accutane","hormonal","chemical_peel","light_sensitive"].forEach(k => state.yn[k] = false);
-  ynQuestions.forEach(([field]) => state.yn[field] = false);
-  state.yn.marketing_optin = false;
-  state.adult = true;
-  state.freq = "Weekly";
-  state.methods = ["Shaving"];
-  state.consentDone = state.consentDone.map(() => true);
-
-  const photoLine = document.getElementById("photoConsentLine");
-  if (photoLine) photoLine.classList.remove("on");
-
-  renderYNGrid();
-  renderConsent();
-  syncConditionalFields();
-  goStep(5);
-  showToast("Test data filled — just click Submit.");
-}
-
-if (new URLSearchParams(window.location.search).get("testfill") === "1") {
-  setTimeout(testFill, 100);
-}
 
 function val(id) { const el = document.getElementById(id); return el ? el.value : ""; }
 function yn(field) { return state.yn[field] === true ? "Y" : state.yn[field] === false ? "N" : ""; }

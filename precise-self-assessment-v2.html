@@ -145,7 +145,7 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 <a href="#" class="topbar-logo"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/eb48d30a-5911-49dd-afa3-bc3109029475/Precise+LASER+HAIR+LOGO-1+Blue.png?format=500w" alt="Precise"></a>
 <span class="topbar-title" style="position:absolute; left:50%; transform:translateX(-50%)">Self Assessment</span>
 <div style="display:flex; align-items:center; gap:18px">
-<a href="index.html" class="exit-link"><span class="exit-txt">Back to website</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
+<a href="/" class="exit-link"><span class="exit-txt">Back to website</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
 <a href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener" class="btn btn-primary" style="padding:11px 20px; font-size:13.5px">Book Now</a>
 </div>
 </div>
@@ -388,12 +388,12 @@ case-insensitive) — add a tag here any time new concern wording should
 trigger this category. Every card gets both a Book Now and a Learn More
 link, no exceptions, so the two never drift out of sync again. */
 const CATEGORIES = [
-{ id:'electrolysis', name:'Electrolysis', page:'services-hair-removal.html#electrolysis',
+{ id:'electrolysis', name:'Electrolysis', page:'/services-hair-removal#electrolysis',
   blurb:'Reaches hair a laser can\'t — blonde, red, grey, fine — by sending current directly into the follicle. The only FDA-approved method for permanent removal of all hair types.',
   expect:'Multiple sessions over months, since hair grows in three separate cycles.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/VQT3OY4IK4KP4ITGJWXWGQ5Z',
   tags:['hair','ingrown'] },
-{ id:'laser', name:'Laser Hair Removal', page:'services-hair-removal.html',
+{ id:'laser', name:'Laser Hair Removal', page:'/services-hair-removal',
   blurb:'A concentrated beam of light targets pigment in the hair follicle, damaging it so future growth slows — up to 95% permanent reduction on most skin types. We\'ll confirm the right method for your hair and skin type at your free consultation.',
   expect:'6–12 sessions typical, spaced a few weeks apart to catch hair in every growth cycle. No downtime.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
@@ -403,25 +403,25 @@ const CATEGORIES = [
    hair, which would read as nonsense to a client. "Peach fuzz" appears
    only on the face's concern list and carries no other tag, so selecting
    it returns this card and nothing else. */
-{ id:'dermaplaning', name:'Dermaplaning Facial', page:'services-facials.html#dermaplaning',
+{ id:'dermaplaning', name:'Dermaplaning Facial', page:'/services-facials#dermaplaning',
   blurb:'A skin treatment where a small, sharp blade is used to gently scrape off dead skin cells and fine facial hair — peach fuzz. Benefits: better product absorption, deep exfoliation, softer fine lines and wrinkles, and noticeably smoother makeup application.',
   expect:'A quick in-office treatment with no downtime — skin looks brighter and feels smoother right away.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y72LAGIZQI2WA6U3O6EHYON4',
   onlyZones:['head'],
   tags:['peach fuzz','unwanted hair'] },
-{ id:'facials', name:'Facials', page:'services-facials.html',
+{ id:'facials', name:'Facials', page:'/services-facials',
   blurb:'Facials cover a lot of ground — texture, tone, congestion, hydration, fine lines and wrinkles. We offer HydraFacial, chemical peels, microneedling, dermaplaning, acne facials, anti-aging facials, and back facials — we\'ll confirm which one is the right fit at your free consultation.',
   expect:'Most run 30–60 minutes with little to no downtime.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
   tags:['acne','breakout','dull','tired','pore','blackhead','uneven skin','redness','congestion',
         'wrinkle','fine line','hyperpigmentation','dark spot','dark patch','sun damage','age spot',
         'freckle','discoloration','rough','dry skin','elasticity','back acne','texture'] },
-{ id:'teeth-whitening', name:'Teeth Whitening', page:'services-beautification.html#teeth-whitening',
+{ id:'teeth-whitening', name:'Teeth Whitening', page:'/services-beautification#teeth-whitening',
   blurb:'Professional whitening removes persistent stains and brightens your smile.',
   expect:'Instant results, no downtime.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/WTPSHKZCRHFO6LQ3U7TOORGC',
   tags:['teeth','stained'] },
-{ id:'colonics', name:'Colon Hydrotherapy', page:'services-detox.html#colon-hydrotherapy',
+{ id:'colonics', name:'Colon Hydrotherapy', page:'/services-detox#colon-hydrotherapy',
   blurb:'A gentle, thorough cleanse — warm purified water clears accumulated waste, gas, and toxins to support digestion and immunity. It\'s also the treatment guests reach for on our end for broader wellness — circulation, muscle recovery, and an overall reset.',
   expect:'A private, one-on-one session with a trained technician. Most people feel lighter within a day.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/ND5YRLKZGKZRZN2K3UR6NBT4',

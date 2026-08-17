@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Precise Laser Hair Removal — Client Intake</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* Language toggle */
+  .lang-switch { display: none; justify-content: center; gap: 0; margin: 0 0 4px; }
+  .lang-switch.on { display: flex; }
+  .lang-switch button {
+    border: 1px solid #1E8A85; background: #fff; color: #1E8A85;
+    font-size: 14px; font-weight: 600; padding: 7px 18px; cursor: pointer;
+  }
+  .lang-switch button:first-child { border-radius: 8px 0 0 8px; }
+  .lang-switch button:last-child { border-radius: 0 8px 8px 0; border-left: none; }
+  .lang-switch button.sel { background: #1E8A85; color: #fff; }
+
+  /* Fitzpatrick chart — built in HTML (not a flat image) so the labels translate */
+  .fitz-chart { margin-top: 14px; border: 1px solid #e0e3e2; border-radius: 10px; padding: 14px 12px 10px; }
+  .fitz-title { text-align: center; font-size: 17px; font-weight: 700; color: #14625E; margin: 0 0 12px; }
+  .fitz-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .fitz-col { text-align: center; }
+  .fitz-sw { height: 62px; border-radius: 8px; border: 1px solid rgba(0,0,0,.08); }
+  .fitz-t { font-size: 11.5px; font-weight: 700; color: #1E8A85; margin: 7px 0 3px; letter-spacing: .02em; }
+  .fitz-b { font-size: 11px; font-weight: 700; color: #333; line-height: 1.25; }
+  .fitz-d { font-size: 10px; color: #666; line-height: 1.25; margin-top: 3px; }
+  @media (max-width: 640px) {
+    .fitz-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .fitz-sw { height: 54px; }
+  }
+  /* draft-recovery banner */
+  .draft-banner { display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
+                  background:#FFF6E0; border:1px solid #E8C97A; color:#6B4E00;
+                  border-radius:10px; padding:14px 16px; margin-bottom:18px; }
+  .draft-banner .draft-text { font-size:15px; }
+  .draft-banner .draft-when { display:block; font-size:13px; opacity:.8; margin-top:2px; }
+  .draft-banner .draft-actions { display:flex; gap:8px; }
+  .draft-banner .btn { margin-top:0; }
+</style>
+</head>
+<body>
+<div class="brand-header" style="background:#fff;">
+  <img class="brand-logo" style="max-height:150px" src="logo.png" alt="Precise Laser Hair Removal &amp; Esthetics">
+  <div class="lang-switch" id="langSwitch">
+    <button id="langEn" onclick="setLang('en')">English</button>
+    <button id="langEs" onclick="setLang('es')">Español</button>
+  </div>
+  <p class="brand-tag" style="color:#14625E; opacity:1" data-i18n="tagline">The most trusted name in Laser Hair Removal — Bring Your Beauty to Light</p>
+  <h1 style="color:#14625E; margin:16px 0 0; font-size:26px" data-i18n="formTitle">Client Intake Form</h1>
+</div>
+<div class="wrap">
+
+  <!-- Draft-recovery prompt. Hidden unless an unsubmitted draft is found in
+       sessionStorage for this tab. Never auto-restores: staff/client must
+       choose, so a previous client's answers can't silently appear in a new
+       client's form. -->
+  <div id="draftBanner" class="draft-banner" style="display:none">
+    <div class="draft-text">
+      <strong data-i18n="draftTitle">Unfinished form found</strong>
+      <span id="draftWhen" class="draft-when"></span>
+    </div>
+    <div class="draft-actions">
+      <button type="button" class="btn small" id="draftResume" data-i18n="draftResume">Resume it</button>
+      <button type="button" class="btn small secondary" id="draftDiscard" data-i18n="draftDiscard">Start fresh</button>
+    </div>
+  </div>
+
+  <div class="step-label" id="stepLabel">Step 1 of 5 — Contact Info</div>
+  <div class="progress"><div class="progress-bar" id="progressBar" style="width:20%"></div></div>
+
+  <!-- STEP 1: CONTACT -->
+  <div class="step active" data-step="1">
+    <div class="btn-row">
+      <div style="flex:1"><label style="margin-top:0" data-i18n="firstName">First Name</label><input type="text" id="first_name" data-i18n-ph="phFirst" placeholder="Jane"></div>
+      <div style="flex:1"><label style="margin-top:0" data-i18n="lastName">Last Name</label><input type="text" id="last_name" data-i18n-ph="phLast" placeholder="Client"></div>
+    </div>
+
+    <label data-i18n="birthday">Birthday</label>
+    <div class="btn-row">
+      <div style="flex:2">
+        <select id="birth_month">
+          <option value="" data-i18n="month">Month</option>
+          <option value="01" data-i18n="m1">January</option><option value="02" data-i18n="m2">February</option><option value="03" data-i18n="m3">March</option>
+          <option value="04" data-i18n="m4">April</option><option value="05" data-i18n="m5">May</option><option value="06" data-i18n="m6">June</option>
+          <option value="07" data-i18n="m7">July</option><option value="08" data-i18n="m8">August</option><option value="09" data-i18n="m9">September</option>
+          <option value="10" data-i18n="m10">October</option><option value="11" data-i18n="m11">November</option><option value="12" data-i18n="m12">December</option>
+        </select>
+      </div>
+      <div style="flex:1">
+        <select id="birth_day">
+          <option value="" data-i18n="day">Day</option>
+        </select>
+      </div>
+      <div style="flex:1"><input type="text" inputmode="numeric" maxlength="4" id="birth_year" data-i18n-ph="year" placeholder="Year"></div>
+    </div>
+
+    <label data-i18n="address">Address</label>
+    <input type="text" id="address" data-i18n-ph="phStreet" placeholder="Street address">
+
+    <div class="btn-row" style="margin-top:14px">
+      <div style="flex:2"><label style="margin-top:0" data-i18n="city">City</label><input type="text" id="city"></div>
+      <div style="flex:1"><label style="margin-top:0" data-i18n="stateLbl">State</label>
+        <select id="state">
+          <option value="">--</option>
+          <option>NY</option><option>NJ</option><option>CT</option><option>PA</option>
+          <option>FL</option><option data-i18n="other">Other</option>
+        </select>
+      </div>
+      <div style="flex:1"><label style="margin-top:0" data-i18n="zip">Zip</label><input type="text" id="zip"></div>
+    </div>
+
+    <label data-i18n="phone">Phone</label>
+    <input type="tel" id="phone" placeholder="(555) 555-5555" inputmode="numeric" oninput="formatPhone(this)">
+    <label data-i18n="email">Email</label>
+    <input type="email" id="email" placeholder="name@email.com">
+
+    <label data-i18n="emergName">Emergency Contact Name</label>
+    <input type="text" id="emergency_contact_name">
+
+    <label data-i18n="emergPhone">Emergency Contact Number</label>
+    <input type="tel" id="emergency_contact_phone" placeholder="(555) 555-5555" inputmode="numeric" oninput="formatPhone(this)">
+
+    <label data-i18n="referral">How did you hear about us?</label>
+    <select id="referral_source">
+      <option value="" data-i18n="selectOne">Select one</option>
+      <option data-i18n="refReferral">Referral</option><option data-i18n="refSocial">Social Media</option><option data-i18n="refGoogle">Google / Search</option>
+      <option data-i18n="refWalkin">Walk-in</option><option data-i18n="other">Other</option>
+    </select>
+
+    <button class="btn" onclick="goStep(2)" data-i18n="continue">Continue</button>
+  </div>
+
+  <!-- STEP 2: MEDICAL HISTORY -->
+  <div class="step" data-step="2">
+    <label data-i18n="areas">What areas are to be treated?</label>
+    <input type="text" id="areas_to_treat" data-i18n-ph="phAreas" placeholder="e.g. underarms, bikini, legs">
+
+    <h2 data-i18n="quickYN">A few quick yes/no questions</h2>
+
+    <div class="yn-block" id="ynAccutane">
+      <div class="yn-row"><div class="q" data-i18n="qAccutane">Have you ever been on Accutane?</div>
+        <div class="yn-toggle"><button class="sel-y" onclick="setYN('accutane',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('accutane',false,this)" data-i18n="no">No</button></div></div>
+      <div class="followup" id="accutane_detail_wrap"><input type="text" id="accutane_detail" data-i18n-ph="phHowLong" placeholder="If yes, how long?"></div>
+    </div>
+
+    <div class="yn-block" id="ynHormonal">
+      <div class="yn-row"><div class="q" data-i18n="qHormonal">Hormonal problem you've been treated for?</div>
+        <div class="yn-toggle"><button class="sel-y" onclick="setYN('hormonal',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('hormonal',false,this)" data-i18n="no">No</button></div></div>
+      <div class="followup" id="hormonal_detail_wrap"><input type="text" id="hormonal_detail" data-i18n-ph="phTreatment" placeholder="If yes, what treatment?"></div>
+    </div>
+
+    <div class="yn-block" id="ynPeel">
+      <div class="yn-row"><div class="q" data-i18n="qPeel">Chemical peel or scars in treatment area?</div>
+        <div class="yn-toggle"><button class="sel-y" onclick="setYN('chemical_peel',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('chemical_peel',false,this)" data-i18n="no">No</button></div></div>
+      <div class="followup" id="chemical_peel_detail_wrap"><input type="text" id="chemical_peel_detail" data-i18n-ph="phExplain" placeholder="If yes, explain"></div>
+    </div>
+
+    <div class="yn-block" id="ynLight">
+      <div class="yn-row"><div class="q" data-i18n="qLight">Medications that make you sensitive to light?</div>
+        <div class="yn-toggle"><button class="sel-y" onclick="setYN('light_sensitive',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('light_sensitive',false,this)" data-i18n="no">No</button></div></div>
+      <div class="followup" id="light_sensitive_detail_wrap"><input type="text" id="light_sensitive_detail" data-i18n-ph="phExplain" placeholder="If yes, explain"></div>
+    </div>
+
+    <label data-i18n="meds">Medications / herbal supplements / topical creams you use</label>
+    <input type="text" id="medications">
+    <label data-i18n="allergies">Any allergies?</label>
+    <input type="text" id="allergies">
+
+    <label data-i18n="howOften">How often do you remove your hair?</label>
+    <div class="chip-row" id="freqChips">
+      <div class="chip" data-v="Daily" data-i18n="fDaily">Daily</div>
+      <div class="chip" data-v="Twice Daily" data-i18n="fTwice">Twice Daily</div>
+      <div class="chip" data-v="Weekly" data-i18n="fWeekly">Weekly</div>
+      <div class="chip" data-v="Other" data-i18n="other">Other</div>
+    </div>
+
+    <label data-i18n="methods">Current hair removal methods (tap all that apply)</label>
+    <div class="chip-row" id="methodChips">
+      <div class="chip" data-v="Waxing" data-i18n="mWax">Waxing</div>
+      <div class="chip" data-v="Shaving" data-i18n="mShave">Shaving</div>
+      <div class="chip" data-v="Sugaring" data-i18n="mSugar">Sugaring</div>
+      <div class="chip" data-v="Creams" data-i18n="mCream">Creams</div>
+      <div class="chip" data-v="Tweezing" data-i18n="mTweeze">Tweezing</div>
+      <div class="chip" data-v="Electrolysis" data-i18n="mElectro">Electrolysis</div>
+    </div>
+
+    <label data-i18n="lastTx">When was your last treatment?</label>
+    <input type="date" id="last_treatment_before_us">
+
+    <h2 data-i18n="moreHistory">Medical history — a few more</h2>
+    <div id="ynGrid"></div>
+
+    <label data-i18n="skinTypeLbl">Skin Type <span class="muted">(provider will confirm)</span></label>
+    <select id="skin_type">
+      <option value="" data-i18n="selectOne">Select one</option>
+      <option value="I" data-i18n="st1">I — Light, pale white. Always burns, never tans</option>
+      <option value="II" data-i18n="st2">II — White, fair. Usually burns, tans with difficulty</option>
+      <option value="III" data-i18n="st3">III — Medium, white to olive. Sometimes mild burn, gradually tans to olive</option>
+      <option value="IV" data-i18n="st4">IV — Olive, moderate brown. Rarely burns, tans with ease to a moderate brown</option>
+      <option value="V" data-i18n="st5">V — Brown, dark brown. Very rarely burns, tans very easily</option>
+      <option value="VI" data-i18n="st6">VI — Black, very dark brown to black. Never burns, tans very easily, deeply pigmented</option>
+    </select>
+
+    <div class="fitz-chart">
+      <p class="fitz-title" data-i18n="fitzTitle">The Fitzpatrick Scale</p>
+      <div class="fitz-grid" id="fitzGrid"></div>
+    </div>
+    <p class="fitz-cap" data-i18n="fitzCap">Not sure? Find the closest match above — your provider will confirm it at your visit.</p>
+
+    <div class="btn-row">
+      <button class="btn secondary" onclick="goStep(1)" data-i18n="back">Back</button>
+      <button class="btn" onclick="goStep(3)" data-i18n="continue">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: CONSENT -->
+  <div class="step" data-step="3">
+    <h2 data-i18n="consentTitle">Laser Hair Removal Consent</h2>
+    <p class="sub" id="consentIntro"></p>
+    <div id="consentList"></div>
+    <div class="btn-row">
+      <button class="btn secondary" onclick="goStep(2)" data-i18n="back">Back</button>
+      <button class="btn" id="toStep4Btn" onclick="goStep(4)" disabled data-i18n="continue">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: PHOTO / MARKETING / AGE -->
+  <div class="step" data-step="4">
+    <h2 data-i18n="photoTitle">Photo Consent</h2>
+    <div class="check-line" id="photoConsentLine" onclick="toggleCheck('photoConsentLine','photo_consent')">
+      <div class="box"></div>
+      <div class="txt" data-i18n="photoText">I consent to clinical before/after photos being taken and stored in my file for treatment tracking.</div>
+    </div>
+
+    <h2 data-i18n="specialsTitle">Specials, Promotions &amp; Gift Certificates</h2>
+    <p class="sub" data-i18n="specialsSub">We run specials throughout the year, including birthday offers, promotions, gift certificates, and discounts.</p>
+    <div class="yn-row marketing-row"><div class="q"><span data-i18n="marketingQ">May we send you birthday specials, promotions, gift certificates, and discounts by text and/or email?</span><span class="req">*</span> <span class="req-note" data-i18n="required">Required</span></div>
+      <div class="yn-toggle"><button class="sel-y" onclick="setYN('marketing_optin',true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setYN('marketing_optin',false,this)" data-i18n="no">No</button></div></div>
+
+    <h2 data-i18n="ageTitle">Age</h2>
+    <div class="yn-row"><div class="q"><span data-i18n="ageQ">Are you 18 or over?</span><span class="req">*</span> <span class="req-note" data-i18n="required">Required</span></div>
+      <div class="yn-toggle"><button class="sel-y" onclick="setAdult(true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setAdult(false,this)" data-i18n="no">No</button></div></div>
+    <div id="guardianWrap" style="display:none">
+      <p class="sub" style="margin-top:14px" data-i18n="guardianNote">Because the client is under 18, a parent or guardian must provide their name and signature.</p>
+      <label data-i18n="guardianName">Parent/Guardian Name</label>
+      <input type="text" id="guardian_name">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn secondary" onclick="goStep(3)" data-i18n="back">Back</button>
+      <button class="btn" id="toStep5Btn" onclick="goStep(5)" disabled data-i18n="continue">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: SIGNATURE -->
+  <div class="step" data-step="5">
+    <h2 data-i18n="signTitle">Sign &amp; Submit</h2>
+    <p class="sub" data-i18n="signSub">Type your name below as your signature.</p>
+    <label data-i18n="clientSig">Client Signature (type full name)</label>
+    <input type="text" id="client_signature">
+    <div id="guardianSigWrap" style="display:none">
+      <label data-i18n="guardianSig">Parent/Guardian Signature (type full name)</label>
+      <input type="text" id="guardian_signature">
+    </div>
+    <button class="btn" id="submitBtn" onclick="submitIntake()" data-i18n="submit">Submit</button>
+    <div class="btn-row"><button class="btn secondary" onclick="goStep(4)" data-i18n="back">Back</button></div>
+  </div>
+
+  <!-- STEP 6: THANK YOU -->
+  <div class="step" data-step="6">
+    <div class="card" style="text-align:center; padding:40px 24px">
+      <h2 style="margin-top:0"><span data-i18n="thanks">Thank you</span><span id="thanksName"></span>!</h2>
+      <p style="font-size:16px; color:#444" data-i18n="thanksSub">You're all set. Please hand the iPad back to your provider.</p>
+      <button class="btn" style="margin-top:24px" onclick="window.location.reload()" data-i18n="newForm">Start a new form</button>
+    </div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ---------------------------------------------------------------------------
+// SPANISH TOGGLE
+//
+// Enabled: a fluent reviewer approved this wording, and it also checks out
+// word-for-word against Precise's own official printed form
+// (Precise-Laser-Intake-ES.pdf). Clients on the iPad now see the language
+// toggle and can fill the form in Spanish.
+// ---------------------------------------------------------------------------
+const SPANISH_ENABLED = true;
+
+let lang = "en";
+
+const T = {
+  tagline: ["The most trusted name in Laser Hair Removal — Bring Your Beauty to Light",
+            "El nombre de mayor confianza en depilación láser — Realza tu belleza"],
+  formTitle: ["Client Intake Form", "Formulario de Admisión"],
+
+  firstName: ["First Name", "Nombre"],
+  lastName: ["Last Name", "Apellido"],
+  phFirst: ["Jane", "María"],
+  phLast: ["Client", "Apellido"],
+  birthday: ["Birthday", "Fecha de nacimiento"],
+  month: ["Month", "Mes"], day: ["Day", "Día"], year: ["Year", "Año"],
+  m1: ["January","Enero"], m2: ["February","Febrero"], m3: ["March","Marzo"],
+  m4: ["April","Abril"], m5: ["May","Mayo"], m6: ["June","Junio"],
+  m7: ["July","Julio"], m8: ["August","Agosto"], m9: ["September","Septiembre"],
+  m10: ["October","Octubre"], m11: ["November","Noviembre"], m12: ["December","Diciembre"],
+  address: ["Address", "Dirección"],
+  phStreet: ["Street address", "Calle y número"],
+  city: ["City", "Ciudad"], stateLbl: ["State", "Estado"], zip: ["Zip", "Código postal"],
+  phone: ["Phone", "Teléfono"], email: ["Email", "Correo electrónico"],
+  emergName: ["Emergency Contact Name", "Nombre del contacto de emergencia"],
+  emergPhone: ["Emergency Contact Number", "Teléfono del contacto de emergencia"],
+  referral: ["How did you hear about us?", "¿Cómo se enteró de nosotros?"],
+  selectOne: ["Select one", "Seleccione una opción"],
+  refReferral: ["Referral", "Recomendación"],
+  refSocial: ["Social Media", "Redes sociales"],
+  refGoogle: ["Google / Search", "Google / Búsqueda"],
+  refWalkin: ["Walk-in", "Vine sin cita"],
+  other: ["Other", "Otro"],
+
+  areas: ["What areas are to be treated?", "¿Qué áreas se van a tratar?"],
+  phAreas: ["e.g. underarms, bikini, legs", "p. ej. axilas, bikini, piernas"],
+  quickYN: ["A few quick yes/no questions", "Unas preguntas rápidas de sí o no"],
+  qAccutane: ["Have you ever been on Accutane?", "¿Ha tomado alguna vez Accutane (isotretinoína)?"],
+  phHowLong: ["If yes, how long?", "Si contestó sí, ¿por cuánto tiempo?"],
+  qHormonal: ["Hormonal problem you've been treated for?", "¿Ha recibido tratamiento por algún problema hormonal?"],
+  phTreatment: ["If yes, what treatment?", "Si contestó sí, ¿qué tratamiento?"],
+  qPeel: ["Chemical peel or scars in treatment area?", "¿Peeling químico o cicatrices en el área a tratar?"],
+  phExplain: ["If yes, explain", "Si contestó sí, explique"],
+  qLight: ["Medications that make you sensitive to light?", "¿Toma medicamentos que la hagan sensible a la luz?"],
+  meds: ["Medications / herbal supplements / topical creams you use",
+         "Medicamentos, suplementos herbales o cremas que usa"],
+  allergies: ["Any allergies?", "¿Tiene alguna alergia?"],
+  howOften: ["How often do you remove your hair?", "¿Con qué frecuencia se depila?"],
+  fDaily: ["Daily", "A diario"], fTwice: ["Twice Daily", "Dos veces al día"], fWeekly: ["Weekly", "Semanalmente"],
+  methods: ["Current hair removal methods (tap all that apply)",
+            "Métodos de depilación que usa actualmente (toque todos los que apliquen)"],
+  mWax: ["Waxing", "Cera"], mShave: ["Shaving", "Rasurado"], mSugar: ["Sugaring", "Azúcar"],
+  mCream: ["Creams", "Cremas"], mTweeze: ["Tweezing", "Pinzas"], mElectro: ["Electrolysis", "Electrólisis"],
+  lastTx: ["When was your last treatment?", "¿Cuándo fue su último tratamiento?"],
+  moreHistory: ["Medical history — a few more", "Historial médico — algunas más"],
+
+  skinTypeLbl: ['Skin Type <span class="muted">(provider will confirm)</span>',
+                'Tipo de piel <span class="muted">(su proveedora lo confirmará)</span>'],
+  st1: ["I — Light, pale white. Always burns, never tans",
+        "I — Clara, blanca pálida. Siempre se quema, nunca se broncea"],
+  st2: ["II — White, fair. Usually burns, tans with difficulty",
+        "II — Blanca. Casi siempre se quema, se broncea con dificultad"],
+  st3: ["III — Medium, white to olive. Sometimes mild burn, gradually tans to olive",
+        "III — Media, de blanca a olivácea. A veces se quema levemente, se broncea poco a poco"],
+  st4: ["IV — Olive, moderate brown. Rarely burns, tans with ease to a moderate brown",
+        "IV — Olivácea, morena clara. Rara vez se quema, se broncea con facilidad"],
+  st5: ["V — Brown, dark brown. Very rarely burns, tans very easily",
+        "V — Morena, morena oscura. Muy rara vez se quema, se broncea muy fácilmente"],
+  st6: ["VI — Black, very dark brown to black. Never burns, tans very easily, deeply pigmented",
+        "VI — Muy oscura, de café muy oscuro a negro. Nunca se quema, muy pigmentada"],
+  fitzTitle: ["The Fitzpatrick Scale", "La Escala de Fitzpatrick"],
+  fitzCap: ["Not sure? Find the closest match above — your provider will confirm it at your visit.",
+            "¿No está segura? Elija la más parecida — su proveedora lo confirmará en su cita."],
+
+  consentTitle: ["Laser Hair Removal Consent", "Consentimiento para Depilación Láser"],
+  consentIntro: ["Tap each statement to initial it. Your initials ({i}) come from your name on step 1.",
+                 "Toque cada declaración para poner sus iniciales. Sus iniciales ({i}) vienen de su nombre en el paso 1."],
+
+  photoTitle: ["Photo Consent", "Consentimiento para Fotografías"],
+  photoText: ["I consent to clinical before/after photos being taken and stored in my file for treatment tracking.",
+              "Doy mi consentimiento para que se tomen fotografías clínicas de antes y después y se guarden en mi expediente para dar seguimiento al tratamiento."],
+  specialsTitle: ["Specials, Promotions & Gift Certificates", "Ofertas, Promociones y Certificados de Regalo"],
+  specialsSub: ["We run specials throughout the year, including birthday offers, promotions, gift certificates, and discounts.",
+                "Tenemos ofertas durante todo el año, incluyendo promociones de cumpleaños, certificados de regalo y descuentos."],
+  marketingQ: ["May we send you birthday specials, promotions, gift certificates, and discounts by text and/or email?",
+               "¿Podemos enviarle ofertas de cumpleaños, promociones, certificados de regalo y descuentos por mensaje de texto y/o correo electrónico?"],
+  required: ["Required", "Obligatorio"],
+  ageTitle: ["Age", "Edad"],
+  ageQ: ["Are you 18 or over?", "¿Tiene 18 años o más?"],
+  guardianNote: ["Because the client is under 18, a parent or guardian must provide their name and signature.",
+                 "Como la clienta es menor de 18 años, su padre, madre o tutor debe dar su nombre y firma."],
+  guardianName: ["Parent/Guardian Name", "Nombre del padre, madre o tutor"],
+
+  signTitle: ["Sign & Submit", "Firmar y Enviar"],
+  signSub: ["Type your name below as your signature.", "Escriba su nombre abajo como firma."],
+  draftTitle: ["Unfinished form found", "Se encontró un formulario sin terminar"],
+  draftResume: ["Resume it", "Continuar"],
+  draftDiscard: ["Start fresh", "Empezar de nuevo"],
+  draftSavedAgo: ["Saved ", "Guardado "],
+  draftJustNow: ["just now", "hace un momento"],
+  draftMinsAgo: [" minutes ago", " minutos atrás"],
+  clientSig: ["Client Signature (type full name)", "Firma de la clienta (escriba su nombre completo)"],
+  guardianSig: ["Parent/Guardian Signature (type full name)",
+                "Firma del padre, madre o tutor (escriba el nombre completo)"],
+  submit: ["Submit", "Enviar"],
+  submitting: ["Submitting…", "Enviando…"],
+  thanks: ["Thank you", "Gracias"],
+  thanksSub: ["You're all set. Please hand the iPad back to your provider.",
+              "Todo listo. Por favor devuelva el iPad a su proveedora."],
+  newForm: ["Start a new form", "Comenzar un formulario nuevo"],
+
+  yes: ["Yes", "Sí"], no: ["No", "No"],
+  back: ["Back", "Atrás"], continue: ["Continue", "Continuar"],
+  stepWord: ["Step", "Paso"], ofWord: ["of", "de"], complete: ["Complete", "Completado"],
+  errGeneric: ["Something went wrong: ", "Algo salió mal: "],
+};
+
+const STEP_LABELS = [
+  ["Contact Info", "Datos de contacto"],
+  ["Medical History", "Historial médico"],
+  ["Consent", "Consentimiento"],
+  ["Preferences", "Preferencias"],
+  ["Sign & Submit", "Firmar y enviar"],
+];
+
+const FITZ = [
+  ["#F4CFB4", ["TYPE I","TIPO I"], ["Light,<br>pale white","Clara,<br>blanca pálida"], ["Always burns,<br>never tans","Siempre se quema,<br>nunca se broncea"]],
+  ["#E7B48F", ["TYPE II","TIPO II"], ["White, fair","Blanca"], ["Usually burns,<br>tans with difficulty","Casi siempre se quema,<br>se broncea con dificultad"]],
+  ["#D29E7C", ["TYPE III","TIPO III"], ["Medium,<br>white to olive","Media,<br>blanca a olivácea"], ["Sometimes mild burn,<br>gradually tans","A veces se quema levemente,<br>se broncea poco a poco"]],
+  ["#C67F55", ["TYPE IV","TIPO IV"], ["Olive,<br>moderate brown","Olivácea,<br>morena clara"], ["Rarely burns,<br>tans with ease","Rara vez se quema,<br>se broncea con facilidad"]],
+  ["#A55D2B", ["TYPE V","TIPO V"], ["Brown,<br>dark brown","Morena,<br>morena oscura"], ["Very rarely burns,<br>tans very easily","Muy rara vez se quema,<br>se broncea muy fácil"]],
+  ["#371B1B", ["TYPE VI","TIPO VI"], ["Black, very dark<br>brown to black","Muy oscura,<br>café oscuro a negro"], ["Never burns,<br>deeply pigmented","Nunca se quema,<br>muy pigmentada"]],
+];
+
+const ynQuestions = [
+  ["q_headaches", ["Do you ever get light-triggered headaches?", "¿Le dan dolores de cabeza provocados por la luz?"]],
+  ["q_testosterone", ["Have you had your testosterone levels checked?", "¿Se ha hecho analizar sus niveles de testosterona?"]],
+  ["q_laser_resurfacing", ["Have you ever had laser resurfacing?", "¿Se ha hecho alguna vez un rejuvenecimiento con láser?"]],
+  ["q_skin_infection", ["Do you have any current skin infections?", "¿Tiene actualmente alguna infección en la piel?"]],
+  ["q_sensitive_skin", ["Do you have sensitive skin?", "¿Tiene la piel sensible?"]],
+  ["q_genital_herpes", ["Have you ever had genital herpes?", "¿Ha tenido alguna vez herpes genital?"]],
+  ["q_microdermabrasion", ["Have you ever had Microdermabrasion?", "¿Se ha hecho alguna vez microdermoabrasión?"]],
+  ["q_hirsutism_family", ["Do you have a family history of Hirsutism?", "¿Tiene antecedentes familiares de hirsutismo?"]],
+  ["q_cold_sores", ["Do you get cold sores?", "¿Le salen fuegos labiales (herpes labial)?"]],
+];
+
+// The 13 consent statements. The Spanish column is what needs fluent review
+// before SPANISH_ENABLED is switched on.
+const consentItems = [
+  ["I confirm I am at least 18 years of age, or have parental permission.",
+   "Confirmo que tengo al menos 18 años de edad, o que cuento con el permiso de mi padre, madre o tutor."],
+  ["I have elected, by my own decision, to have laser hair removal performed.",
+   "He decidido, por mi propia voluntad, someterme a la depilación láser."],
+  ["The procedure, including the process and objective, has been explained to me before undergoing laser hair removal.",
+   "Se me ha explicado el procedimiento, incluyendo el proceso y su objetivo, antes de someterme a la depilación láser."],
+  ["I have been given the opportunity to ask questions regarding any benefits, risks, or possible complications of the procedure.",
+   "He tenido la oportunidad de hacer preguntas sobre los beneficios, riesgos y posibles complicaciones del procedimiento."],
+  ["I understand my provider has taken measures to minimize any risks or negative reactions, and I acknowledge any reaction or complications associated with the procedure as they have been explained to me.",
+   "Entiendo que mi proveedora ha tomado medidas para minimizar cualquier riesgo o reacción negativa, y reconozco las reacciones o complicaciones asociadas con el procedimiento tal como me han sido explicadas."],
+  ["I have followed all pre-procedure care instructions as they have been explained to me.",
+   "He seguido todas las instrucciones de cuidado previas al procedimiento tal como me fueron explicadas."],
+  ["I understand it is important to provide feedback during my treatment, and will inform my provider of any pain or discomfort during the session.",
+   "Entiendo que es importante comunicarme durante mi tratamiento, e informaré a mi proveedora de cualquier dolor o molestia durante la sesión."],
+  ["I understand that a range of skin discolorations can occur, including permanent lightening or darkening, pigmented lesions, pinpoint bleeding and scarring.",
+   "Entiendo que pueden ocurrir diversas alteraciones en el color de la piel, incluyendo aclaramiento u oscurecimiento permanente, lesiones pigmentadas, sangrado puntiforme y cicatrices."],
+  ["I understand protective eyewear will be provided and must be kept on at all times during treatment to protect my eyes from accidental laser exposure.",
+   "Entiendo que se me proporcionarán gafas protectoras y que debo mantenerlas puestas en todo momento durante el tratamiento para proteger mis ojos de la exposición accidental al láser."],
+  ["I understand that more than 6-12 treatments may be needed and results are not guaranteed; hormonal changes, pregnancy, medications, menopause, or steroids can trigger new hair growth.",
+   "Entiendo que pueden necesitarse más de 6 a 12 tratamientos y que los resultados no están garantizados; los cambios hormonales, el embarazo, los medicamentos, la menopausia o los esteroides pueden provocar nuevo crecimiento de vello."],
+  ["I understand tanning (sun, tanning beds, self-tanners) during treatment is not recommended, and I must inform the provider if my skin is darker than at my last treatment.",
+   "Entiendo que broncearme (sol, camas de bronceado, autobronceadores) durante el tratamiento no es recomendable, y que debo informar a mi proveedora si mi piel está más oscura que en mi último tratamiento."],
+  ["I understand I should avoid sun/tanning beds 4-6 weeks before and 2 weeks after treatment, and use SPF 30+ on the treated area.",
+   "Entiendo que debo evitar el sol y las camas de bronceado de 4 a 6 semanas antes y 2 semanas después del tratamiento, y usar protector solar SPF 30 o superior en el área tratada."],
+  ["I confirm I have given an accurate account of my medical history, including allergies and medications I take or intend to take.",
+   "Confirmo que he dado un relato veraz de mi historial médico, incluyendo alergias y medicamentos que tomo o que pienso tomar."],
+];
+
+let state = { yn: {}, adult: null, freq: null, methods: [], consentDone: new Array(consentItems.length).fill(false) };
+let currentStep = 1;
+
+function t(key) {
+  const e = T[key];
+  return e ? e[lang === "es" ? 1 : 0] : key;
+}
+
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  try { localStorage.setItem("precise_lang", l); } catch (e) {}
+
+  document.getElementById("langEn").classList.toggle("sel", l === "en");
+  document.getElementById("langEs").classList.toggle("sel", l === "es");
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const v = t(el.getAttribute("data-i18n"));
+    if (v.indexOf("<") !== -1) el.innerHTML = v; else el.textContent = v;
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+    el.placeholder = t(el.getAttribute("data-i18n-ph"));
+  });
+
+  renderFitz();
+  renderYNGrid();
+  renderConsent();
+  updateStepLabel();
+}
+
+function renderFitz() {
+  const g = document.getElementById("fitzGrid");
+  const i = lang === "es" ? 1 : 0;
+  g.innerHTML = FITZ.map(f =>
+    '<div class="fitz-col">' +
+      '<div class="fitz-sw" style="background:' + f[0] + '"></div>' +
+      '<div class="fitz-t">' + f[1][i] + '</div>' +
+      '<div class="fitz-b">' + f[2][i] + '</div>' +
+      '<div class="fitz-d">' + f[3][i] + '</div>' +
+    '</div>'
+  ).join("");
+}
+
+// Day dropdown 1-31
+(function initDayDropdown() {
+  const sel = document.getElementById("birth_day");
+  for (let d = 1; d <= 31; d++) {
+    const opt = document.createElement("option");
+    opt.value = String(d).padStart(2, "0");
+    opt.textContent = d;
+    sel.appendChild(opt);
+  }
+})();
+
+// Auto-format phone as (XXX) XXX-XXXX while typing
+function formatPhone(input) {
+  let digits = input.value.replace(/\D/g, "").slice(0, 10);
+  let out = digits;
+  if (digits.length > 6) out = "(" + digits.slice(0,3) + ") " + digits.slice(3,6) + "-" + digits.slice(6);
+  else if (digits.length > 3) out = "(" + digits.slice(0,3) + ") " + digits.slice(3);
+  else if (digits.length > 0) out = "(" + digits;
+  input.value = out;
+}
+
+function updateStepLabel() {
+  const el = document.getElementById("stepLabel");
+  if (currentStep > 5) { el.textContent = t("complete"); return; }
+  const name = STEP_LABELS[currentStep - 1][lang === "es" ? 1 : 0];
+  el.textContent = t("stepWord") + " " + currentStep + " " + t("ofWord") + " 5 — " + name;
+}
+
+function goStep(n) {
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+  document.querySelector('.step[data-step="' + n + '"]').classList.add("active");
+  currentStep = n;
+  updateStepLabel();
+  document.getElementById("progressBar").style.width = (n * 20) + "%";
+  window.scrollTo(0,0);
+  if (n === 3) renderConsent();
+  if (n === 5) {
+    document.getElementById("guardianSigWrap").style.display = state.adult === false ? "block" : "none";
+  }
+}
+
+function setYN(field, val, btn) {
+  state.yn[field] = val;
+  const row = btn.closest(".yn-row");
+  row.querySelectorAll("button").forEach(b => b.classList.remove("sel"));
+  btn.classList.add("sel");
+  const followup = document.getElementById(field + "_detail_wrap");
+  if (followup) followup.classList.toggle("show", val === true);
+  if (field === "marketing_optin") refreshStep4Gate();
+}
+
+// "Are you 18 or over?"  No  ->  under 18  ->  parent/guardian required.
+function setAdult(isAdult, btn) {
+  state.adult = isAdult;
+  const row = btn.closest(".yn-row");
+  row.querySelectorAll("button").forEach(b => b.classList.remove("sel"));
+  btn.classList.add("sel");
+  document.getElementById("guardianWrap").style.display = isAdult ? "none" : "block";
+  if (isAdult) document.getElementById("guardian_name").value = "";
+  refreshStep4Gate();
+}
+
+// Step 4 can't be left until both required questions have an answer.
+function refreshStep4Gate() {
+  const answered = state.yn.marketing_optin !== undefined && state.adult !== null;
+  document.getElementById("toStep5Btn").disabled = !answered;
+}
+
+// Rebuilt on language change; selections are preserved from state.yn.
+function renderYNGrid() {
+  const grid = document.getElementById("ynGrid");
+  const i = lang === "es" ? 1 : 0;
+  grid.innerHTML = "";
+  ynQuestions.forEach(([field, text]) => {
+    const row = document.createElement("div");
+    row.className = "yn-row";
+    const cur = state.yn[field];
+    row.innerHTML = '<div class="q">' + text[i] + '</div><div class="yn-toggle">' +
+      '<button class="sel-y' + (cur === true ? " sel" : "") + '" onclick="setYN(\'' + field + '\',true,this)">' + t("yes") + '</button>' +
+      '<button class="sel-n' + (cur === false ? " sel" : "") + '" onclick="setYN(\'' + field + '\',false,this)">' + t("no") + '</button></div>';
+    grid.appendChild(row);
+  });
+}
+
+document.getElementById("freqChips").addEventListener("click", (e) => {
+  if (!e.target.classList.contains("chip")) return;
+  document.querySelectorAll("#freqChips .chip").forEach(c => c.classList.remove("sel"));
+  e.target.classList.add("sel");
+  state.freq = e.target.dataset.v;
+});
+document.getElementById("methodChips").addEventListener("click", (e) => {
+  if (!e.target.classList.contains("chip")) return;
+  e.target.classList.toggle("sel");
+  state.methods = [...document.querySelectorAll("#methodChips .chip.sel")].map(c => c.dataset.v);
+});
+
+function getInitials() {
+  const first = (document.getElementById("first_name").value || "").trim();
+  const last = (document.getElementById("last_name").value || "").trim();
+  if (!first && !last) return "--";
+  return [first, last].filter(Boolean).map(w => w[0].toUpperCase()).join("");
+}
+
+function renderConsent() {
+  const initials = getInitials();
+  const i = lang === "es" ? 1 : 0;
+  document.getElementById("consentIntro").textContent = t("consentIntro").replace("{i}", initials);
+  const list = document.getElementById("consentList");
+  list.innerHTML = "";
+  consentItems.forEach((pair, idx) => {
+    const div = document.createElement("div");
+    div.className = "consent-item" + (state.consentDone[idx] ? " done" : "");
+    div.innerHTML = '<div class="initial-box">' + (state.consentDone[idx] ? initials : "") + '</div>' +
+      '<div class="txt">' + (idx+1) + '. ' + pair[i] + '</div>';
+    div.onclick = () => {
+      state.consentDone[idx] = !state.consentDone[idx];
+      renderConsent();
+    };
+    list.appendChild(div);
+  });
+  document.getElementById("toStep4Btn").disabled = !state.consentDone.every(Boolean);
+}
+
+function toggleCheck(elId) {
+  document.getElementById(elId).classList.toggle("on");
+}
+
+// ---- boot ----
+if (SPANISH_ENABLED) {
+  document.getElementById("langSwitch").classList.add("on");
+  let saved = "en";
+  try { saved = localStorage.getItem("precise_lang") || "en"; } catch (e) {}
+  setLang(saved);
+} else {
+  setLang("en");
+}
+
+async function submitIntake() {
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true; btn.textContent = t("submitting");
+
+  const payload = {
+    first_name: val("first_name"), last_name: val("last_name"),
+    birth_month: val("birth_month"), birth_day: val("birth_day"), birth_year: val("birth_year"),
+    address: val("address"),
+    city: val("city"), state: val("state"), zip: val("zip"), phone: val("phone"), email: val("email"),
+    emergency_contact_name: val("emergency_contact_name"),
+    emergency_contact_phone: val("emergency_contact_phone"),
+    referral_source: val("referral_source"),
+    areas_to_treat: val("areas_to_treat"),
+    accutane: state.yn.accutane === true ? "Y" : state.yn.accutane === false ? "N" : "",
+    accutane_detail: val("accutane_detail"),
+    hormonal: state.yn.hormonal === true ? "Y" : state.yn.hormonal === false ? "N" : "",
+    hormonal_detail: val("hormonal_detail"),
+    chemical_peel: state.yn.chemical_peel === true ? "Y" : state.yn.chemical_peel === false ? "N" : "",
+    chemical_peel_detail: val("chemical_peel_detail"),
+    medications: val("medications"),
+    light_sensitive: state.yn.light_sensitive === true ? "Y" : state.yn.light_sensitive === false ? "N" : "",
+    light_sensitive_detail: val("light_sensitive_detail"),
+    allergies: val("allergies"),
+    removal_frequency: state.freq || "",
+    removal_methods: state.methods.join(", "),
+    last_treatment_before_us: val("last_treatment_before_us"),
+    q_headaches: yn("q_headaches"), q_testosterone: yn("q_testosterone"),
+    q_laser_resurfacing: yn("q_laser_resurfacing"), q_skin_infection: yn("q_skin_infection"),
+    q_sensitive_skin: yn("q_sensitive_skin"), q_genital_herpes: yn("q_genital_herpes"),
+    q_microdermabrasion: yn("q_microdermabrasion"), q_hirsutism_family: yn("q_hirsutism_family"),
+    q_cold_sores: yn("q_cold_sores"),
+    skin_type: val("skin_type"),
+    consent_initials: getInitials(),
+    consent_items: state.consentDone,
+    photo_consent: document.getElementById("photoConsentLine").classList.contains("on"),
+    marketing_optin: state.yn.marketing_optin === true,
+    is_adult: state.adult === true,
+    guardian_name: val("guardian_name"),
+    guardian_signature: val("guardian_signature"),
+    client_signature: val("client_signature"),
+    form_language: lang,
+    signed_at: new Date().toISOString(),
+  };
+
+  try {
+    const res = await fetch("/submit-intake", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Submit failed");
+
+    // Destroy the local draft ONLY once the server has confirmed the record was
+    // created (201). Anything else — network drop, 4xx, 5xx — leaves the cache
+    // intact so the client can resume instead of re-typing their medical
+    // history. See submit-intake.js: that 201 is load-bearing.
+    if (res.status === 201) clearDraft();
+
+    document.getElementById("thanksName").textContent = payload.first_name ? ", " + payload.first_name : "";
+    document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+    document.querySelector('.step[data-step="6"]').classList.add("active");
+    currentStep = 6;
+    updateStepLabel();
+    document.getElementById("progressBar").style.width = "100%";
+    window.scrollTo(0,0);
+  } catch (err) {
+    alert(t("errGeneric") + err.message);
+    btn.disabled = false; btn.textContent = t("submit");
+  }
+}
+
+/* ===========================================================================
+   DRAFT RECOVERY — survives a Wi-Fi drop or an accidental reload mid-intake.
+   ===========================================================================
+
+   WHY sessionStorage AND NOT localStorage:
+   This iPad is handed to client after client. localStorage persists to disk
+   across tabs and sessions, so one client's medications/herpes history could
+   still be sitting there when the next client picks the device up.
+   sessionStorage is scoped to the one tab and is destroyed when that tab
+   closes — which covers the actual failure this is for (network drop, reload,
+   accidental back-swipe) without leaving medical data at rest on a shared
+   device.
+
+   TRADE-OFF, STATED PLAINLY: this does NOT survive the tab being closed or
+   Safari being killed. That is the deliberate cost of not writing client
+   medical answers to disk on a shared device.
+
+   THE CROSS-CLIENT RISK, AND HOW IT IS HANDLED:
+   If a client abandons the form and staff hand the iPad to the next person
+   without closing the tab, a naive restore would silently pour client A's
+   answers into client B's form. So this NEVER auto-restores. It shows a
+   banner and requires an explicit choice, drafts expire after 60 minutes,
+   and the cache is destroyed the moment a submission is accepted (201).
+=========================================================================== */
+
+const DRAFT_KEY = "precise_intake_draft";
+const DRAFT_MAX_AGE_MS = 60 * 60 * 1000; // 60 minutes
+
+function draftFieldIds() {
+  return Array.from(document.querySelectorAll(".wrap input, .wrap select, .wrap textarea"))
+    .filter(el => el.id && el.type !== "file" && el.type !== "button")
+    .map(el => el.id);
+}
+
+function saveDraft() {
+  try {
+    const fields = {};
+    draftFieldIds().forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.value !== "") fields[id] = el.value;
+    });
+
+    const photoLine = document.getElementById("photoConsentLine");
+
+    const draft = {
+      v: 1,
+      savedAt: Date.now(),
+      lang: lang,
+      currentStep: currentStep,
+      fields: fields,
+      state: {
+        yn: state.yn,
+        adult: state.adult,
+        freq: state.freq,
+        methods: state.methods,
+        consentDone: state.consentDone,
+      },
+      photoConsent: photoLine ? photoLine.classList.contains("on") : false,
+    };
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } catch (e) {
+    // Private mode / quota — draft recovery is a convenience, never block intake.
+  }
+}
+
+function clearDraft() {
+  try { sessionStorage.removeItem(DRAFT_KEY); } catch (e) {}
+}
+
+function readDraft() {
+  try {
+    const raw = sessionStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    if (!d || d.v !== 1 || !d.savedAt) return null;
+    if (Date.now() - d.savedAt > DRAFT_MAX_AGE_MS) { clearDraft(); return null; }
+    return d;
+  } catch (e) { return null; }
+}
+
+function applyDraft(d) {
+  if (d.lang && d.lang !== lang) setLang(d.lang);
+
+  Object.keys(d.fields || {}).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = d.fields[id];
+  });
+
+  if (d.state) {
+    state.yn = d.state.yn || {};
+    state.adult = d.state.adult === undefined ? null : d.state.adult;
+    state.freq = d.state.freq || null;
+    state.methods = Array.isArray(d.state.methods) ? d.state.methods : [];
+    if (Array.isArray(d.state.consentDone) && d.state.consentDone.length === consentItems.length) {
+      state.consentDone = d.state.consentDone;
+    }
+  }
+
+  const photoLine = document.getElementById("photoConsentLine");
+  if (photoLine) photoLine.classList.toggle("on", !!d.photoConsent);
+
+  // Re-render everything driven by `state` rather than by input values.
+  renderYNGrid();
+  renderConsent();
+  renderFitz();
+  syncConditionalFields();
+
+  const step = Math.min(Math.max(parseInt(d.currentStep, 10) || 1, 1), 5);
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+  const target = document.querySelector('.step[data-step="' + step + '"]');
+  if (target) target.classList.add("active");
+  currentStep = step;
+  updateStepLabel();
+  const bar = document.getElementById("progressBar");
+  if (bar) bar.style.width = (step * 20) + "%";
+  window.scrollTo(0, 0);
+}
+
+// Several parts of the UI are driven by `state`, not by input values, and are
+// therefore NOT restored by writing field values back. renderYNGrid() rebuilds
+// the nine screening questions from state, but everything below is static
+// markup whose selected/visible state lives only in CSS classes applied by a
+// click handler. Restoring the data without this would look correct while
+// leaving the form subtly broken — e.g. Continue on step 4 staying disabled.
+function syncConditionalFields() {
+  // 1. Conditional detail fields. These use a `show` CLASS, not inline display —
+  //    setting style.display here would win over the class permanently and
+  //    break the field for the rest of the session.
+  [["accutane","accutane_detail_wrap"],
+   ["hormonal","hormonal_detail_wrap"],
+   ["chemical_peel","chemical_peel_detail_wrap"],
+   ["light_sensitive","light_sensitive_detail_wrap"]].forEach(([key, wrapId]) => {
+    const wrap = document.getElementById(wrapId);
+    if (wrap) wrap.classList.toggle("show", state.yn[key] === true);
+  });
+
+  // 2. Static Yes/No rows that renderYNGrid() does not own.
+  const markRow = (row, val) => {
+    if (!row) return;
+    const btns = row.querySelectorAll("button");
+    btns.forEach(b => b.classList.remove("sel"));
+    if (val === true && btns[0]) btns[0].classList.add("sel");
+    if (val === false && btns[1]) btns[1].classList.add("sel");
+  };
+  const optinBtn = document.querySelector('[onclick*="marketing_optin"]');
+  markRow(optinBtn ? optinBtn.closest(".yn-toggle") : null, state.yn.marketing_optin);
+  const adultBtn = document.querySelector('[onclick*="setAdult"]');
+  markRow(adultBtn ? adultBtn.closest(".yn-toggle") : null, state.adult);
+
+  // 3. Guardian block — only shown when the client answered "No" to 18-or-over.
+  const gw = document.getElementById("guardianWrap");
+  if (gw) gw.style.display = state.adult === false ? "block" : "none";
+
+  // 4. Chip rows (removal frequency + methods) keep their selection in CSS only.
+  document.querySelectorAll("#freqChips .chip").forEach(c =>
+    c.classList.toggle("sel", !!state.freq && c.dataset.v === state.freq));
+  document.querySelectorAll("#methodChips .chip").forEach(c =>
+    c.classList.toggle("sel", state.methods.indexOf(c.dataset.v) !== -1));
+
+  // 5. Re-evaluate the step-4 gate, or Continue stays disabled after a restore.
+  if (typeof refreshStep4Gate === "function") refreshStep4Gate();
+}
+
+function draftAgeText(savedAt) {
+  const mins = Math.floor((Date.now() - savedAt) / 60000);
+  return t("draftSavedAgo") + (mins < 1 ? t("draftJustNow") : mins + t("draftMinsAgo"));
+}
+
+(function initDraftRecovery() {
+  const banner = document.getElementById("draftBanner");
+  const d = readDraft();
+
+  if (d && banner) {
+    document.getElementById("draftWhen").textContent = draftAgeText(d.savedAt);
+    banner.style.display = "flex";
+    document.getElementById("draftResume").addEventListener("click", () => {
+      applyDraft(d);
+      banner.style.display = "none";
+    });
+    document.getElementById("draftDiscard").addEventListener("click", () => {
+      clearDraft();
+      banner.style.display = "none";
+    });
+  }
+
+  // Primary trigger, as specified: save when a field loses focus.
+  // `blur` does not bubble, so this is registered in the capture phase.
+  document.addEventListener("blur", (e) => {
+    const el = e.target;
+    if (el && (el.tagName === "INPUT" || el.tagName === "SELECT" || el.tagName === "TEXTAREA")) saveDraft();
+  }, true);
+
+  // blur alone is not enough here. The consent initials, the Yes/No chips, the
+  // removal-method chips and the age choice are all tap targets that mutate
+  // `state` without any field ever losing focus — i.e. exactly the answers a
+  // client would most hate to re-enter. A debounced click listener catches them.
+  let clickTimer;
+  document.addEventListener("click", () => {
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(saveDraft, 250);
+  }, true);
+
+  // Backstop for iOS: pagehide fires on background/close where unload does not.
+  window.addEventListener("pagehide", saveDraft);
+})();
+
+function val(id) { const el = document.getElementById(id); return el ? el.value : ""; }
+function yn(field) { return state.yn[field] === true ? "Y" : state.yn[field] === false ? "N" : ""; }
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 4000);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Precise Laser — Log Treatment</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* important-note flag */
+  .notes-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:18px; }
+  .flag-btn { display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+              background:#fff; border:1px solid #d8d8d8; color:#666;
+              border-radius:20px; padding:6px 14px; font-size:13px; font-weight:600; }
+  .flag-btn .flag-ico { font-size:15px; line-height:1; }
+  .flag-btn.on { background:#FDECEC; border-color:#E4A0A0; color:#A32D2D; }
+  .flag-hint { color:#A32D2D; font-size:13px; font-weight:600; margin:6px 0 0; }
+  tr.flagged td { background:#FDECEC !important; }
+  .flag-cell { color:#A32D2D; font-size:15px; text-align:center; }
+
+  /* collapsed visit history */
+  .hist-toggle { margin-top:10px; }
+  .hist-more { display:none; }
+  .hist-more.on { display:table-row-group; }
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a href="index.html">🏠 Home</a>
+  <a href="intake.html">New Client</a>
+  <a href="treatment.html" class="current">Log Treatment</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="chatbot.html">Chatbot Answers</a>
+  <a href="audit.html">Access Log</a>
+</div>
+<div class="staff-logo-bar">
+  <img src="logo.png" alt="Precise Laser Hair Removal &amp; Esthetics">
+</div>
+<div class="wrap">
+  <h1>Log Today's Treatment</h1>
+  <p class="sub">Provider screen — find the client, then log this visit.</p>
+
+  <!-- SEARCH -->
+  <div id="searchBlock">
+    <label>Find Client</label>
+    <input type="text" id="searchInput" placeholder="Type a name…" oninput="doSearch()">
+    <div id="searchResults"></div>
+  </div>
+
+  <!-- SELECTED CLIENT -->
+  <div id="clientBlock" style="display:none">
+    <div class="card">
+      <strong id="clientName" style="font-size:18px"></strong>
+      <div class="muted" id="clientMeta"></div>
+      <button class="btn secondary small" style="margin-top:12px" onclick="clearClient()">Not this client — search again</button>
+    </div>
+
+    <h2>Previous Visits</h2>
+    <div id="history"><p class="muted">No previous visits on file yet.</p></div>
+
+    <h2>Today's Treatment</h2>
+    <label>Date</label>
+    <input type="date" id="visit_date">
+
+    <label>Provider</label>
+    <select id="provider">
+      <option value="">Select provider</option>
+      <option>Ami</option>
+      <option>Kayla</option>
+    </select>
+
+    <label>Treatment Area</label>
+    <input type="text" id="treatment_area" placeholder="e.g. underarms, bikini, legs">
+
+    <label>Procedure Performed</label>
+    <select id="procedure">
+      <option value="">Select procedure</option>
+      <optgroup label="Hair Removal">
+        <option>Laser Hair Removal</option>
+        <option>Electrolysis</option>
+      </optgroup>
+      <optgroup label="Detoxification">
+        <option>Infrared Sauna</option>
+        <option>Colon Hydrotherapy</option>
+        <option>FIT Bodywrap</option>
+      </optgroup>
+      <optgroup label="Rejuvenating Facials">
+        <option>HydraFacial</option>
+        <option>Chemical Peel</option>
+        <option>Microneedling</option>
+        <option>Dermaplaning</option>
+        <option>Acne Facial</option>
+        <option>Anti-Aging Facial</option>
+        <option>Back Facial</option>
+      </optgroup>
+      <optgroup label="Beautification">
+        <option>Keratin Lash Lift</option>
+        <option>Teeth Whitening</option>
+        <option>Lip Blushing PMU</option>
+        <option>Hyperpigmentation Correction</option>
+        <option>Swarovski Tooth Gems</option>
+      </optgroup>
+      <optgroup label="Other">
+        <option>TBD — 18th Procedure (placeholder)</option>
+      </optgroup>
+    </select>
+
+    <label>Laser</label>
+    <select id="laser">
+      <option value="">Select laser</option>
+      <option>Candela</option>
+      <option>Lightage</option>
+    </select>
+
+    <!-- inputmode="numeric" gives the iPad a number pad without the desktop
+         spinner arrows, so a provider types "20" instead of tapping up 20x. -->
+    <div class="btn-row">
+      <div style="flex:1"><label style="margin-top:0">Joules</label>
+        <input type="text" id="joules" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="e.g. 15"></div>
+      <div style="flex:1"><label style="margin-top:0">MS</label>
+        <input type="text" id="ms" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="e.g. 20"></div>
+    </div>
+
+    <div class="notes-head">
+      <label style="margin-top:0">Notes</label>
+      <button type="button" class="flag-btn" id="flagBtn" onclick="toggleFlag()"
+              aria-pressed="false" title="Mark this visit as important">
+        <span class="flag-ico">&#9873;</span><span id="flagText">Flag as important</span>
+      </button>
+    </div>
+    <textarea id="notes" placeholder="Reaction, adjustments, anything to remember for next time"></textarea>
+    <p class="flag-hint" id="flagHint" style="display:none">
+      Flagged. This visit will show a red flag on the client's history so this approach isn't repeated.
+    </p>
+
+    <label>Photo</label>
+    <input type="file" id="photo" accept="image/*" capture="environment">
+
+    <button class="btn" id="saveBtn" onclick="saveTreatment()">Save Treatment</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let selectedClient = null;
+document.getElementById("visit_date").value = new Date().toISOString().slice(0,10);
+
+const urlParams = new URLSearchParams(window.location.search);
+const preselectId = urlParams.get("client_id");
+if (preselectId) loadClient(preselectId);
+
+let searchTimer;
+function doSearch() {
+  clearTimeout(searchTimer);
+  const q = document.getElementById("searchInput").value.trim();
+  if (q.length < 2) { document.getElementById("searchResults").innerHTML = ""; return; }
+  searchTimer = setTimeout(async () => {
+    const res = await fetch("/api/clients?q=" + encodeURIComponent(q));
+    const list = await res.json();
+    const box = document.getElementById("searchResults");
+    box.innerHTML = "";
+    if (!list.length) { box.innerHTML = '<p class="muted">No matches.</p>'; return; }
+    const table = document.createElement("table");
+    table.innerHTML = "<tr><th>Name</th><th>Phone</th></tr>" + list.map(c =>
+      '<tr class="clickable" onclick="loadClient(' + c.id + ')"><td>' + c.first_name + ' ' + c.last_name + '</td><td>' + (c.phone||"") + '</td></tr>'
+    ).join("");
+    box.appendChild(table);
+  }, 250);
+}
+
+async function loadClient(id) {
+  const res = await fetch("/api/clients/" + id);
+  const data = await res.json();
+  selectedClient = data.client;
+  document.getElementById("searchBlock").style.display = "none";
+  document.getElementById("clientBlock").style.display = "block";
+  document.getElementById("clientName").textContent = selectedClient.first_name + " " + selectedClient.last_name;
+  document.getElementById("clientMeta").textContent =
+    [selectedClient.phone, selectedClient.skin_type ? ("Skin Type " + selectedClient.skin_type) : ""].filter(Boolean).join(" · ");
+
+  renderHistory(data.treatments);
+}
+
+// Visit history is collapsed to the most recent visit only. A provider with a
+// client on the table needs last time's settings, not two years of scrolling —
+// and this list grows every single appointment.
+function renderHistory(treatments) {
+  const hist = document.getElementById("history");
+  hist.innerHTML = "";
+
+  if (!treatments.length) {
+    hist.innerHTML = '<p class="muted">No previous visits on file yet.</p>';
+    return;
+  }
+
+  const head = "<thead><tr><th></th><th>Date</th><th>Provider</th><th>Procedure</th><th>Area</th>" +
+               "<th>Laser</th><th>Joules</th><th>MS</th><th>Notes</th></tr></thead>";
+  const row = t =>
+    '<tr' + (t.flagged ? ' class="flagged"' : '') + '>' +
+      '<td class="flag-cell">' + (t.flagged ? "&#9873;" : "") + '</td>' +
+      "<td>" + esc(t.visit_date) + "</td><td>" + esc(t.provider) + "</td><td>" + esc(t.procedure) +
+      "</td><td>" + esc(t.treatment_area) + "</td><td>" + esc(t.laser) + "</td><td>" + esc(t.joules) +
+      "</td><td>" + esc(t.ms) + "</td><td>" + esc(t.notes) + "</td></tr>";
+
+  const first = treatments[0];
+  const rest = treatments.slice(1);
+
+  const table = document.createElement("table");
+  table.innerHTML = head +
+    "<tbody>" + row(first) + "</tbody>" +
+    (rest.length ? '<tbody class="hist-more" id="histMore">' + rest.map(row).join("") + "</tbody>" : "");
+  hist.appendChild(table);
+
+  // A flagged visit buried in the collapsed section must not be hidden — that
+  // is the whole point of the flag. Surface the count up front.
+  const hiddenFlags = rest.filter(t => t.flagged).length;
+
+  if (rest.length) {
+    const btn = document.createElement("button");
+    btn.className = "btn secondary small hist-toggle";
+    btn.type = "button";
+    const showLabel = "Show all " + treatments.length + " visits" +
+      (hiddenFlags ? "  ⚑ " + hiddenFlags + " flagged" : "");
+    btn.textContent = showLabel;
+    btn.onclick = () => {
+      const more = document.getElementById("histMore");
+      const open = more.classList.toggle("on");
+      btn.textContent = open ? "Show only the last visit" : showLabel;
+    };
+    hist.appendChild(btn);
+  }
+
+  const photos = treatments.filter(t => t.photo_key);
+  if (photos.length) {
+    const grid = document.createElement("div");
+    grid.className = "photo-grid";
+    photos.forEach(t => {
+      const img = document.createElement("img");
+      img.src = "/api/photo/" + t.photo_key;
+      img.title = (t.visit_date || "") + (t.flagged ? " — FLAGGED" : "");
+      grid.appendChild(img);
+    });
+    hist.appendChild(grid);
+  }
+}
+
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+let flagged = false;
+function toggleFlag() {
+  flagged = !flagged;
+  const btn = document.getElementById("flagBtn");
+  btn.classList.toggle("on", flagged);
+  btn.setAttribute("aria-pressed", flagged ? "true" : "false");
+  document.getElementById("flagText").textContent = flagged ? "Flagged as important" : "Flag as important";
+  document.getElementById("flagHint").style.display = flagged ? "block" : "none";
+}
+
+function clearClient() {
+  selectedClient = null;
+  document.getElementById("clientBlock").style.display = "none";
+  document.getElementById("searchBlock").style.display = "block";
+  document.getElementById("searchInput").value = "";
+  document.getElementById("searchResults").innerHTML = "";
+}
+
+async function saveTreatment() {
+  if (!selectedClient) return;
+  const btn = document.getElementById("saveBtn");
+  btn.disabled = true; btn.textContent = "Saving…";
+
+  let photo_key = null;
+  const fileInput = document.getElementById("photo");
+  if (fileInput.files[0]) {
+    const fd = new FormData();
+    fd.append("photo", fileInput.files[0]);
+    const upRes = await fetch("/api/upload", { method: "POST", body: fd });
+    const upData = await upRes.json();
+    photo_key = upData.key;
+  }
+
+  const payload = {
+    client_id: selectedClient.id,
+    visit_date: document.getElementById("visit_date").value,
+    provider: document.getElementById("provider").value,
+    treatment_area: document.getElementById("treatment_area").value,
+    procedure: document.getElementById("procedure").value,
+    laser: document.getElementById("laser").value,
+    joules: document.getElementById("joules").value,
+    ms: document.getElementById("ms").value,
+    notes: document.getElementById("notes").value,
+    photo_key,
+    flagged: flagged,
+  };
+
+  const res = await fetch("/api/treatments", {
+    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload),
+  });
+  if (res.ok) {
+    showToast(flagged ? "Treatment saved and flagged." : "Treatment saved.");
+    loadClient(selectedClient.id);
+    ["treatment_area","procedure","joules","ms","notes"].forEach(id => document.getElementById(id).value = "");
+    fileInput.value = "";
+    if (flagged) toggleFlag();   // reset, so the next visit isn't flagged by accident
+  } else {
+    alert("Save failed — try again.");
+  }
+  btn.disabled = false; btn.textContent = "Save Treatment";
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 3000);
+}
+</script>
+</body>
+</html>

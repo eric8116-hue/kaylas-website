@@ -297,12 +297,12 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 
 <script>
 const CONCERNS = {
-head:["Fine lines & wrinkles","Acne & breakouts","Uneven skin tone","Dull, tired-looking skin","Enlarged pores","Peach fuzz / unwanted facial hair","Rough texture","Sun damage / age spots","Thin, sparse lashes","Uneven or thin lips","Stained or dull teeth","Blackheads & clogged pores","Freckles / moderate discoloration","Facial redness / irritation","Stress-related skin dullness","Tension & facial tension"],
+head:["Unwanted hair","Peach fuzz","Fine lines & wrinkles","Acne & breakouts","Uneven skin tone","Dull, tired-looking skin","Enlarged pores","Rough texture","Sun damage / age spots","Thin, sparse lashes","Uneven or thin lips","Stained or dull teeth","Blackheads & clogged pores","Freckles / moderate discoloration","Facial redness / irritation","Stress-related skin dullness","Tension & facial tension"],
 arms:["Unwanted hair","Ingrown hairs","Rough or bumpy texture","Muscle soreness","Joint pain (elbows/wrists)","Poor circulation","Sun damage","Uneven skin tone","Cellulite (upper arms)","Skin dullness","Inflammation","Fatigue / low energy","Slow recovery after activity"],
 torso:["Unwanted hair","Ingrown hairs","Acne / body breakouts","Uneven skin tone","Rough texture","Sun damage","Poor circulation","Muscle tension","Stress / anxiety","Skin dullness","Inflammation","Back acne & congestion"],
-stomach:["Cellulite","Bloating","Unwanted hair","Slow digestion","Detoxification / toxin buildup","Weak immunity","Weight management","Poor skin elasticity","Constipation / irregularity","Low energy / fatigue","Water retention","Skin dullness","Sun damage","Poor nutrient absorption"],
-hips:["Cellulite","Unwanted hair","Ingrown hairs","Uneven skin tone","Water retention","Poor circulation","Joint discomfort","Skin dullness","Weight management","Muscle tension","Detoxification"],
-thighs:["Cellulite","Unwanted hair","Ingrown hairs","Chafing / irritation","Uneven skin tone","Poor circulation","Water retention","Muscle soreness","Skin dullness / roughness","Weight management","Joint pain (knees)","Detoxification","Sun damage"],
+stomach:["Unwanted hair","Cellulite","Bloating","Slow digestion","Detoxification / toxin buildup","Weak immunity","Weight management","Poor skin elasticity","Constipation / irregularity","Low energy / fatigue","Water retention","Skin dullness","Sun damage","Poor nutrient absorption"],
+hips:["Unwanted hair","Cellulite","Ingrown hairs","Uneven skin tone","Water retention","Poor circulation","Joint discomfort","Skin dullness","Weight management","Muscle tension","Detoxification"],
+thighs:["Unwanted hair","Cellulite","Ingrown hairs","Chafing / irritation","Uneven skin tone","Poor circulation","Water retention","Muscle soreness","Skin dullness / roughness","Weight management","Joint pain (knees)","Detoxification","Sun damage"],
 calves:["Unwanted hair","Ingrown hairs","Rough, dry skin","Poor circulation","Muscle cramping / soreness","Swelling / water retention","Joint pain (ankles/knees)","Varicose vein appearance","Fatigue after standing","Cellulite","Skin dullness","Uneven skin tone","Detoxification"]
 };
 const ZONE_LABELS = {head:"Head / Face", arms:"Arms", torso:"Upper Torso / Chest", stomach:"Stomach", hips:"Hip Area", thighs:"Thighs", calves:"Calves & Feet"};
@@ -388,23 +388,34 @@ case-insensitive) — add a tag here any time new concern wording should
 trigger this category. Every card gets both a Book Now and a Learn More
 link, no exceptions, so the two never drift out of sync again. */
 const CATEGORIES = [
-{ id:'laser', name:'Laser Hair Removal', page:'services-hair-removal.html',
-  blurb:'A concentrated beam of light targets pigment in the hair follicle, damaging it so future growth slows — up to 95% permanent reduction on most skin types. We\'ll confirm the right method for your hair and skin type at your free consultation.',
-  expect:'6–12 sessions typical, spaced a few weeks apart to catch hair in every growth cycle. No downtime.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
-  tags:['hair','ingrown','chafing','peach fuzz'] },
 { id:'electrolysis', name:'Electrolysis', page:'services-hair-removal.html#electrolysis',
   blurb:'Reaches hair a laser can\'t — blonde, red, grey, fine — by sending current directly into the follicle. The only FDA-approved method for permanent removal of all hair types.',
   expect:'Multiple sessions over months, since hair grows in three separate cycles.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/VQT3OY4IK4KP4ITGJWXWGQ5Z',
-  tags:['hair','ingrown','peach fuzz'] },
+  tags:['hair','ingrown'] },
+{ id:'laser', name:'Laser Hair Removal', page:'services-hair-removal.html',
+  blurb:'A concentrated beam of light targets pigment in the hair follicle, damaging it so future growth slows — up to 95% permanent reduction on most skin types. We\'ll confirm the right method for your hair and skin type at your free consultation.',
+  expect:'6–12 sessions typical, spaced a few weeks apart to catch hair in every growth cycle. No downtime.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
+  tags:['hair','ingrown','chafing'] },
+/* Dermaplaning is face-only by nature — a blade treatment for the facial
+   surface. onlyZones keeps it from ever being suggested for leg or torso
+   hair, which would read as nonsense to a client. "Peach fuzz" appears
+   only on the face's concern list and carries no other tag, so selecting
+   it returns this card and nothing else. */
+{ id:'dermaplaning', name:'Dermaplaning Facial', page:'services-facials.html#dermaplaning',
+  blurb:'A skin treatment where a small, sharp blade is used to gently scrape off dead skin cells and fine facial hair — peach fuzz. Benefits: better product absorption, deep exfoliation, softer fine lines and wrinkles, and noticeably smoother makeup application.',
+  expect:'A quick in-office treatment with no downtime — skin looks brighter and feels smoother right away.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y72LAGIZQI2WA6U3O6EHYON4',
+  onlyZones:['head'],
+  tags:['peach fuzz','unwanted hair'] },
 { id:'facials', name:'Facials', page:'services-facials.html',
   blurb:'Facials cover a lot of ground — texture, tone, congestion, hydration, fine lines and wrinkles. We offer HydraFacial, chemical peels, microneedling, dermaplaning, acne facials, anti-aging facials, and back facials — we\'ll confirm which one is the right fit at your free consultation.',
   expect:'Most run 30–60 minutes with little to no downtime.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
   tags:['acne','breakout','dull','tired','pore','blackhead','uneven skin','redness','congestion',
         'wrinkle','fine line','hyperpigmentation','dark spot','dark patch','sun damage','age spot',
-        'freckle','discoloration','rough','dry skin','elasticity','peach fuzz','back acne','texture'] },
+        'freckle','discoloration','rough','dry skin','elasticity','back acne','texture'] },
 { id:'teeth-whitening', name:'Teeth Whitening', page:'services-beautification.html#teeth-whitening',
   blurb:'Professional whitening removes persistent stains and brightens your smile.',
   expect:'Instant results, no downtime.',
@@ -425,9 +436,13 @@ Object.keys(state.concernsByZone).forEach(zone => {
 state.concernsByZone[zone].forEach(c => selected.push({zone, concern:c}));
 });
 const results = CATEGORIES.map(t => {
-const matches = selected.filter(s => t.tags.some(tag => s.concern.toLowerCase().includes(tag)));
+const matches = selected.filter(s =>
+  (!t.onlyZones || t.onlyZones.includes(s.zone)) &&
+  t.tags.some(tag => s.concern.toLowerCase().includes(tag)));
 return Object.assign({}, t, {matches});
 }).filter(t => t.matches.length > 0);
+/* Sort is stable, so an equal number of matches falls back to the order
+   of CATEGORIES above — which is why Electrolysis is listed first there. */
 results.sort((a,b) => b.matches.length - a.matches.length);
 return results;
 }

@@ -1,0 +1,24 @@
+# Cloudflare Pages redirect rules.
+# Format: <from> <to> <status>
+#
+# Old Squarespace URLs. The site previously lived on Squarespace, whose
+# home page sat at /home rather than /. Google still has that URL indexed
+# and it was showing up in Search Console as a duplicate of the real
+# homepage. A 301 sends both people and Googlebot to the right place and
+# passes along whatever link value the old URL had earned.
+/home                     /                          301
+/home/                    /                          301
+
+# Old service paths, in case any are still linked from directories,
+# social profiles, or printed material.
+/services                 /#services                 301
+/laser-hair-removal       /services-hair-removal     301
+/electrolysis             /services-hair-removal#electrolysis  301
+/facials                  /services-facials          301
+/detox                    /services-detox            301
+/contact                  /?open=contact             301
+/book                     /?open=contact             301
+
+# Convenience paths people may type or that staff may hand out verbally.
+/intake                   /client-intake             301
+/espanol                  /servicios                 301

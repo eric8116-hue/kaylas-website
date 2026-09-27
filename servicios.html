@@ -117,6 +117,7 @@ a.svc:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; bord
 .sec{padding:52px 0}
 }
 </style>
+<link rel="stylesheet" href="language-switch.css">
 </head>
 <body>
 
@@ -143,6 +144,20 @@ a.svc:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; bord
 </div>
 <a class="hdr-phone" href="tel:6319231174">(631) 923-1174</a>
 <a class="btn btn-p" href="tel:6319231174">Llamar Ahora</a>
+<div class="mobile-lang-switch" role="group" aria-label="Language / Idioma">
+<a href="/" class="ls" lang="en" aria-label="English">EN</a>
+<a href="/servicios.html" class="ls is-on" lang="es" aria-label="Español" aria-current="page">ES</a>
+</div>
+<details class="es-mobile-menu">
+<summary aria-label="Abrir menú"><span class="es-menu-lines" aria-hidden="true"><i></i><i></i><i></i></span></summary>
+<nav aria-label="Menú principal">
+<a href="#servicios-lista" onclick="this.closest('details').open=false">Servicios</a>
+<a href="#resenas" onclick="this.closest('details').open=false">Reseñas</a>
+<a href="#espanol" onclick="this.closest('details').open=false">Nosotros</a>
+<a href="#contacto" onclick="this.closest('details').open=false">Contacto</a>
+<a href="/client-intake">Admisión</a>
+</nav>
+</details>
 </div>
 </div>
 </header>

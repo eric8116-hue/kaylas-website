@@ -1,0 +1,31 @@
+/* H&R-style mobile language control: English stays blue, Spanish stays red. */
+.mobile-lang-switch{display:none; flex:0 0 auto; align-items:stretch; height:34px; overflow:hidden; border:1px solid #344154; border-radius:999px; background:#070d16}
+.mobile-lang-switch .ls{display:inline-flex; align-items:center; justify-content:center; min-width:38px; padding:0 8px; font:800 11px/1 'Inter',Arial,sans-serif; letter-spacing:.04em; text-decoration:none}
+.mobile-lang-switch .ls + .ls{border-left:1px solid #344154}
+.mobile-lang-switch .ls[lang="en"]{color:#2f80ed}
+.mobile-lang-switch .ls[lang="es"]{color:#e53935}
+.mobile-lang-switch .ls[lang="en"].is-on{background:#2f80ed;color:#fff}
+.mobile-lang-switch .ls[lang="es"].is-on{background:#e53935;color:#fff}
+.mobile-lang-switch .ls:focus-visible,.es-mobile-menu summary:focus-visible{outline:2px solid #2f80ed;outline-offset:2px}
+
+/* The English page already has a three-line menu. Keep both controls level. */
+@media (max-width:1100px){
+  .hdr-in > .mobile-lang-switch{display:inline-flex; align-self:center}
+}
+
+/* The Spanish page needs the same header controls when its desktop nav hides. */
+.es-mobile-menu{display:none; position:relative; flex:0 0 auto}
+.es-mobile-menu summary{display:flex; align-items:center; justify-content:center; width:40px; height:40px; border:1.5px solid var(--teal); border-radius:10px; background:var(--teal-light); cursor:pointer; list-style:none}
+.es-mobile-menu summary::-webkit-details-marker{display:none}
+.es-menu-lines{display:flex; flex-direction:column; justify-content:space-between; width:20px; height:14px}
+.es-menu-lines i{display:block; width:20px; height:2px; border-radius:2px; background:var(--teal-deep)}
+.es-mobile-menu nav{display:none; position:absolute; top:calc(100% + 12px); right:0; z-index:950; width:min(250px,calc(100vw - 24px)); padding:8px; border:1px solid var(--line); border-radius:12px; background:var(--paper); box-shadow:0 14px 30px rgba(13,62,59,.2)}
+.es-mobile-menu[open] nav{display:flex; flex-direction:column}
+.es-mobile-menu nav a{display:block; padding:9px 12px; border-radius:7px; color:var(--ink); font-size:14px; font-weight:600}
+.es-mobile-menu nav a:hover,.es-mobile-menu nav a:focus-visible{background:var(--teal-light); color:var(--teal-deep)}
+@media (max-width:900px){
+  .hdr-cta > .mobile-lang-switch{display:inline-flex; align-self:center}
+  .hdr-cta > .es-mobile-menu{display:block}
+  .hdr-cta > .btn{display:none}
+  .hdr-cta{gap:8px}
+}

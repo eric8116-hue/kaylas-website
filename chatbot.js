@@ -273,6 +273,10 @@ const CSS = `
    the other four rail widgets at a glance. */
 .cb-btn{border:none; padding:0; cursor:pointer; font:inherit; color:#fff; -webkit-appearance:none; appearance:none; border-radius:16px}
 .cb-btn svg{stroke:#fff; fill:none}
+.cb-mobile-label{display:none}
+@media (max-width:760px){
+  .cb-mobile-label{display:inline; font-size:12px; font-weight:700; line-height:1}
+}
 @media (max-width:640px){ .cb-btn{border-radius:13px} }
 .cb-panel{position:fixed; right:16px; bottom:24px; width:360px; max-width:calc(100vw - 24px); max-height:min(560px,calc(100vh - 100px)); background:var(--paper); border:1px solid var(--line); border-radius:20px; box-shadow:0 30px 60px -14px rgba(20,97,93,.35); z-index:950; display:none; flex-direction:column; overflow:hidden; font-family:'Inter',system-ui,sans-serif}
 .cb-panel.open{display:flex; animation:cbFade .22s ease}
@@ -303,7 +307,8 @@ const CSS = `
 .cb-send{background:linear-gradient(135deg,var(--teal-deep),var(--teal-darker)); color:#fff; border:none; border-radius:11px; width:42px; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0}
 .cb-bookbar{padding:10px 12px; background:var(--teal-light); text-align:center}
 .cb-bookbar a{font-size:12.5px; font-weight:700; color:var(--teal-deep)}
-@media (max-width:480px){ .cb-panel{right:12px; bottom:80px; width:calc(100vw - 24px)} }
+@media (max-width:480px){ .cb-panel{right:12px; width:calc(100vw - 24px)} }
+@media (max-width:760px){ .cb-panel{bottom:calc(84px + env(safe-area-inset-bottom)); max-height:calc(100vh - 110px - env(safe-area-inset-bottom))} }
 `;
 
 function buildPanel(){
@@ -420,7 +425,7 @@ function init(){
     <circle cx="14.8" cy="10.4" r="1.35" fill="#fff" stroke="none"/>
     <path d="M9.4 14.1h5.2"/>
     <path d="M8.6 17.2v2.2M15.4 17.2v2.2"/>
-  </svg>`;
+  </svg><span class="cb-mobile-label" aria-hidden="true">Chat</span>`;
   // first position in the rail — above the Self-Assessment button
   rail.insertBefore(btn, rail.firstChild);
 

@@ -1,0 +1,44 @@
+/* Eric 10-01 — desktop header, side buttons, rating badge, EN/ES switch.
+   Gold and glow copied from H&R Automotive (#FFC233 gold, #F2A900 glow, Space Grotesk 700).
+   EN/ES pill is the canonical switch (H&R black-ink.css). */
+
+/* EN/ES pill in the desktop nav (replaces the "Español" text link) */
+.desk-lang{height:27px; display:inline-flex; align-items:stretch; flex:0 0 auto; overflow:hidden; border:1px solid #344154; border-radius:999px; background:#070d16}
+.desk-lang .ls{display:inline-flex; align-items:center; justify-content:center; min-width:34px; min-height:27px; padding:0 8px; font:800 9.6px/1 'Inter',Arial,sans-serif; letter-spacing:.06em; text-decoration:none}
+.desk-lang .ls + .ls{border-left:1px solid #344154}
+.desk-lang .ls[lang="en"]{color:#2f80ed}
+.desk-lang .ls[lang="es"]{color:#e53935}
+.desk-lang .ls[lang="en"].is-on{background:#2f80ed; color:#fff}
+.desk-lang .ls[lang="es"].is-on{background:#e53935; color:#fff}
+.desk-lang .ls:not(.is-on):hover{background:rgba(255,255,255,.08)}
+.desk-lang .ls::after{display:none}
+.nav a.ls{padding:0 8px}
+
+/* header: logo hard left, menu items never wrap */
+.hdr-in{padding-left:clamp(8px,1vw,18px)}
+.nav a{white-space:nowrap}
+@media (max-width:1560px){ .nav{gap:16px} .nav a{font-size:14px} }
+
+/* side shortcut buttons: below the header, centred in the visible hero */
+@media (min-width:761px){
+  .action-rail{top:calc(50vh + var(--hdr-h,172px) / 2)}
+}
+
+/* Reviews section (under the self-assessment): 5.0 in H&R gold with a radiant pulse, stars glowing.
+   Font, size and star shapes unchanged. The header badge is left exactly as it was. */
+.revsec-score{color:#FFC233; animation:preciseRadGlow 2.8s ease-in-out infinite}
+.revsec-stars svg{fill:#FFC233; animation:preciseStarGlow 2.8s ease-in-out infinite}
+@keyframes preciseRadGlow{
+  0%,100%{text-shadow:0 0 6px rgba(242,169,0,.35), 0 0 12px rgba(242,169,0,.18)}
+  50%{text-shadow:0 0 12px rgba(242,169,0,.9), 0 0 24px rgba(242,169,0,.6), 0 0 40px rgba(242,169,0,.32)}
+}
+@keyframes preciseStarGlow{
+  0%,100%{filter:drop-shadow(0 0 3px rgba(242,169,0,.4))}
+  50%{filter:drop-shadow(0 0 6px rgba(242,169,0,.95)) drop-shadow(0 0 12px rgba(242,169,0,.55))}
+}
+@media (prefers-reduced-motion:reduce){ .revsec-score,.revsec-stars svg{animation:none} }
+
+/* the three static review cards: stars centred */
+.quote-stars{justify-content:center}
+.quote-stars svg{fill:#FFC233; animation:preciseStarGlow 2.8s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){ .quote-stars svg{animation:none} }

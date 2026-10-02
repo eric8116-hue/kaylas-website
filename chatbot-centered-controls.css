@@ -1,0 +1,152 @@
+/* Center the open chat composition at every preview width and keep controls
+   compact, smooth, and semantically colored. */
+.cb-panel .cb-head {
+  position: relative;
+  justify-content: center;
+  text-align: center;
+}
+
+.cb-panel .cb-head > div {
+  max-width: calc(100% - 48px);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.cb-panel .cb-close {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+}
+
+.cb-panel .cb-toolbar {
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cb-panel .cb-toolbar #cbLanguages {
+  display: inline-flex;
+  justify-content: center;
+  margin-inline: 0;
+}
+
+.cb-panel .cb-toolbar > .cb-chip {
+  flex: 0 0 auto;
+  margin-inline: 0;
+}
+
+.cb-panel .cb-body {
+  align-items: center;
+}
+
+.cb-panel .cb-msg {
+  align-self: center;
+  text-align: center;
+}
+
+.cb-panel .cb-msg-actions,
+.cb-panel .cb-chips {
+  justify-content: center;
+}
+
+.cb-panel .cb-privacy {
+  text-align: center;
+}
+
+.cb-panel .cb-foot {
+  justify-content: center;
+}
+
+.cb-panel .cb-input {
+  text-align: center;
+}
+
+.cb-panel .cb-msg-actions a,
+.cb-panel .cb-chip,
+.cb-panel .cb-share,
+.cb-panel .cb-send,
+.cb-panel .cb-toolbar .cb-chip,
+.cb-panel .cb-lang {
+  min-height: 34px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-weight: 750;
+  line-height: 1.15;
+  transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+
+.cb-panel .cb-msg-actions a:hover,
+.cb-panel .cb-chip:hover,
+.cb-panel .cb-share:hover,
+.cb-panel .cb-send:hover,
+.cb-panel .cb-toolbar .cb-chip:hover,
+.cb-panel .cb-lang:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(28, 53, 59, .14);
+}
+
+.cb-panel .cb-chip {
+  border: 1px solid #d6c0e5;
+  background: #f3eaf9;
+  color: #673787;
+}
+
+.cb-panel .cb-book { background: #a13f5c; color: #fff; }
+.cb-panel .cb-call { background: #16754f; color: #fff; }
+.cb-panel .cb-learn { background: #edf5f0; color: #145e54; }
+
+.cb-panel .cb-send {
+  border: 0;
+  background: #12675f;
+  color: #fff;
+}
+
+.cb-panel .cb-toolbar #cbLanguages .cb-en[aria-pressed="true"] {
+  background: #2f80ed;
+  color: #fff;
+}
+
+.cb-panel .cb-toolbar #cbLanguages .cb-es[aria-pressed="true"] {
+  background: #e53935;
+  color: #fff;
+}
+
+@media (max-width: 760px) {
+  .cb-panel .cb-input { flex: 0 1 280px; }
+  .action-rail > .cb-btn {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 122px);
+    right: 14px;
+    left: auto;
+    bottom: auto;
+    z-index: 945;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    transform: none;
+    box-shadow: 0 8px 22px rgba(20, 97, 93, .32);
+    touch-action: none;
+    user-select: none;
+    cursor: grab;
+  }
+  .action-rail > .cb-btn:hover { transform: scale(1.04); }
+  .action-rail > .cb-btn.cb-dragging {
+    cursor: grabbing;
+    transition: none;
+  }
+  .action-rail > .cb-btn > span[aria-hidden="true"] { font-size: 14px; line-height: 1; }
+  .action-rail > .cb-btn .cb-mobile-label { display: block; font-size: 8px; line-height: 1; }
+  .action-rail .rail-text { order: 2; background: #2f80ed; }
+  .action-rail .rail-whatsapp { order: 3; }
+  .action-rail .rail-call { order: 4; }
+}

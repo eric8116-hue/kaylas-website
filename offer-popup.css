@@ -1,0 +1,297 @@
+.promo-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(10, 40, 38, 0.58);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px calc(20px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.promo-scrim.open {
+  display: flex;
+  animation: offerFade 0.2s ease;
+}
+@keyframes offerFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.promo-card {
+  width: min(100%, 460px);
+  margin: auto 0;
+  background: var(--paper, #fff);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 34px 80px rgba(10, 40, 38, 0.4);
+  position: relative;
+  animation: offerRise 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+@keyframes offerRise {
+  from {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.promo-close {
+  position: absolute;
+  right: 13px;
+  top: 13px;
+  z-index: 4;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink, #16302e);
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+}
+.promo-top {
+  padding: 34px 28px 26px;
+  background: linear-gradient(
+    140deg,
+    var(--teal, #1e8a85),
+    var(--teal-deep, #14615d)
+  );
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.promo-badge {
+  display: inline-block;
+  margin-bottom: 13px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.promo-head {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(28px, 6vw, 40px);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.08;
+  margin: 0 0 10px;
+}
+.promo-sub {
+  max-width: 34ch;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.promo-body {
+  padding: 22px 24px;
+  text-align: center;
+}
+.promo-code {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1.5px solid var(--teal, #1e8a85);
+  border-radius: 12px;
+  background: var(--teal-light, #e4f4f2);
+}
+.promo-code[hidden],
+.promo-image[hidden],
+.promo-bullets[hidden],
+.promo-price[hidden] {
+  display: none !important;
+}
+.promo-code-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #5a716f);
+}
+.promo-code-val {
+  font:
+    600 22px "Cormorant Garamond",
+    Georgia,
+    serif;
+  color: var(--teal-deep, #14615d);
+  letter-spacing: 0.04em;
+}
+.promo-cta {
+  display: block;
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    var(--teal, #1e8a85),
+    var(--teal-deep, #14615d)
+  );
+  box-shadow: 0 8px 20px rgba(20, 97, 93, 0.26);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+}
+.promo-fine {
+  margin: 11px 0 0;
+  color: var(--ink-soft, #5a716f);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.promo-dismiss {
+  display: inline-block;
+  margin-top: 13px;
+  color: var(--ink-soft, #5a716f);
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.promo-card.has-image {
+  display: grid;
+  grid-template-columns: minmax(125px, 38%) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  max-width: 590px;
+  min-height: 250px;
+}
+.promo-image {
+  grid-column: 1;
+  grid-row: 1/3;
+  min-height: 250px;
+  background-position: center;
+  background-size: cover;
+  background-color: #e4f4f2;
+}
+.promo-top,
+.promo-body {
+  grid-column: 2;
+}
+.promo-card:not(.has-image) {
+  display: block;
+  max-width: 460px;
+  min-height: 0;
+}
+.promo-card:not(.has-image) .promo-top,
+.promo-card:not(.has-image) .promo-body {
+  grid-column: 1;
+}
+.promo-card.has-image.is-background {
+  position: relative;
+  display: block;
+  max-width: 430px;
+  min-height: 390px;
+  background: #16302e;
+}
+.promo-card.is-background .promo-image {
+  position: absolute;
+  inset: 0;
+  display: block !important;
+  background-position: center;
+  background-size: cover;
+}
+.promo-card.is-background .promo-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #000a, rgba(0, 0, 0, 0.12) 90%);
+}
+.promo-card.is-background .promo-top,
+.promo-card.is-background .promo-body {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  color: var(--offer-ink, #fff);
+  text-shadow: 0 1px 4px #0008;
+}
+.promo-card.is-background .promo-top {
+  padding-top: 54px;
+}
+.promo-card.is-background .promo-body {
+  padding-top: 12px;
+}
+.promo-card.is-background .promo-cta {
+  background: linear-gradient(135deg, #1e8a85, #14615d);
+  text-shadow: none;
+}
+.promo-card:not(.has-brand) .promo-badge {
+  display: none;
+}
+.promo-bullets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 16px;
+  margin: 0 auto 14px;
+  padding: 0;
+  list-style: none;
+  color: inherit;
+  font-size: 12px;
+}
+.promo-bullets li::before {
+  content: "✓ ";
+  color: var(--teal, #1e8a85);
+  font-weight: 900;
+}
+.promo-card.is-background .promo-bullets li::before {
+  color: #a7fff0;
+}
+.promo-price {
+  display: block;
+  margin: 0 0 12px;
+  color: #a64f80;
+  font-size: 18px;
+  font-weight: 850;
+}
+.promo-card.is-background .promo-price {
+  color: var(--offer-ink, #fff);
+}
+@media (max-width: 480px) {
+  .promo-top {
+    padding: 30px 22px;
+  }
+  .promo-body {
+    padding: 19px;
+  }
+  .promo-card.has-image {
+    grid-template-columns: 105px minmax(0, 1fr);
+    min-height: 220px;
+  }
+  .promo-card.has-image .promo-top {
+    padding: 32px 14px 14px;
+  }
+  .promo-card.has-image .promo-body {
+    padding: 12px;
+  }
+  .promo-card.has-image .promo-head {
+    font-size: 25px;
+  }
+  .promo-card.is-background {
+    min-height: 360px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .promo-scrim.open,
+  .promo-card {
+    animation: none;
+  }
+}

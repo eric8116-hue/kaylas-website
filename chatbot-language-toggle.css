@@ -1,0 +1,31 @@
+/* Match the H&R shared language capsule: English blue, Spanish red. */
+.cb-toolbar #cbLanguages {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 2px;
+  overflow: hidden;
+  border: 1px solid #344154;
+  border-radius: 999px;
+  background: #0f1724;
+}
+
+.cb-toolbar #cbLanguages .cb-lang {
+  appearance: none;
+  min-width: 34px;
+  min-height: 28px;
+  padding: 5px 9px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cb-toolbar #cbLanguages .cb-en { color: #2f80ed; }
+.cb-toolbar #cbLanguages .cb-es { color: #e53935; }
+.cb-toolbar #cbLanguages .cb-en[aria-pressed="true"] { background: #2f80ed; color: #fff; }
+.cb-toolbar #cbLanguages .cb-es[aria-pressed="true"] { background: #e53935; color: #fff; }
+.cb-toolbar #cbLanguages .cb-lang:not([aria-pressed="true"]):hover { background: #ffffff14; }

@@ -1,0 +1,25 @@
+/* Compact, smooth CTA shape. Action colors come from each page's existing variants. */
+.btn:not(.btn-size-keep) {
+  min-height: 38px;
+  padding: 8px 15px !important;
+  border-radius: 999px !important;
+  font-size: 13px !important;
+  font-weight: 700;
+  letter-spacing: .01em;
+  line-height: 1.2;
+  transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease, color .16s ease;
+}
+
+.btn:not(.btn-size-keep):hover { transform: translateY(-1px); }
+.btn:not(.btn-size-keep):active { transform: translateY(0) scale(.985); }
+.btn:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+.btn:disabled { cursor: not-allowed; }
+
+.btn-row .btn {
+  min-height: 44px;
+  padding: 8px 15px !important;
+}
+
+@media (max-width: 600px) {
+  .btn:not(.btn-size-keep) { min-height: 40px; padding-inline: 14px !important; }
+}

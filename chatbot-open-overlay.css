@@ -1,0 +1,25 @@
+/* On phones, the open chat is a focused overlay above the site's header. */
+@media (max-width: 760px) {
+  .cb-panel {
+    top: calc(env(safe-area-inset-top) + 8px);
+    bottom: calc(80px + env(safe-area-inset-bottom));
+    height: auto;
+    max-height: none;
+  }
+
+  .cb-head {
+    position: relative;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .cb-head > div { max-width: calc(100% - 38px); }
+  .cb-close { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); }
+  .cb-toolbar { justify-content: center; }
+  .cb-msg { align-self: center; text-align: center; }
+  .cb-msg-actions { justify-content: center; }
+  .cb-chips { justify-content: center; }
+  .cb-privacy { text-align: center; }
+  .cb-foot { justify-content: center; }
+  .cb-input { flex: 0 1 280px; }
+}

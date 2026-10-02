@@ -27,6 +27,7 @@
         is now the fallback rather than the primary path.
    ═══════════════════════════════════════════════════════════════════ */
 
+import { sanitizeAnswers, questionForReview } from './chatbot-support.mjs';
 const KV_KEY = 'custom_qa';
 const NOTIFY_FROM = 'website@preciselaserspa.com';
 const NOTIFY_FROM_NAME = 'Precise Laser Website';
@@ -42,7 +43,9 @@ const ALLOWED_ORIGINS = [
 
 function corsHeaders(request) {
   const origin = request.headers.get('Origin') || '';
-  const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  const local = ['127.0.0.1','localhost'].includes(new URL(request.url).hostname);
+  const localOrigin = /^http:\/\/(127\.0\.0\.1|localhost):\d+$/.test(origin);
+  const allow = ALLOWED_ORIGINS.includes(origin) || (local && localOrigin) ? origin : ALLOWED_ORIGINS[0];
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -244,8 +247,10 @@ export default {
     /* ---------- Public read: the chatbot calls this on every page load ---------- */
     if (path === '/qa' && request.method === 'GET') {
       const stored = await env.CHATBOT_KV.get(KV_KEY);
-      const list = stored ? JSON.parse(stored) : [];
-      return json({ qa: list }, request, 200, {
+      const record = stored ? JSON.parse(stored) : [];
+      const list = Array.isArray(record) ? record : record.qa || [];
+      const revision = Array.isArray(record) ? stored || '' : record.revision;
+      return json({ qa: list, revision }, request, 200, {
         // Cache briefly at the edge so we don't hit KV on every single visit,
         // but new answers still go live within a minute.
         'Cache-Control': 'public, max-age=60'
@@ -256,7 +261,7 @@ export default {
     if (path === '/login' && request.method === 'POST') {
       let body;
       try { body = await request.json(); } catch { return json({ ok: false }, request, 400); }
-      const ok = safeEqual(String(body.password || ''), String(env.ADMIN_PASSWORD || ''));
+      const ok = Boolean(env.ADMIN_PASSWORD) && safeEqual(String(body.password || ''), String(env.ADMIN_PASSWORD));
       if (!ok) {
         // Small delay makes brute-forcing impractical.
         await new Promise(r => setTimeout(r, 700));
@@ -268,7 +273,7 @@ export default {
     /* ---------- Protected write ---------- */
     if (path === '/qa' && request.method === 'POST') {
       const pw = request.headers.get('X-Admin-Password') || '';
-      if (!safeEqual(pw, String(env.ADMIN_PASSWORD || ''))) {
+      if (!env.ADMIN_PASSWORD || !safeEqual(pw, String(env.ADMIN_PASSWORD))) {
         await new Promise(r => setTimeout(r, 700));
         return json({ ok: false, error: 'Not authorized.' }, request, 401);
       }
@@ -276,11 +281,43 @@ export default {
       let body;
       try { body = await request.json(); } catch { return json({ ok: false, error: 'Bad request.' }, request, 400); }
 
-      const clean = sanitize(body.qa);
+      const clean = sanitizeAnswers(body.qa);
       if (clean === null) return json({ ok: false, error: 'Expected a list of Q&A items.' }, request, 400);
 
-      await env.CHATBOT_KV.put(KV_KEY, JSON.stringify(clean));
+      const previous = await env.CHATBOT_KV.get(KV_KEY);
+      const record = previous ? JSON.parse(previous) : [];
+      const revision = Array.isArray(record) ? previous || '' : record.revision;
+      if (typeof body.revision !== 'string' || body.revision !== revision)
+        return json({ ok: false, error: 'Answers changed or this editor is outdated. Reload answers before saving.' }, request, 409);
+      await env.CHATBOT_KV.put(KV_KEY, JSON.stringify({ qa: clean, revision: crypto.randomUUID() }));
       return json({ ok: true, count: clean.length }, request);
+    }
+
+    /* H&R-style unanswered-question review, explicitly shared by the visitor. */
+    if(path === '/miss' && request.method === 'POST'){
+      let body;try{body=await request.json();}catch{return json({error:'Invalid question.'},request,400);}
+      const entry=questionForReview(body);
+      if(!entry)return json({error:'Share a general question without contact details.'},request,400);
+      // Best-effort abuse protection; retain only a rotating hash, never the raw IP.
+      const ip=request.headers.get('CF-Connecting-IP');
+      if(ip){
+        const bucket=Math.floor(Date.now()/600000);
+        const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(bucket+':'+ip));
+        const key='miss-rate:'+Array.from(new Uint8Array(digest),x=>x.toString(16).padStart(2,'0')).join('');
+        const count=Number(await env.CHATBOT_KV.get(key))||0;
+        if(count>=10)return json({error:'Please try again later or call the spa.'},request,429);
+        await env.CHATBOT_KV.put(key,String(count+1),{expirationTtl:1200});
+      }
+      const id=crypto.randomUUID();
+      await env.CHATBOT_KV.put('miss:'+Date.now()+':'+id,JSON.stringify({...entry,id,at:new Date().toISOString()}),{expirationTtl:30*86400});
+      return json({ok:true},request);
+    }
+    if(path === '/miss' && request.method === 'GET'){
+      const pw=request.headers.get('X-Admin-Password')||'';
+      if(!env.ADMIN_PASSWORD || !safeEqual(pw,String(env.ADMIN_PASSWORD)))return json({error:'Not authorized.'},request,401);
+      const keys=await env.CHATBOT_KV.list({prefix:'miss:',limit:100});
+      const rows=(await Promise.all(keys.keys.map(k=>env.CHATBOT_KV.get(k.name,{type:'json'})))).filter(Boolean).sort((a,b)=>b.at.localeCompare(a.at));
+      return json({rows,limited:!keys.list_complete},request);
     }
 
     /* ---------- Public: contact form + text widget delivery ---------- */

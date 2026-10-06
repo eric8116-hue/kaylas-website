@@ -20,7 +20,7 @@ img{max-width:100%; display:block}
 svg{max-width:100%}
 .wrap{max-width:1180px; margin:0 auto; padding:0 24px}
 
-.eyebrow{font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--teal)}
+.eyebrow{font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#187772}
 .h2{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:clamp(28px,4vw,42px); line-height:1.12}
 .lede{font-size:16px; color:var(--ink-soft); line-height:1.7}
 
@@ -128,6 +128,7 @@ section[id]{scroll-margin-top:110px}
 
 .pill-list{list-style:none; display:flex; flex-wrap:wrap; gap:9px; margin:0 0 24px}
 .pill-list li{font-size:13.5px; font-weight:600; color:var(--teal-deep); background:var(--teal-light); padding:9px 15px; border-radius:99px}
+.pill-list.pill-stack{flex-direction:column; align-items:flex-start}
 
 .callout{border-left:4px solid var(--teal); background:var(--paper); border:1px solid var(--line); border-left-width:4px; border-radius:12px; padding:20px 24px; margin:0 0 24px}
 .callout h3{font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--teal-deep); margin-bottom:9px}
@@ -175,6 +176,7 @@ section[id]{scroll-margin-top:110px}
 .social:hover{background:var(--teal); transform:translateY(-2px)}
 .social svg{fill:#fff; stroke:none}
 .prefoot-map{border-radius:0; overflow:hidden; border-top:1px solid var(--line)}
+.prefoot-map:focus-within{outline:3px solid #14615D; outline-offset:-3px}
 .prefoot-map iframe{width:100%; height:340px; border:0; display:block; filter:grayscale(.15)}
 
 /* footer */

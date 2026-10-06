@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" translate="no">
 <head>
-<meta name="build" content="PLS-20261006-QUALITY">
+<meta name="build" content="PLS-20261006-ES">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -16,9 +16,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" hreflang="en" href="https://preciselaserspa.com/">
 <link rel="alternate" hreflang="es" href="https://preciselaserspa.com/servicios">
-<link rel="preconnect" href="https://images.squarespace-cdn.com">
-<link rel="preload" as="image" href="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/1027a4a5-39a9-4aca-af58-3dcb8a128b9c/1000_F_109337580_dBbFtED3zK9ES9icDMv4paWB3EiDlbGF.jpg?format=2500w" media="(min-width:761px)" fetchpriority="high">
-<link rel="preload" as="image" href="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/1027a4a5-39a9-4aca-af58-3dcb8a128b9c/1000_F_109337580_dBbFtED3zK9ES9icDMv4paWB3EiDlbGF.jpg?format=1000w" media="(max-width:760px)" fetchpriority="high">
+<link rel="preload" as="image" href="source-images/1000-f-109337580-dbbfted3zk9es9icdmv4pawb3eidlbgf-969w.jpg" media="(min-width:761px)" fetchpriority="high">
+<link rel="preload" as="image" href="source-images/1000-f-109337580-dbbfted3zk9es9icdmv4pawb3eidlbgf-969w.jpg" media="(max-width:760px)" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -101,6 +100,16 @@ a.svc:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; bord
 .stat{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:22px 18px; text-align:center}
 .stat-n{font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:600; color:var(--teal-deep); line-height:1}
 .stat-l{font-size:13px; font-weight:600; color:var(--ink-soft); margin-top:8px}
+.es-stars{display:flex; gap:4px; justify-content:center; margin-top:12px}
+.es-stars svg{fill:#FFC233; stroke:none}
+.es-quotes-note{text-align:center; font-size:13px; font-weight:600; color:var(--ink-soft); margin:0 0 16px}
+.es-quotes{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:1100px; margin:0 auto 12px}
+@media (max-width:900px){ .es-quotes{grid-template-columns:1fr} }
+.es-quotes .quote{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:22px 24px}
+.es-quotes .quote-stars{display:flex; gap:3px; justify-content:center; margin-bottom:11px}
+.es-quotes .quote-stars svg{fill:#FFC233; stroke:none}
+.es-quotes .quote-body{font-family:'Inter',system-ui,sans-serif; font-style:normal; font-size:14.5px; line-height:1.65; margin:0 0 13px; color:var(--ink)}
+.es-quotes .quote-who{font-size:12.5px; font-weight:600; color:var(--ink-soft)}
 .quote{background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:26px 28px; max-width:620px; margin:0 auto}
 .quote-stars{color:#E8A93C; font-size:15px; letter-spacing:2px; margin-bottom:10px}
 .quote-body{font-size:16px; font-style:italic; color:var(--ink); margin-bottom:12px; font-family:'Cormorant Garamond',serif; font-size:19px}
@@ -123,7 +132,7 @@ a.svc:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; bord
 </style>
 <link rel="stylesheet" href="language-switch.css">
 <link rel="stylesheet" href="button-refinement.css?v=1">
-<link rel="stylesheet" href="desktop-refinements.css?v=PLS-20261006-023901">
+<link rel="stylesheet" href="desktop-refinements.css?v=PLS-20261006-STACK">
 <meta property="og:image" content="https://preciselaserspa.com/sign.jpg">
 <meta property="og:image:alt" content="Precise Laser Hair Removal &amp; Esthetics in Babylon, New York">
 <meta name="twitter:image" content="https://preciselaserspa.com/sign.jpg">
@@ -133,8 +142,8 @@ a.svc:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; bord
 
 <header class="hdr">
 <div class="hdr-in">
-<a href="/" class="hdr-logo">
-<img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/eb48d30a-5911-49dd-afa3-bc3109029475/Precise+LASER+HAIR+LOGO-1+Blue.png?format=1500w" alt="Precise Laser Hair Removal &amp; Esthetics">
+<a href="/" class="hdr-logo" aria-label="Inicio de Precise Laser Spa">
+<img src="source-images/precise-laser-hair-logo-1-blue-649w.jpg" srcset="source-images/precise-laser-hair-logo-1-blue-320w.jpg 320w, source-images/precise-laser-hair-logo-1-blue-649w.jpg 649w" sizes="228px" width="649" height="427" alt="Precise Laser Hair Removal &amp; Esthetics">
 </a>
 <nav class="nav">
 <a href="#servicios-lista">Servicios</a>
@@ -175,9 +184,9 @@ a.svc:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; bord
 <main id="main-content" tabindex="-1">
 <section class="hero">
 <div class="kb" aria-hidden="true">
-<div class="kb-slide" style="--hero-image:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/1027a4a5-39a9-4aca-af58-3dcb8a128b9c/1000_F_109337580_dBbFtED3zK9ES9icDMv4paWB3EiDlbGF.jpg?format=2500w');--hero-image-mobile:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/1027a4a5-39a9-4aca-af58-3dcb8a128b9c/1000_F_109337580_dBbFtED3zK9ES9icDMv4paWB3EiDlbGF.jpg?format=1000w')"></div>
-<div class="kb-slide" style="--hero-image:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/47378cae-a8fc-4bac-9348-dd84dc9d61f1/legs+for+days.jpg?format=2500w');--hero-image-mobile:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/47378cae-a8fc-4bac-9348-dd84dc9d61f1/legs+for+days.jpg?format=1000w')"></div>
-<div class="kb-slide" style="--hero-image:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/18fe34f4-0493-42fa-a34d-9c4f239977f2/beach+body+laser+%282%29.jpg?format=2500w');--hero-image-mobile:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/18fe34f4-0493-42fa-a34d-9c4f239977f2/beach+body+laser+%282%29.jpg?format=1000w')"></div>
+<div class="kb-slide" style="--hero-image:url('source-images/1000-f-109337580-dbbfted3zk9es9icdmv4pawb3eidlbgf-969w.jpg');--hero-image-mobile:url('source-images/1000-f-109337580-dbbfted3zk9es9icdmv4pawb3eidlbgf-969w.jpg')"></div>
+<div class="kb-slide" style="--hero-image:url('source-images/legs-for-days-760w.jpg');--hero-image-mobile:url('source-images/legs-for-days-760w.jpg')"></div>
+<div class="kb-slide" style="--hero-image:url('source-images/beach-body-laser-2-1920w.jpg');--hero-image-mobile:url('source-images/beach-body-laser-2-1000w.jpg')"></div>
 </div>
 <div class="kb-veil"></div>
 <div class="wrap">
@@ -209,7 +218,7 @@ WhatsApp
 <div class="svc-grid">
 <a class="svc" href="#contacto">
 <div class="svc-box">
-<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/47378cae-a8fc-4bac-9348-dd84dc9d61f1/legs+for+days.jpg?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-img"><img src="source-images/legs-for-days-760w.jpg" srcset="source-images/legs-for-days-480w.jpg 480w, source-images/legs-for-days-760w.jpg 760w" sizes="360px" width="760" height="380" alt="" loading="lazy"></div>
 <h3>Depilación Láser</h3>
 <p>Explore la reducción del vello con láser. En su consulta gratuita, evaluamos su piel y su vello para hablar de las opciones de tratamiento y del número de sesiones que puede necesitar.</p>
 </div>
@@ -217,7 +226,7 @@ WhatsApp
 
 <a class="svc" href="#contacto">
 <div class="svc-box">
-<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/6c2dfd88-f3fe-41c2-b1d6-7c036fc5baa7/Electrolysis+images+face.jpg?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-img"><img src="source-images/electrolysis-images-face-600w.jpg" width="600" height="600" alt="" loading="lazy"></div>
 <h3>Electrólisis</h3>
 <p>El único método reconocido por la FDA para eliminar el vello de forma permanente, folículo por folículo. Ideal para áreas pequeñas, vello hormonal, o cabello claro o canoso que el láser no puede tratar. Funciona en todo tipo de piel y color de vello.</p>
 </div>
@@ -225,7 +234,7 @@ WhatsApp
 
 <a class="svc" href="#contacto">
 <div class="svc-box">
-<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/818d412d-131a-4412-bbf9-a1b1496281a2/Ava_Treatment_Face_2518_1.png?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-img"><img src="source-images/ava-treatment-face-2518-1-571w.jpg" width="571" height="701" alt="" loading="lazy"></div>
 <h3>Faciales Rejuvenecedores</h3>
 <p>HydraFacial, peelings químicos, microneedling, dermaplaning y más — tratamientos dirigidos a la textura, el tono, la congestión, la hidratación y las líneas de expresión. Nuestras esteticistas evalúan su piel antes de cada tratamiento.</p>
 </div>
@@ -233,7 +242,7 @@ WhatsApp
 
 <a class="svc" href="#contacto">
 <div class="svc-box">
-<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/9a751fe2-deb1-4125-bc21-a00e22a526a0/City_Cave_July_15_of_61.jpg?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-img"><img src="source-images/city-cave-july-15-of-61-1000w.jpg" srcset="source-images/city-cave-july-15-of-61-480w.jpg 480w, source-images/city-cave-july-15-of-61-1000w.jpg 1000w" sizes="360px" width="1000" height="666" alt="" loading="lazy"></div>
 <h3>Desintoxicación y Bienestar</h3>
 <p>Explore sauna infrarrojo, hidroterapia de colon y FIT Bodywrap. Conozca en qué consiste cada sesión y consulte si es adecuada para usted antes de reservar.</p>
 </div>
@@ -241,7 +250,7 @@ WhatsApp
 
 <a class="svc" href="#contacto">
 <div class="svc-box">
-<div class="svc-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/5b5b2f4e-58e2-4523-83f8-e8970f72fb5b/teeth+whitening.jpg?format=1000w" alt="" loading="lazy"></div>
+<div class="svc-img"><img src="source-images/teeth-whitening-1000w.jpg" srcset="source-images/teeth-whitening-480w.jpg 480w, source-images/teeth-whitening-1000w.jpg 1000w" sizes="360px" width="1000" height="667" alt="" loading="lazy"></div>
 <h3>Realce de Belleza</h3>
 <p>Lifting de pestañas, lip blushing (maquillaje permanente de labios), blanqueamiento dental y gemas dentales Swarovski — los detalles finales, hechos con un enfoque conservador y profesional.</p>
 </div>
@@ -265,12 +274,26 @@ WhatsApp
 <div class="wrap">
 <div class="sec-head">
 <div class="eyebrow">Lo Que Dicen Nuestros Clientes</div>
-<h2 class="h2">5.0 en Google · 332 reseñas (consultado el 5 de octubre de 2026)</h2>
+<h2 class="h2">5.0 en Google · 332 reseñas</h2>
+<div class="es-stars" role="img" aria-label="5 de 5 estrellas"><svg width="22" height="22" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="22" height="22" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="22" height="22" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="22" height="22" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="22" height="22" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg></div>
 </div>
-<div class="stats-row">
-<div class="stat"><div class="stat-n">5.0</div><div class="stat-l">Calificación promedio en Google</div></div>
-<div class="stat"><div class="stat-n">332</div><div class="stat-l">Reseñas en Google</div></div>
-
+<p class="es-quotes-note">Reseñas en inglés, con las palabras de nuestros clientes</p>
+<div class="es-quotes" lang="en">
+<div class="quote">
+<div class="quote-stars"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg></div>
+<p class="quote-body">Hands down recommend getting your hair removal done here. I had laser hair before and the hair kept growing back. I came to precise laser asking about electrolysis. They explained to me all the options and I ultimately went with laser - which was amazing. They have laser that caters to every skin shade and I had excellent results. I also got electrolysis on my stubborn chin hairs which also went away.</p>
+<div class="quote-who">— Sneha C., Google</div>
+</div>
+<div class="quote">
+<div class="quote-stars"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg></div>
+<p class="quote-body">BEST laser hair removal on the island! I've been going here for 2 years now and Ami and Kayla are the best laser technicians. They are patient, flexible, and incredibly kind. Every area I've had treated has shown amazing results, and I've been extremely satisfied with my experience. I highly recommend!!</p>
+<div class="quote-who">— Belinda, Google</div>
+</div>
+<div class="quote">
+<div class="quote-stars"><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg><svg width="14" height="14" viewBox="0 0 24 24"><path d="m12 2 3 6.2 6.8.9-4.9 4.8 1.2 6.8L12 17.5 5.9 20.7l1.2-6.8L2.2 9.1 9 8.2Z"/></svg></div>
+<p class="quote-body">I've had such an amazing experience here! As a Middle Eastern woman with naturally thick, stubborn hair, I wasn't expecting dramatic results right away. But after just one laser session, I'm already seeing incredible improvement on both my underarms and face. Kayla, who did my treatment, has been absolutely wonderful. She's so kind, knowledgeable, and made me feel completely comfortable throughout the whole process. I'm so excited to continue my sessions and couldn't recommend this place more.</p>
+<div class="quote-who">— Laura H., Google</div>
+</div>
 </div>
 <div style="text-align:center; margin-top:24px">
 <p>Lea las experiencias de nuestros clientes directamente en Google.</p>

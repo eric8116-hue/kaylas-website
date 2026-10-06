@@ -63,4 +63,3 @@ function answer(question,lang='en',custom=[]){
 function category(id,lang='en'){const c=categories.find(c=>c.id===id);return c?{text:c.names[lang],kind:'category',id,label:c.label[lang],url:c.page,book:true}:answer('',lang);}
 return {BUILD,booking,phone,ui,categories,services,faqs,normalize,score,answer,category};
 });
-

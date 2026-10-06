@@ -1,6 +1,6 @@
 # Precise Laser Spa — October 5, 2026 worklog and improvement priorities
 
-This report covers the public website and its separate staff CRM. It records work completed on October 5 in the America/New_York time zone, including the public release earlier in the day and the subsequent local quality batch. Local Site Preview at `127.0.0.1` is a design and behavior check, not evidence that the same change is live. Customer and medical information was not entered during testing.
+This report covers the public website and its separate staff CRM. It records the October 5 work and release verification that finished just after midnight on October 6 in the America/New_York time zone. Local Site Preview at `127.0.0.1` is a design and behavior check, not evidence that the same change is live. Customer and medical information was not entered during testing.
 
 ## What was changed
 
@@ -13,6 +13,7 @@ This report covers the public website and its separate staff CRM. It records wor
 - Kept the visible **332 Google reviews** count. The count is an editorial value checked on October 5; it is not an automatically synchronized measurement.
 - Applied the compact homepage language design to the Spanish page and service navigation. The intake form now uses the same 34 px dark EN/ES capsule: blue English, red Spanish. Its labels remain accessible and the form changes language in place.
 - Improved the mobile menu and 404 navigation with a shared menu script, keyboard focus behavior, and clearer labels. Renamed “Existing Clients” links to **Client Intake** to match the actual form destination.
+- Kept the website and CRM chatbot answer engine files byte-identical after the final release-marker correction.
 - Improved form and assessment accessibility: skip links, clearer field labels and pressed states, visible focus, and touch controls. Improved the self-assessment routing so selected concerns lead to appropriate service information.
 - Revised treatment copy that overstated outcomes, including laser hair removal and teeth whitening. Adjusted wellness wording to explain services and prompt a suitability discussion. Removed unsupported “300+ happy clients” and “100% personalized care” claims.
 - Shortened service and Spanish page titles and matching social titles. Tightened the Spanish meta description. Kept an appropriate noindex directive on the sensitive client intake form.
@@ -63,4 +64,12 @@ These are working grades from source inspection, local Site Preview on desktop a
 
 ## Release record
 
-Release commands, commit IDs, and live checks will be added after the October 5 deployment completes.
+On October 5, the CRM code was committed as `f6aaa9b`. Additive D1 migrations `011_website_offer.sql`, `012_google_reputation.sql`, and `013_google_review_reply_url.sql` were applied in order and the two new tables were confirmed present. The CRM Pages deployment was reported as **Production / main**, deployment ID `956d1640-7e27-480f-9943-9a8d85e6d956`.
+
+The public website quality batch was committed as `ddf6271`. A 36-file static bundle was deployed to the `kaylas-website` Pages project as **Production / main**. The final corrected deployment ID is `a08f7f3b-2d0f-488a-92df-0e0a3129f131`. The bundle omitted repository notes, tests, Worker source, local caches, and backup files. The chatbot Worker was not changed in this release.
+
+Final live checks of `https://preciselaserspa.com/` and `/client-intake.html` returned the `PLS-20261006-QUALITY` marker. The homepage still showed 332 Google reviews, and the intake page contained the shared EN/ES control. After synchronizing the two chatbot engine files, all 25 public-site tests passed again.
+
+The CRM staff page correctly redirected unauthenticated requests to Cloudflare Access. The new CRM `/api/public-reviews` and `/api/offer` routes also redirected at the outer Access layer, so the marketing site cannot consume them yet. The public site handles this by keeping its existing review content and disabled promotion. The intake endpoint's production OPTIONS preflight returned 204 for the public website origin. A real intake POST, inbox receipt, staff session, and live Square booking were not performed as part of this release.
+
+The Google review credentials and push notification keys remain unset, and the daily Google-content cleanup Worker was not deployed. No automated reputation alert is active. Review follow-up remains manual.

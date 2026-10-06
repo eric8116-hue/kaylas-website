@@ -66,10 +66,12 @@ These are working grades from source inspection, local Site Preview on desktop a
 
 On October 5, the CRM code was committed as `f6aaa9b`. Additive D1 migrations `011_website_offer.sql`, `012_google_reputation.sql`, and `013_google_review_reply_url.sql` were applied in order and the two new tables were confirmed present. The CRM Pages deployment was reported as **Production / main**, deployment ID `956d1640-7e27-480f-9943-9a8d85e6d956`.
 
-The public website quality batch was committed as `ddf6271`. A 36-file static bundle was deployed to the `kaylas-website` Pages project as **Production / main**. The final corrected deployment ID is `a08f7f3b-2d0f-488a-92df-0e0a3129f131`. The bundle omitted repository notes, tests, Worker source, local caches, and backup files. The chatbot Worker was not changed in this release.
+The public website quality batch was committed as `ddf6271`, followed by the corrected release marker and worklog in `c73d42c`. A 36-file static bundle was deployed to the `kaylas-website` Pages project as **Production / main**. The corrected manual deployment ID was `a08f7f3b-2d0f-488a-92df-0e0a3129f131`. The Git push also triggered the project's automatic production build; a final 36-file static bundle was reapplied afterward. The curated bundle omitted repository notes, tests, Worker source, local caches, and backup files. The chatbot Worker was not changed in this release. Use Cloudflare's deployment list for the current production ID, which can change after a Git push.
 
 Final live checks of `https://preciselaserspa.com/` and `/client-intake.html` returned the `PLS-20261006-QUALITY` marker. The homepage still showed 332 Google reviews, and the intake page contained the shared EN/ES control. After synchronizing the two chatbot engine files, all 25 public-site tests passed again.
 
 The CRM staff page correctly redirected unauthenticated requests to Cloudflare Access. The new CRM `/api/public-reviews` and `/api/offer` routes also redirected at the outer Access layer, so the marketing site cannot consume them yet. The public site handles this by keeping its existing review content and disabled promotion. The intake endpoint's production OPTIONS preflight returned 204 for the public website origin. A real intake POST, inbox receipt, staff session, and live Square booking were not performed as part of this release.
+
+Both repository `main` branches were pushed to GitHub and matched their remote branches in the final source check. Backup files and local Wrangler caches remained untracked and were not pushed.
 
 The Google review credentials and push notification keys remain unset, and the daily Google-content cleanup Worker was not deployed. No automated reputation alert is active. Review follow-up remains manual.

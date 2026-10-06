@@ -24,7 +24,7 @@ svg{max-width:100%}
 .h2{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:clamp(28px,4vw,42px); line-height:1.12}
 .lede{font-size:16px; color:var(--ink-soft); line-height:1.7}
 
-.btn{display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:15px 30px; border-radius:12px; font-size:15px; font-weight:600; transition:transform .16s, box-shadow .16s, background .16s, color .16s; white-space:nowrap}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:15px 30px; border-radius:999px; font-size:14px; font-weight:700; transition:transform .16s, box-shadow .16s, background .16s, color .16s; white-space:nowrap}
 .btn-p{background:linear-gradient(135deg,var(--teal-deep),var(--teal-darker)); color:#fff; box-shadow:0 10px 26px rgba(13,62,59,.4)}
 .btn-p:hover{transform:translateY(-2px); box-shadow:0 14px 32px rgba(13,62,59,.5); background:linear-gradient(135deg,var(--teal-darker),#082826)}
 .btn-o{border:1.5px solid var(--ink); color:var(--ink)}
@@ -130,7 +130,7 @@ section[id]{scroll-margin-top:110px}
 .pill-list li{font-size:13.5px; font-weight:600; color:var(--teal-deep); background:var(--teal-light); padding:9px 15px; border-radius:99px}
 
 .callout{border-left:4px solid var(--teal); background:var(--paper); border:1px solid var(--line); border-left-width:4px; border-radius:12px; padding:20px 24px; margin:0 0 24px}
-.callout h4{font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--teal-deep); margin-bottom:9px}
+.callout h3{font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--teal-deep); margin-bottom:9px}
 .callout p, .callout li{font-size:14.5px; color:var(--ink-soft); line-height:1.7}
 .callout ul{list-style:none; display:flex; flex-direction:column; gap:7px}
 .callout li::before{content:'— '; color:var(--teal)}
@@ -181,7 +181,7 @@ section[id]{scroll-margin-top:110px}
 .foot{background:var(--ink); color:rgba(255,255,255,.72); padding:52px 0 30px; font-size:13.5px}
 .foot-in{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:38px; margin-bottom:36px}
 @media (max-width:760px){ .foot-in{grid-template-columns:1fr; gap:26px} }
-.foot h5{color:#fff; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px}
+.foot h2{color:#fff; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px}
 .foot ul{list-style:none; display:flex; flex-direction:column; gap:9px}
 .foot a:hover{color:#fff}
 .foot-logo{background:#fff; border-radius:14px; padding:10px 14px; display:inline-block; margin-bottom:16px}

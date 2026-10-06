@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="build" content="PLS-20261006-023901">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -18,10 +19,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="service-page.css">
+<link rel="stylesheet" href="service-page.css?v=PLS-20261006-023901">
 <style>
 /* ================= CLIENT INTAKE FORM — scoped styles ================= */
-/* Prefixed "ic-" throughout so nothing collides with service-page.css or chatbot.js. */
+/* Prefixed "ic-" throughout so nothing collides with service-page.css?v=PLS-20261006-023901 or chatbot.js?v=PLS-20261006-023901. */
 
 .ic-section{padding:48px 0 80px}
 .ic-card{max-width:760px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(24px,4vw,48px); box-shadow:0 10px 40px rgba(20,97,93,.08)}
@@ -116,8 +117,10 @@
 .ic-toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:var(--ink); color:#fff; padding:12px 20px; border-radius:10px; font-size:14px; display:none; z-index:900}
 </style>
 <link rel="stylesheet" href="button-refinement.css?v=1">
+<link rel="stylesheet" href="form-accessibility.css?v=PLS-20261006-023901">
 </head>
-<body>
+<body class="intake-page">
+<a class="skip-link" href="#main-content">Skip to intake form</a>
 
 <header class="hdr">
 <div class="hdr-in">
@@ -127,8 +130,8 @@
 <a href="/#reviews">Reviews</a>
 <a href="/#about">About</a>
 <a href="/?open=contact">Contact</a>
-<a href="/precise-self-assessment-v2">Self-Assessment</a>
-<a href="/client-intake" class="on">Client Intake</a>
+<a href="/precise-self-assessment-v2.html">Self-Assessment</a>
+<a href="/client-intake.html" class="on">Client Intake</a>
 </nav>
 <div class="hdr-right">
 <a class="hdr-phone" href="tel:6319231174">(631) 923-1174</a>
@@ -149,14 +152,15 @@
 <a class="dlink" href="/#reviews">Reviews</a>
 <a class="dlink" href="/#about">About</a>
 <a class="dlink" href="/?open=contact">Contact</a>
-<a class="dlink" href="/precise-self-assessment-v2">Self-Assessment</a>
-<a class="dlink" href="/client-intake">Client Intake</a>
+<a class="dlink" href="/precise-self-assessment-v2.html">Self-Assessment</a>
+<a class="dlink" href="/client-intake.html">Client Intake</a>
 <div class="drawer-foot">
 <a class="btn btn-p" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book Now</a>
 <a class="btn btn-o" href="tel:6319231174">Call (631) 923-1174</a>
 </div>
 </div>
 
+<main id="main-content" tabindex="-1">
 <section class="pbanner" style="min-height:260px">
 <div class="pbanner-img" style="background-image:url('https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/cab5f536-af0c-4767-a71a-eccaff518dc8/image0+%281%29.png?format=2500w')"></div>
 <div class="pbanner-veil"></div>
@@ -192,20 +196,20 @@
     <input type="text" id="company_url" name="company_url" tabindex="-1" autocomplete="off">
   </div>
 
-  <div class="ic-steplabel" id="icStepLabel">Step 1 of 5 — Contact Info</div>
+  <div class="ic-steplabel" id="icStepLabel" tabindex="-1">Step 1 of 5 — Contact Info</div>
   <div class="ic-progress"><div class="ic-progress-bar" id="icProgressBar" style="width:20%"></div></div>
 
   <!-- STEP 1: CONTACT -->
   <div class="ic-step active" data-step="1">
     <div class="ic-row">
-      <div><label style="margin-top:0" data-i18n="firstName">First Name</label><input type="text" id="first_name" data-i18n-ph="phFirst" placeholder="Jane"></div>
-      <div><label style="margin-top:0" data-i18n="lastName">Last Name</label><input type="text" id="last_name" data-i18n-ph="phLast" placeholder="Client"></div>
+      <div><label style="margin-top:0" data-i18n="firstName" for="first_name">First Name</label><input type="text" id="first_name" autocomplete="given-name" data-i18n-ph="phFirst" placeholder="Jane"></div>
+      <div><label style="margin-top:0" data-i18n="lastName" for="last_name">Last Name</label><input type="text" id="last_name" autocomplete="family-name" data-i18n-ph="phLast" placeholder="Client"></div>
     </div>
 
-    <label data-i18n="birthday">Birthday</label>
+    <div class="ic-field-label" data-i18n="birthday">Birthday</div>
     <div class="ic-row">
       <div style="flex:2">
-        <select id="birth_month">
+        <select id="birth_month" autocomplete="bday-month">
           <option value="" data-i18n="month">Month</option>
           <option value="01" data-i18n="m1">January</option><option value="02" data-i18n="m2">February</option><option value="03" data-i18n="m3">March</option>
           <option value="04" data-i18n="m4">April</option><option value="05" data-i18n="m5">May</option><option value="06" data-i18n="m6">June</option>
@@ -213,36 +217,36 @@
           <option value="10" data-i18n="m10">October</option><option value="11" data-i18n="m11">November</option><option value="12" data-i18n="m12">December</option>
         </select>
       </div>
-      <div><select id="birth_day"><option value="" data-i18n="day">Day</option></select></div>
-      <div><input type="text" inputmode="numeric" maxlength="4" id="birth_year" data-i18n-ph="year" placeholder="Year"></div>
+      <div><select id="birth_day" autocomplete="bday-day"><option value="" data-i18n="day">Day</option></select></div>
+      <div><input type="text" inputmode="numeric" maxlength="4" id="birth_year" autocomplete="bday-year" data-i18n-ph="year" placeholder="Year"></div>
     </div>
 
-    <label data-i18n="address">Address</label>
-    <input type="text" id="address" data-i18n-ph="phStreet" placeholder="Street address">
+    <label data-i18n="address" for="address">Address</label>
+    <input type="text" id="address" autocomplete="street-address" data-i18n-ph="phStreet" placeholder="Street address">
 
     <div class="ic-row" style="margin-top:14px">
-      <div style="flex:2"><label style="margin-top:0" data-i18n="city">City</label><input type="text" id="city"></div>
-      <div><label style="margin-top:0" data-i18n="stateLbl">State</label>
-        <select id="state">
+      <div style="flex:2"><label style="margin-top:0" data-i18n="city" for="city">City</label><input type="text" id="city" autocomplete="address-level2"></div>
+      <div><label style="margin-top:0" data-i18n="stateLbl" for="state">State</label>
+        <select id="state" autocomplete="address-level1">
           <option value="">--</option>
           <option>NY</option><option>NJ</option><option>CT</option><option>PA</option>
           <option>FL</option><option data-i18n="other">Other</option>
         </select>
       </div>
-      <div><label style="margin-top:0" data-i18n="zip">Zip</label><input type="text" id="zip"></div>
+      <div><label style="margin-top:0" data-i18n="zip" for="zip">Zip</label><input type="text" id="zip" inputmode="numeric" autocomplete="postal-code"></div>
     </div>
 
-    <label data-i18n="phone">Phone</label>
-    <input type="tel" id="phone" placeholder="(555) 555-5555" inputmode="numeric" oninput="formatPhone(this)">
-    <label data-i18n="email">Email</label>
-    <input type="email" id="email" placeholder="name@email.com">
+    <label data-i18n="phone" for="phone">Phone</label>
+    <input type="tel" id="phone" autocomplete="tel-national" placeholder="(555) 555-5555" inputmode="numeric" oninput="formatPhone(this)">
+    <label data-i18n="email" for="email">Email</label>
+    <input type="email" id="email" autocomplete="email" placeholder="name@email.com">
 
-    <label data-i18n="emergName">Emergency Contact Name</label>
+    <label data-i18n="emergName" for="emergency_contact_name">Emergency Contact Name</label>
     <input type="text" id="emergency_contact_name">
-    <label data-i18n="emergPhone">Emergency Contact Number</label>
+    <label data-i18n="emergPhone" for="emergency_contact_phone">Emergency Contact Number</label>
     <input type="tel" id="emergency_contact_phone" placeholder="(555) 555-5555" inputmode="numeric" oninput="formatPhone(this)">
 
-    <label data-i18n="referral">How did you hear about us?</label>
+    <label data-i18n="referral" for="referral_source">How did you hear about us?</label>
     <select id="referral_source">
       <option value="" data-i18n="selectOne">Select one</option>
       <option data-i18n="refReferral">Referral</option><option data-i18n="refSocial">Social Media</option><option data-i18n="refGoogle">Google / Search</option>
@@ -254,7 +258,7 @@
 
   <!-- STEP 2: MEDICAL HISTORY -->
   <div class="ic-step" data-step="2">
-    <label style="margin-top:0" data-i18n="areas">What areas are to be treated?</label>
+    <label style="margin-top:0" data-i18n="areas" for="areas_to_treat">What areas are to be treated?</label>
     <input type="text" id="areas_to_treat" data-i18n-ph="phAreas" placeholder="e.g. underarms, bikini, legs">
 
     <h2 data-i18n="quickYN">A few quick yes/no questions</h2>
@@ -283,36 +287,36 @@
       <div class="ic-followup" id="light_sensitive_detail_wrap"><input type="text" id="light_sensitive_detail" data-i18n-ph="phExplain" placeholder="If yes, explain"></div>
     </div>
 
-    <label data-i18n="meds">Medications / herbal supplements / topical creams you use</label>
+    <label data-i18n="meds" for="medications">Medications / herbal supplements / topical creams you use</label>
     <input type="text" id="medications">
-    <label data-i18n="allergies">Any allergies?</label>
+    <label data-i18n="allergies" for="allergies">Any allergies?</label>
     <input type="text" id="allergies">
 
-    <label data-i18n="howOften">How often do you remove your hair?</label>
+    <div class="ic-field-label" data-i18n="howOften">How often do you remove your hair?</div>
     <div class="ic-chip-row" id="freqChips">
-      <div class="ic-chip" data-v="Daily" data-i18n="fDaily">Daily</div>
-      <div class="ic-chip" data-v="Twice Daily" data-i18n="fTwice">Twice Daily</div>
-      <div class="ic-chip" data-v="Weekly" data-i18n="fWeekly">Weekly</div>
-      <div class="ic-chip" data-v="Other" data-i18n="other">Other</div>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Daily" data-i18n="fDaily">Daily</button>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Twice Daily" data-i18n="fTwice">Twice Daily</button>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Weekly" data-i18n="fWeekly">Weekly</button>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Other" data-i18n="other">Other</button>
     </div>
 
-    <label data-i18n="methods">Current hair removal methods (tap all that apply)</label>
+    <div class="ic-field-label" data-i18n="methods">Current hair removal methods (tap all that apply)</div>
     <div class="ic-chip-row" id="methodChips">
-      <div class="ic-chip" data-v="Waxing" data-i18n="mWax">Waxing</div>
-      <div class="ic-chip" data-v="Shaving" data-i18n="mShave">Shaving</div>
-      <div class="ic-chip" data-v="Sugaring" data-i18n="mSugar">Sugaring</div>
-      <div class="ic-chip" data-v="Creams" data-i18n="mCream">Creams</div>
-      <div class="ic-chip" data-v="Tweezing" data-i18n="mTweeze">Tweezing</div>
-      <div class="ic-chip" data-v="Electrolysis" data-i18n="mElectro">Electrolysis</div>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Waxing" data-i18n="mWax">Waxing</button>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Shaving" data-i18n="mShave">Shaving</button>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Sugaring" data-i18n="mSugar">Sugaring</button>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Creams" data-i18n="mCream">Creams</button>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Tweezing" data-i18n="mTweeze">Tweezing</button>
+      <button type="button" class="ic-chip" aria-pressed="false" data-v="Electrolysis" data-i18n="mElectro">Electrolysis</button>
     </div>
 
-    <label data-i18n="lastTx">When was your last treatment?</label>
+    <label data-i18n="lastTx" for="last_treatment_before_us">When was your last treatment?</label>
     <input type="date" id="last_treatment_before_us">
 
     <h2 data-i18n="moreHistory">Medical history — a few more</h2>
     <div id="ynGrid"></div>
 
-    <label data-i18n="skinTypeLbl">Skin Type <span style="font-weight:400; color:var(--ink-soft)">(provider will confirm)</span></label>
+    <label data-i18n="skinTypeLbl" for="skin_type">Skin Type <span style="font-weight:400; color:var(--ink-soft)">(provider will confirm)</span></label>
     <select id="skin_type">
       <option value="" data-i18n="selectOne">Select one</option>
       <option value="I" data-i18n="st1">I — Light, pale white. Always burns, never tans</option>
@@ -349,7 +353,7 @@
   <!-- STEP 4: PHOTO / MARKETING / AGE -->
   <div class="ic-step" data-step="4">
     <h2 style="margin-top:0" data-i18n="photoTitle">Photo Consent</h2>
-    <div class="ic-check-line" id="photoConsentLine" onclick="toggleCheck('photoConsentLine')">
+    <div class="ic-check-line" id="photoConsentLine" role="checkbox" tabindex="0" aria-checked="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" onclick="toggleCheck('photoConsentLine')">
       <div class="ic-box"></div>
       <div class="ic-txt" data-i18n="photoText">I consent to clinical before/after photos being taken and stored in my file for treatment tracking.</div>
     </div>
@@ -364,7 +368,7 @@
       <div class="ic-yn-toggle"><button class="sel-y" onclick="setAdult(true,this)" data-i18n="yes">Yes</button><button class="sel-n" onclick="setAdult(false,this)" data-i18n="no">No</button></div></div>
     <div id="guardianWrap" style="display:none">
       <p class="ic-sub" style="margin-top:14px" data-i18n="guardianNote">Because the client is under 18, a parent or guardian must provide their name and signature.</p>
-      <label data-i18n="guardianName">Parent/Guardian Name</label>
+      <label data-i18n="guardianName" for="guardian_name">Parent/Guardian Name</label>
       <input type="text" id="guardian_name">
     </div>
 
@@ -378,10 +382,10 @@
   <div class="ic-step" data-step="5">
     <h2 style="margin-top:0" data-i18n="signTitle">Sign &amp; Submit</h2>
     <p class="ic-sub" data-i18n="signSub">Type your name below as your signature.</p>
-    <label style="margin-top:0" data-i18n="clientSig">Client Signature (type full name)</label>
+    <label style="margin-top:0" data-i18n="clientSig" for="client_signature">Client Signature (type full name)</label>
     <input type="text" id="client_signature">
     <div id="guardianSigWrap" style="display:none">
-      <label data-i18n="guardianSig">Parent/Guardian Signature (type full name)</label>
+      <label data-i18n="guardianSig" for="guardian_signature">Parent/Guardian Signature (type full name)</label>
       <input type="text" id="guardian_signature">
     </div>
     <div class="ic-btn-row">
@@ -421,7 +425,7 @@
 </div>
 <div class="pf-brand">
 <img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/eb48d30a-5911-49dd-afa3-bc3109029475/Precise+LASER+HAIR+LOGO-1+Blue.png?format=1500w" alt="Precise Laser Hair Removal &amp; Esthetics">
-<p class="pf-tag">The Most Trusted Name With Proven Results In Laser Hair Removal</p>
+<p class="pf-tag">The Laser Hair Removal &amp; Personalized Skin Care in Babylon</p>
 </div>
 <div>
 <div class="pf-h">Location</div>
@@ -438,6 +442,7 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 </section>
 
+</main>
 <footer class="foot">
 <div class="wrap">
 <div class="foot-in">
@@ -446,16 +451,16 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <p style="line-height:1.7; max-width:34ch">Licensed laser hair removal, electrolysis, esthetics, and wellness treatments in Babylon, New York.</p>
 </div>
 <div>
-<h5>Services</h5>
+<h2>Services</h2>
 <ul>
-<li><a href="/services-hair-removal">Hair Removal</a></li>
-<li><a href="/services-detox">Detoxification</a></li>
-<li><a href="/services-facials">Rejuvenating Facials</a></li>
-<li><a href="/services-beautification">Beauty Enhancements</a></li>
+<li><a href="/services-hair-removal.html">Hair Removal</a></li>
+<li><a href="/services-detox.html">Detoxification</a></li>
+<li><a href="/services-facials.html">Rejuvenating Facials</a></li>
+<li><a href="/services-beautification.html">Beauty Enhancements</a></li>
 </ul>
 </div>
 <div>
-<h5>Visit</h5>
+<h2>Visit</h2>
 <ul>
 <li><a href="https://www.google.com/maps/search/?api=1&query=626+Deer+Park+Ave+Babylon+NY+11702" target="_blank" rel="noopener">626 Deer Park Ave<br>Babylon, NY 11702</a></li>
 <li><a href="tel:6319231174">(631) 923-1174</a></li>
@@ -472,7 +477,7 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 </footer>
 
-<div class="ic-toast" id="toast"></div>
+<div class="ic-toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 function openDrawer(){ document.getElementById('drawer').classList.add('open'); document.body.classList.add('locked'); }
@@ -711,6 +716,7 @@ function setLang(l) {
   renderYNGrid();
   renderConsent();
   updateStepLabel();
+  syncIntakeAccessibility();
 }
 
 function renderFitz() {
@@ -759,6 +765,7 @@ function goStep(n) {
   updateStepLabel();
   document.getElementById("icProgressBar").style.width = (n * 20) + "%";
   window.scrollTo({top: document.querySelector('.ic-card').offsetTop - 100, behavior: "instant"});
+  document.getElementById("icStepLabel").focus({preventScroll:true});
   if (n === 3) renderConsent();
   if (n === 5) {
     document.getElementById("guardianSigWrap").style.display = state.adult === false ? "block" : "none";
@@ -770,6 +777,7 @@ function setYN(field, val, btn) {
   const row = btn.closest(".ic-yn-row");
   row.querySelectorAll("button").forEach(b => b.classList.remove("sel"));
   btn.classList.add("sel");
+  syncIntakeAccessibility();
   const followup = document.getElementById(field + "_detail_wrap");
   if (followup) followup.classList.toggle("show", val === true);
   if (field === "marketing_optin") refreshStep4Gate();
@@ -780,6 +788,7 @@ function setAdult(isAdult, btn) {
   const row = btn.closest(".ic-yn-row");
   row.querySelectorAll("button").forEach(b => b.classList.remove("sel"));
   btn.classList.add("sel");
+  syncIntakeAccessibility();
   document.getElementById("guardianWrap").style.display = isAdult ? "none" : "block";
   if (isAdult) document.getElementById("guardian_name").value = "";
   refreshStep4Gate();
@@ -810,11 +819,13 @@ document.getElementById("freqChips").addEventListener("click", (e) => {
   document.querySelectorAll("#freqChips .ic-chip").forEach(c => c.classList.remove("sel"));
   e.target.classList.add("sel");
   state.freq = e.target.dataset.v;
+  syncIntakeAccessibility();
 });
 document.getElementById("methodChips").addEventListener("click", (e) => {
   if (!e.target.classList.contains("ic-chip")) return;
   e.target.classList.toggle("sel");
   state.methods = [...document.querySelectorAll("#methodChips .ic-chip.sel")].map(c => c.dataset.v);
+  syncIntakeAccessibility();
 });
 
 function getInitials() {
@@ -832,12 +843,17 @@ function renderConsent() {
   list.innerHTML = "";
   consentItems.forEach((pair, idx) => {
     const div = document.createElement("div");
+    div.setAttribute("role","checkbox");
+    div.tabIndex = 0;
+    div.setAttribute("aria-checked",String(Boolean(state.consentDone[idx])));
+    div.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();div.click();}});
     div.className = "ic-consent-item" + (state.consentDone[idx] ? " done" : "");
     div.innerHTML = '<div class="ic-initial-box">' + (state.consentDone[idx] ? initials : "") + '</div>' +
       '<div class="ic-txt">' + (idx+1) + '. ' + pair[i] + '</div>';
     div.onclick = () => {
       state.consentDone[idx] = !state.consentDone[idx];
       renderConsent();
+      document.querySelectorAll(".ic-consent-item")[idx].focus();
     };
     list.appendChild(div);
   });
@@ -845,7 +861,31 @@ function renderConsent() {
 }
 
 function toggleCheck(elId) {
-  document.getElementById(elId).classList.toggle("on");
+  const checkbox = document.getElementById(elId);
+  checkbox.classList.toggle("on");
+  checkbox.setAttribute("aria-checked",String(checkbox.classList.contains("on")));
+}
+
+
+function syncIntakeAccessibility() {
+  const photo=document.getElementById("photoConsentLine");photo.setAttribute("aria-checked",String(photo.classList.contains("on")));
+  document.querySelectorAll('.ic-yn-row').forEach((row,index)=>{
+    const question=row.querySelector('.ic-q');
+    if(question){question.id='intake-question-'+index;row.setAttribute('role','group');row.setAttribute('aria-labelledby',question.id);}
+    row.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.classList.contains('sel'))));
+  });
+  document.querySelectorAll('.ic-chip').forEach(button=>button.setAttribute('aria-pressed',String(button.classList.contains('sel'))));
+  ['icLangEn','icLangEs'].forEach(id=>{const b=document.getElementById(id);b.setAttribute('aria-pressed',String(b.classList.contains('sel')));});
+  const fields={birth_month:lang==='es'?'Mes de nacimiento':'Birth month',birth_day:lang==='es'?'Día de nacimiento':'Birth day',birth_year:lang==='es'?'Año de nacimiento':'Birth year'};
+  Object.entries(fields).forEach(([id,label])=>document.getElementById(id).setAttribute('aria-label',label));
+  document.querySelectorAll('.ic-followup input').forEach(input=>{
+    const question=input.parentElement.previousElementSibling.querySelector('.ic-q');
+    if(question)input.setAttribute('aria-label',question.textContent+' — '+input.placeholder);
+  });
+  [['freqChips','howOften'],['methodChips','methods']].forEach(([id,key])=>{
+    const label=document.querySelector('[data-i18n="'+key+'"]');label.id=id+'-label';
+    const group=document.getElementById(id);group.setAttribute('role','group');group.setAttribute('aria-labelledby',label.id);
+  });
 }
 
 // ---- boot ----
@@ -951,6 +991,8 @@ function draftFieldIds() {
 }
 
 function saveDraft() {
+  if (currentStep > 5) return;
+  if (document.getElementById("icDraftBanner").style.display === "flex") return;
   try {
     const fields = {};
     draftFieldIds().forEach(id => {
@@ -965,6 +1007,8 @@ function saveDraft() {
       state: { yn: state.yn, adult: state.adult, freq: state.freq, methods: state.methods, consentDone: state.consentDone },
       photoConsent: photoLine ? photoLine.classList.contains("on") : false,
     };
+    const hasAnswers = Object.keys(fields).some(id => id !== "state" && id !== "company_url") || Object.keys(state.yn).length || state.adult !== null || state.freq || state.methods.length || state.consentDone.some(Boolean) || draft.photoConsent;
+    if (!hasAnswers) { clearDraft(); return; }
     sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
   } catch (e) {}
 }
@@ -1009,6 +1053,7 @@ function applyDraft(d) {
   renderConsent();
   renderFitz();
   syncConditionalFields();
+  syncIntakeAccessibility();
 
   const step = Math.min(Math.max(parseInt(d.currentStep, 10) || 1, 1), 5);
   document.querySelectorAll(".ic-step").forEach(s => s.classList.remove("active"));
@@ -1069,8 +1114,12 @@ function draftAgeText(savedAt) {
       banner.style.display = "none";
     });
     document.getElementById("icDraftDiscard").addEventListener("click", () => {
+      clearTimeout(clickTimer);
+      draftFieldIds().forEach(id => { document.getElementById(id).value = ""; });
+      applyDraft({fields:{},currentStep:1,state:{yn:{},adult:null,freq:null,methods:[],consentDone:Array(consentItems.length).fill(false)},photoConsent:false});
       clearDraft();
       banner.style.display = "none";
+      document.getElementById("icStepLabel").focus();
     });
   }
 
@@ -1096,7 +1145,7 @@ function showToast(msg) {
   setTimeout(() => el.style.display = "none", 4000);
 }
 </script>
-<script src="chatbot.js?v=23" defer></script>
+<script src="chatbot.js?v=PLS-20261006-023901" defer></script>
 
 </body>
 </html>

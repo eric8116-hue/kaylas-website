@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="build" content="PLS-20261006-023901">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -138,36 +139,38 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 @media (max-width:480px){ .results-cta .row{flex-direction:column} .results-cta .row .btn{width:100%} }
 </style>
 <link rel="stylesheet" href="button-refinement.css?v=1">
+<link rel="stylesheet" href="form-accessibility.css?v=PLS-20261006-023901">
 </head>
-<body>
+<body class="assessment-page">
+<a class="skip-link" href="#main-content">Skip to assessment</a>
 
 <header class="topbar">
 <div class="wrap topbar-inner">
-<a href="#" class="topbar-logo"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/eb48d30a-5911-49dd-afa3-bc3109029475/Precise+LASER+HAIR+LOGO-1+Blue.png?format=500w" alt="Precise"></a>
+<a href="/" class="topbar-logo"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/eb48d30a-5911-49dd-afa3-bc3109029475/Precise+LASER+HAIR+LOGO-1+Blue.png?format=500w" alt="Precise"></a>
 <span class="topbar-title" style="position:absolute; left:50%; transform:translateX(-50%)">Self Assessment</span>
 <div style="display:flex; align-items:center; gap:18px">
-<a href="/" class="exit-link"><span class="exit-txt">Back to website</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
+<a href="/" class="exit-link" aria-label="Back to website"><span class="exit-txt">Back to website</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
 <a href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener" class="btn btn-primary" style="padding:11px 20px; font-size:13.5px">Book Now</a>
 </div>
 </div>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-<div class="stage">
+<main class="stage" id="main-content" tabindex="-1">
 
 <!-- SCREEN 1: SELECT (toggle + figure + panel) -->
 <div class="screen active" id="screen-select">
 <div class="wrap">
 <div class="intro-head">
 <div class="intro-eyebrow">Free Self-Assessment</div>
-<h1 class="intro-title">Where would you like to focus?</h1>
+<h1 class="intro-title" tabindex="-1">Where would you like to focus?</h1>
 <div class="intro-sub">Select your body type, then tap any area on the figure to see the treatments we'd recommend.</div>
 </div>
 
 <div class="gender-toggle" id="genderToggle">
 <div class="gender-indicator"></div>
-<button id="tgFemale" class="active" onclick="setGender('female')">Female</button>
-<button id="tgMale" onclick="setGender('male')">Male</button>
+<button aria-pressed="true" id="tgFemale" class="active" onclick="setGender('female')">Female</button>
+<button aria-pressed="false" id="tgMale" onclick="setGender('male')">Male</button>
 </div>
 
 <div class="assess-layout">
@@ -176,54 +179,54 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 <div class="figure-col">
 <svg class="body-figure" id="figFemale" viewBox="0 0 281 728">
 <image href="figure-female.jpg" x="0" y="0" width="281" height="728" preserveAspectRatio="xMidYMid meet"/>
-<g class="zone-btn" data-zone="head" onclick="toggleZone('head')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Head / Face" aria-pressed="false" data-zone="head" onclick="toggleZone('head')">
 <polygon points="89,105 91,68 100,40 118,22 140,15 162,22 180,40 189,68 190,105 184,124 172,134 108,134 96,124" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="torso" onclick="toggleZone('torso')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Upper Torso / Chest" aria-pressed="false" data-zone="torso" onclick="toggleZone('torso')">
 <polygon points="104,134 176,134 196,166 199,205 197,245 193,286 88,286 84,245 82,205 85,166" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="arms" onclick="toggleZone('arms')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Arms" aria-pressed="false" data-zone="arms" onclick="toggleZone('arms')">
 <polygon points="88,152 66,160 56,190 50,242 49,300 50,352 54,408 81,408 79,352 82,300 84,250 86,198" fill="var(--fig)"/>
 <polygon points="193,152 215,160 225,190 231,242 232,300 231,352 227,408 200,408 202,352 199,300 197,250 195,198" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="stomach" onclick="toggleZone('stomach')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Stomach" aria-pressed="false" data-zone="stomach" onclick="toggleZone('stomach')">
 <polygon points="88,286 193,286 197,322 85,322" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="hips" onclick="toggleZone('hips')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Hip Area" aria-pressed="false" data-zone="hips" onclick="toggleZone('hips')">
 <polygon points="85,322 197,322 205,355 203,400 79,400 77,355" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="thighs" onclick="toggleZone('thighs')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Thighs" aria-pressed="false" data-zone="thighs" onclick="toggleZone('thighs')">
 <polygon points="79,400 138,400 134,450 129,478 127,507 83,507 80,470 76,440" fill="var(--fig)"/>
 <polygon points="146,400 203,400 206,440 202,470 199,507 156,507 154,478 150,450" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="calves" onclick="toggleZone('calves')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Calves and Feet" aria-pressed="false" data-zone="calves" onclick="toggleZone('calves')">
 <polygon points="83,507 127,507 122,545 117,600 113,655 116,702 73,703 78,655 80,600 80,545" fill="var(--fig)"/>
 <polygon points="156,507 199,507 202,545 202,600 194,655 209,703 167,702 170,655 166,600 163,545" fill="var(--fig)"/>
 </g>
 </svg>
 <svg class="body-figure" id="figMale" viewBox="0 0 308 728" style="display:none">
 <image href="figure-male.jpg" x="0" y="0" width="308" height="728" preserveAspectRatio="xMidYMid meet"/>
-<g class="zone-btn" data-zone="head" onclick="toggleZone('head')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Head / Face" aria-pressed="false" data-zone="head" onclick="toggleZone('head')">
 <polygon points="116,105 116,58 124,32 142,20 158,20 176,32 184,58 184,105 178,124 168,134 130,134 120,124" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="torso" onclick="toggleZone('torso')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Upper Torso / Chest" aria-pressed="false" data-zone="torso" onclick="toggleZone('torso')">
 <polygon points="120,134 180,134 210,166 214,205 213,245 211,292 96,292 94,245 93,205 97,166" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="arms" onclick="toggleZone('arms')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Arms" aria-pressed="false" data-zone="arms" onclick="toggleZone('arms')">
 <polygon points="94,152 66,162 56,196 50,250 50,305 52,358 56,412 84,412 80,358 83,305 86,250 90,198" fill="var(--fig)"/>
 <polygon points="214,152 242,162 252,196 258,250 258,305 256,358 252,412 224,412 228,358 225,305 222,250 218,198" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="stomach" onclick="toggleZone('stomach')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Stomach" aria-pressed="false" data-zone="stomach" onclick="toggleZone('stomach')">
 <polygon points="96,292 211,292 215,340 91,340" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="hips" onclick="toggleZone('hips')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Hip Area" aria-pressed="false" data-zone="hips" onclick="toggleZone('hips')">
 <polygon points="91,340 215,340 220,400 86,400" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="thighs" onclick="toggleZone('thighs')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Thighs" aria-pressed="false" data-zone="thighs" onclick="toggleZone('thighs')">
 <polygon points="86,400 152,400 150,440 144,470 138,512 84,512 80,470 79,440" fill="var(--fig)"/>
 <polygon points="156,400 220,400 224,440 226,470 224,512 171,512 165,470 160,440" fill="var(--fig)"/>
 </g>
-<g class="zone-btn" data-zone="calves" onclick="toggleZone('calves')">
+<g class="zone-btn" role="button" tabindex="0" aria-label="Calves and Feet" aria-pressed="false" data-zone="calves" onclick="toggleZone('calves')">
 <polygon points="84,512 138,512 132,545 127,600 119,660 121,702 67,703 76,660 83,600 83,545" fill="var(--fig)"/>
 <polygon points="171,512 224,512 225,545 224,600 215,660 239,703 187,702 189,660 181,600 178,545" fill="var(--fig)"/>
 </g>
@@ -241,7 +244,7 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 </div>
 <!-- concern state (hidden until zone chosen) -->
 <div id="panelConcerns" style="display:none; flex:1; flex-direction:column">
-<div class="panel-zone-name" id="panelZoneName"></div>
+<h2 class="panel-zone-name" id="panelZoneName" tabindex="-1"></h2>
 <div class="panel-zone-hint">Select all that apply — multiple selections allowed</div>
 <div class="concern-list" id="concernList"></div>
 </div>
@@ -259,7 +262,7 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 <div class="wrap">
 <div class="center-head">
 <div class="center-eyebrow">Review</div>
-<div class="center-title">Confirm your concerns</div>
+<h2 class="center-title" tabindex="-1">Confirm your concerns</h2>
 <div class="center-sub">Here's what you selected. Go back to adjust, or continue to get your personalized assessment.</div>
 </div>
 <div class="confirm-summary" id="confirmSummary"></div>
@@ -275,12 +278,12 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 <div class="wrap">
 <div class="center-head">
 <div class="center-eyebrow">Your Results</div>
-<div class="center-title">Here's what we'd recommend</div>
+<h2 class="center-title" tabindex="-1">Here's what we'd recommend</h2>
 <div class="center-sub">Based on the areas and concerns you picked — what each treatment does, and what to expect.</div>
 </div>
 <div class="results-list" id="resultsList"></div>
 <div class="results-cta">
-<div class="center-title">Ready to book?</div>
+<h2 class="center-title" tabindex="-1">Ready to book?</h2>
 <div class="center-sub">Every treatment starts with a complimentary consultation — we'll confirm the plan in person before anything is scheduled.</div>
 <div class="row">
 <a href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener" class="btn btn-primary">Book a Consultation</a>
@@ -294,7 +297,7 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 </div>
 </div>
 
-</div>
+</main>
 
 <script>
 const CONCERNS = {
@@ -312,6 +315,8 @@ let state = { gender:'female', activeZone:null, concernsByZone:{}, hear:null };
 
 function setGender(g){
 state.gender = g;
+document.getElementById('tgFemale').setAttribute('aria-pressed',String(g==='female'));
+document.getElementById('tgMale').setAttribute('aria-pressed',String(g==='male'));
 document.getElementById('tgFemale').classList.toggle('active', g==='female');
 document.getElementById('tgMale').classList.toggle('active', g==='male');
 document.getElementById('genderToggle').classList.toggle('is-male', g==='male');
@@ -324,6 +329,7 @@ document.querySelectorAll('.zone-btn').forEach(el => {
 const z = el.dataset.zone;
 const hasConcerns = state.concernsByZone[z] && state.concernsByZone[z].length > 0;
 const isActive = z === state.activeZone;
+el.setAttribute('aria-pressed',String(isActive));
 const color = (hasConcerns || isActive) ? 'var(--fig-sel)' : 'var(--fig)';
 el.querySelectorAll('circle,rect,path,ellipse').forEach(s => s.setAttribute('fill', color));
 });
@@ -338,6 +344,7 @@ pc.style.display = 'flex';
 document.getElementById('panelZoneName').textContent = ZONE_LABELS[zone];
 renderConcerns(zone);
 paintFigure();
+document.getElementById('panelZoneName').focus();
 }
 
 function renderConcerns(zone){
@@ -345,7 +352,9 @@ const list = document.getElementById('concernList');
 list.innerHTML = '';
 CONCERNS[zone].forEach(c => {
 const sel = state.concernsByZone[zone].includes(c);
-const chip = document.createElement('div');
+const chip = document.createElement('button');
+chip.type = 'button';
+chip.setAttribute('aria-pressed',String(sel));
 chip.className = 'concern-chip' + (sel ? ' selected' : '');
 chip.onclick = () => toggleConcern(zone, c);
 chip.innerHTML = `<span class="concern-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><span>${c}</span>`;
@@ -358,6 +367,8 @@ const arr = state.concernsByZone[zone];
 const i = arr.indexOf(concern);
 if (i === -1) arr.push(concern); else arr.splice(i, 1);
 renderConcerns(zone);
+const index = CONCERNS[zone].indexOf(concern);
+document.getElementById('concernList').children[index].focus();
 paintFigure();
 updateContinue();
 }
@@ -389,14 +400,14 @@ case-insensitive) — add a tag here any time new concern wording should
 trigger this category. Every card gets both a Book Now and a Learn More
 link, no exceptions, so the two never drift out of sync again. */
 const CATEGORIES = [
-{ id:'electrolysis', name:'Electrolysis', page:'/services-hair-removal#electrolysis',
+{ id:'electrolysis', name:'Electrolysis', page:'/services-hair-removal.html#electrolysis',
   blurb:'Reaches hair a laser can\'t — blonde, red, grey, fine — by sending current directly into the follicle. The only FDA-approved method for permanent removal of all hair types.',
   expect:'Multiple sessions over months, since hair grows in three separate cycles.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/VQT3OY4IK4KP4ITGJWXWGQ5Z',
   tags:['hair','ingrown'] },
-{ id:'laser', name:'Laser Hair Removal', page:'/services-hair-removal',
-  blurb:'A concentrated beam of light targets pigment in the hair follicle, damaging it so future growth slows — up to 95% permanent reduction on most skin types. We\'ll confirm the right method for your hair and skin type at your free consultation.',
-  expect:'6–12 sessions typical, spaced a few weeks apart to catch hair in every growth cycle. No downtime.',
+{ id:'laser', name:'Laser Hair Removal', page:'/services-hair-removal.html',
+  blurb:'A concentrated beam of light targets pigment in the hair follicle, to reduce future hair growth. Results vary. We\'ll confirm the right method for your hair and skin type at your free consultation.',
+  expect:'A series of sessions is usually needed. Your consultation covers timing, expected results, and aftercare.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
   tags:['hair','ingrown','chafing'] },
 /* Dermaplaning is face-only by nature — a blade treatment for the facial
@@ -404,25 +415,25 @@ const CATEGORIES = [
    hair, which would read as nonsense to a client. "Peach fuzz" appears
    only on the face's concern list and carries no other tag, so selecting
    it returns this card and nothing else. */
-{ id:'dermaplaning', name:'Dermaplaning Facial', page:'/services-facials#dermaplaning',
+{ id:'dermaplaning', name:'Dermaplaning Facial', page:'/services-facials.html#dermaplaning',
   blurb:'A skin treatment where a small, sharp blade is used to gently scrape off dead skin cells and fine facial hair — peach fuzz. Benefits: better product absorption, deep exfoliation, softer fine lines and wrinkles, and noticeably smoother makeup application.',
   expect:'A quick in-office treatment with no downtime — skin looks brighter and feels smoother right away.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y72LAGIZQI2WA6U3O6EHYON4',
   onlyZones:['head'],
   tags:['peach fuzz','unwanted hair'] },
-{ id:'facials', name:'Facials', page:'/services-facials',
+{ id:'facials', name:'Facials', page:'/services-facials.html',
   blurb:'Facials cover a lot of ground — texture, tone, congestion, hydration, fine lines and wrinkles. We offer HydraFacial, chemical peels, microneedling, dermaplaning, acne facials, anti-aging facials, and back facials — we\'ll confirm which one is the right fit at your free consultation.',
   expect:'Most run 30–60 minutes with little to no downtime.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
   tags:['acne','breakout','dull','tired','pore','blackhead','uneven skin','redness','congestion',
         'wrinkle','fine line','hyperpigmentation','dark spot','dark patch','sun damage','age spot',
         'freckle','discoloration','rough','dry skin','elasticity','back acne','texture'] },
-{ id:'teeth-whitening', name:'Teeth Whitening', page:'/services-beautification#teeth-whitening',
+{ id:'teeth-whitening', name:'Teeth Whitening', page:'/services-beautification.html#teeth-whitening',
   blurb:'Professional whitening removes persistent stains and brightens your smile.',
   expect:'Instant results, no downtime.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/WTPSHKZCRHFO6LQ3U7TOORGC',
   tags:['teeth','stained'] },
-{ id:'colonics', name:'Colon Hydrotherapy', page:'/services-detox#colon-hydrotherapy',
+{ id:'colonics', name:'Colon Hydrotherapy', page:'/services-detox.html#colon-hydrotherapy',
   blurb:'A gentle, thorough cleanse — warm purified water clears accumulated waste, gas, and toxins to support digestion and immunity. It\'s also the treatment guests reach for on our end for broader wellness — circulation, muscle recovery, and an overall reset.',
   expect:'A private, one-on-one session with a trained technician. Most people feel lighter within a day.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/ND5YRLKZGKZRZN2K3UR6NBT4',
@@ -469,10 +480,15 @@ goScreen('results');
 const PROGRESS = {select:33, confirm:66, results:100};
 function goScreen(name){
 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-document.getElementById('screen-'+name).classList.add('active');
+const screen = document.getElementById('screen-'+name);
+screen.classList.add('active');
+screen.querySelector('h1,h2').focus({preventScroll:true});
 document.getElementById('progressFill').style.width = PROGRESS[name] + '%';
-window.scrollTo({top:0, behavior:'smooth'});
+window.scrollTo({top:0, behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});
 }
+document.querySelectorAll('.zone-btn').forEach(zone=>zone.addEventListener('keydown',event=>{
+if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleZone(zone.dataset.zone);}
+}));
 </script>
 
 </body>

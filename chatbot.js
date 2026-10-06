@@ -3,7 +3,7 @@
 'use strict';
 const source=document.currentScript.src,local=['localhost','127.0.0.1'].includes(location.hostname);
 const API=local?'http://127.0.0.1:8815':'https://chatbot-api.eric8116.workers.dev';
-const script=document.createElement('script');script.src=new URL('chatbot-core.js?v=2',source).href;script.onload=init;document.head.append(script);
+const script=document.createElement('script');script.src=new URL('chatbot-core.js?v=PLS-20261006-023901',source).href;script.onload=init;document.head.append(script);
 function init(){
  const core=window.PreciseChat,rail=document.querySelector('.action-rail');
  const buttonStyle=document.createElement('link');buttonStyle.rel='stylesheet';buttonStyle.href=new URL('button-refinement.css?v=1',source).href;document.head.append(buttonStyle);
@@ -17,20 +17,21 @@ function init(){
  const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('chatbot.css?v=3',source).href;document.head.append(style);
  const languageStyle=document.createElement('link');languageStyle.rel='stylesheet';languageStyle.href=new URL('chatbot-language-toggle.css?v=1',source).href;document.head.append(languageStyle);
  const overlayStyle=document.createElement('link');overlayStyle.rel='stylesheet';overlayStyle.href=new URL('chatbot-open-overlay.css?v=1',source).href;document.head.append(overlayStyle);
- const centeredStyle=document.createElement('link');centeredStyle.rel='stylesheet';centeredStyle.href=new URL('chatbot-centered-controls.css?v=2',source).href;document.head.append(centeredStyle);
+ const centeredStyle=document.createElement('link');centeredStyle.rel='stylesheet';centeredStyle.href=new URL('chatbot-centered-controls.css?v=PLS-20261006-023901',source).href;document.head.append(centeredStyle);
  const launcher=document.createElement('button');launcher.id='cbRailBtn';launcher.className='rail-btn cb-btn';
  launcher.innerHTML='<span class="rail-label">Chat with Precise</span><span aria-hidden="true">✦</span><span class="cb-mobile-label">Chat</span>';
  launcher.setAttribute('aria-label','Chat with Precise — drag to move, tap to open');launcher.setAttribute('aria-expanded','false');launcher.setAttribute('aria-controls','cbPanel');rail.prepend(launcher);
- let drag=null,suppressClick=false;
+ let drag=null,suppressClick=false,launcherMoved=false;
+ const phoneLayout=window.matchMedia("(max-width:760px)");
  function placeLauncher(left,top){
-  const pad=8,maxLeft=Math.max(pad,window.innerWidth-launcher.offsetWidth-pad),maxTop=Math.max(pad,window.innerHeight-launcher.offsetHeight-pad);
+  const pad=8,maxLeft=Math.max(pad,document.documentElement.clientWidth-launcher.offsetWidth-pad),maxTop=Math.max(pad,document.documentElement.clientHeight-launcher.offsetHeight-pad);
   launcher.style.left=Math.min(maxLeft,Math.max(pad,left))+'px';launcher.style.top=Math.min(maxTop,Math.max(pad,top))+'px';launcher.style.right='auto';launcher.style.bottom='auto';launcher.style.transform='none';
  }
  function moveLauncher(event){
   if(!drag||event.pointerId!==drag.id)return;
   const dx=event.clientX-drag.x,dy=event.clientY-drag.y;
   if(!drag.moved&&Math.hypot(dx,dy)<4)return;
-  drag.moved=true;placeLauncher(drag.left+dx,drag.top+dy);
+  drag.moved=true;launcherMoved=true;placeLauncher(drag.left+dx,drag.top+dy);
  }
  function finishLauncherDrag(event){
   if(!drag||event.pointerId!==drag.id)return;
@@ -48,8 +49,28 @@ function init(){
  launcher.addEventListener('keydown',event=>{
   if(!window.matchMedia('(max-width: 760px)').matches)return;
   const step=12,delta={ArrowUp:[0,-step],ArrowDown:[0,step],ArrowLeft:[-step,0],ArrowRight:[step,0]}[event.key];
-  if(!delta)return;event.preventDefault();const rect=launcher.getBoundingClientRect();placeLauncher(rect.left+delta[0],rect.top+delta[1]);
+  if(!delta)return;event.preventDefault();launcherMoved=true;const rect=launcher.getBoundingClientRect();placeLauncher(rect.left+delta[0],rect.top+delta[1]);
  });
+ // A transformed action rail creates a containing block for fixed children.
+ // On phones, keep the draggable launcher directly under body instead.
+ function positionLauncher(){
+  if(!phoneLayout.matches){
+   if(launcher.parentElement!==rail)rail.prepend(launcher);
+   launcher.style.cssText='';launcherMoved=false;return;
+  }
+  if(launcher.parentElement!==document.body)document.body.append(launcher);
+  if(drag)return;
+  if(launcherMoved){const rect=launcher.getBoundingClientRect();placeLauncher(rect.left,rect.top);return;}
+  const header=document.querySelector('.hdr');
+  const headerBottom=header?header.getBoundingClientRect().bottom:0;
+  placeLauncher(document.documentElement.clientWidth-launcher.offsetWidth-14,Math.max(12,headerBottom+12));
+ }
+ positionLauncher();
+ centeredStyle.addEventListener('load',positionLauncher);
+ window.addEventListener('resize',positionLauncher,{passive:true});
+ window.addEventListener('scroll',()=>{if(!launcherMoved)positionLauncher();},{passive:true});
+ phoneLayout.addEventListener('change',positionLauncher);
+ if(document.fonts)document.fonts.ready.then(positionLauncher);
  const panel=document.createElement('section');panel.id='cbPanel';panel.className='cb-panel';panel.hidden=true;panel.setAttribute('role','dialog');panel.setAttribute('aria-labelledby','cbTitle');
  panel.innerHTML='<header class="cb-head"><div><strong id="cbTitle"></strong><small id="cbSubtitle"></small></div><button type="button" class="cb-close" id="cbClose">✕</button></header><div class="cb-toolbar"><div id="cbLanguages"><button type="button" data-lang="en" class="cb-lang cb-en">EN</button><button type="button" data-lang="es" class="cb-lang cb-es">ES</button></div><button type="button" id="cbReset" class="cb-chip"></button></div><div class="cb-body" id="cbBody" role="log" aria-live="polite" aria-relevant="additions"></div><div class="cb-chips" id="cbChips"></div><p class="cb-privacy" id="cbPrivacy"></p><form class="cb-foot"><label class="cb-sr" for="cbInput">Question / Pregunta</label><input id="cbInput" class="cb-input" maxlength="240" autocomplete="off"><button class="cb-send" type="submit" id="cbSend"></button></form>';
  document.body.append(panel);

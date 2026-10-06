@@ -1,0 +1,30 @@
+/* Shared access and compact controls for the assessment and intake flows. */
+.skip-link{position:fixed;top:8px;left:12px;z-index:10000;transform:translateY(-180%);padding:10px 18px;border:2px solid #14615D;border-radius:999px;background:#E4F4F2;color:#16302E;font:700 14px/1.3 Inter,sans-serif}
+.skip-link:focus{transform:none}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[role="button"]:focus-visible,[role="checkbox"]:focus-visible{outline:3px solid #14615D;outline-offset:4px}
+main:focus,[tabindex="-1"]:focus{outline:none}
+main{scroll-margin-top:130px}
+.assessment-page h2.center-title,.assessment-page h2.panel-zone-name{font-weight:600}
+.assessment-page .concern-chip{font-family:inherit;text-align:left;color:#16302E;background:#EDF8F6;border-color:#6C9690;border-radius:999px;padding:10px 14px;min-height:44px;width:100%;cursor:pointer}
+.assessment-page .concern-chip.selected{background:#D5F2E6;border-color:#14615D}
+.assessment-page .zone-btn{cursor:pointer}
+.assessment-page .zone-btn:focus-visible{outline-offset:1px}
+.assessment-page .btn-secondary,.intake-page .ic-card .ic-btn.secondary{background:#DCEAFB;border:1px solid #547396;color:#16302E}
+.assessment-page a[href^="tel:"].btn{background:#E5EDCB;border:1px solid #667B3D;color:#16302E}
+.intake-page .ic-card .ic-btn{border-radius:999px;padding:11px 18px;min-height:44px;font-weight:700}
+.intake-page .ic-chip{font-family:inherit;background:#EDF8F6;border-color:#6C9690;color:#16302E;min-height:44px;cursor:pointer}
+.intake-page .ic-chip.sel{background:#D5F2E6;border-color:#14615D;color:#16302E}
+.intake-page .ic-yn-toggle button{min-height:44px}
+.intake-page .ic-consent-item[role="checkbox"],.intake-page .ic-check-line[role="checkbox"]{cursor:pointer}
+@media(max-width:760px){
+ .intake-page .ic-card input,.intake-page .ic-card select,.intake-page .ic-card textarea{font-size:16px}
+ .assessment-page .topbar-inner{flex-wrap:wrap;gap:10px}
+ .assessment-page .topbar-title{position:static!important;transform:none!important;order:3;width:100%;text-align:center}
+ .assessment-page .topbar-inner>div{gap:10px!important;margin-left:auto}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ .assessment-page *, .intake-page *{animation:none!important;transition:none!important}
+}
+
+.intake-page .ic-field-label{display:block;font-size:13.5px;font-weight:600;color:var(--ink);margin:18px 0 6px}

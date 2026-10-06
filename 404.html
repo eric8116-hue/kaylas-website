@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="PLS-20261006-023901">
+<meta name="build" content="PLS-20261006-QUALITY-LOCAL">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -109,11 +109,10 @@
 </footer>
 
 <script>
-function openDrawer(){ document.getElementById('drawer').classList.add('open'); document.body.classList.add('locked'); }
-function closeDrawer(){ document.getElementById('drawer').classList.remove('open'); document.body.classList.remove('locked'); }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
 document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
 </script>
 
+<script src="site-menu.js?v=quality-1" defer></script>
 </body>
 </html>

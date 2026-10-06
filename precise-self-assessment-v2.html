@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="PLS-20261006-023901">
+<meta name="build" content="PLS-20261006-QUALITY-LOCAL">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Free Skin & Body Assessment | Precise Laser Hair Removal & Esthetics</title>
+<title>Free Skin &amp; Body Assessment | Precise Laser Spa</title>
 <meta name="description" content="Take our free self-assessment to find the right treatment for your concerns.">
 <link rel="canonical" href="https://preciselaserspa.com/precise-self-assessment-v2">
-<meta property="og:title" content="Free Skin &amp; Body Assessment | Precise Laser Hair Removal &amp; Esthetics">
+<meta property="og:title" content="Free Skin &amp; Body Assessment | Precise Laser Spa">
 <meta property="og:description" content="Take our free self-assessment to find the right treatment for your concerns.">
 <meta property="og:url" content="https://preciselaserspa.com/precise-self-assessment-v2">
 <meta name="twitter:card" content="summary">
@@ -301,13 +301,66 @@ display:flex; flex-direction:column; box-shadow:0 24px 50px -12px rgba(20,97,93,
 
 <script>
 const CONCERNS = {
-head:["Unwanted hair","Peach fuzz","Fine lines & wrinkles","Acne & breakouts","Uneven skin tone","Dull, tired-looking skin","Enlarged pores","Rough texture","Sun damage / age spots","Thin, sparse lashes","Uneven or thin lips","Stained or dull teeth","Blackheads & clogged pores","Freckles / moderate discoloration","Facial redness / irritation","Stress-related skin dullness","Tension & facial tension"],
-arms:["Unwanted hair","Ingrown hairs","Rough or bumpy texture","Muscle soreness","Joint pain (elbows/wrists)","Poor circulation","Sun damage","Uneven skin tone","Cellulite (upper arms)","Skin dullness","Inflammation","Fatigue / low energy","Slow recovery after activity"],
-torso:["Unwanted hair","Ingrown hairs","Acne / body breakouts","Uneven skin tone","Rough texture","Sun damage","Poor circulation","Muscle tension","Stress / anxiety","Skin dullness","Inflammation","Back acne & congestion"],
-stomach:["Unwanted hair","Cellulite","Bloating","Slow digestion","Detoxification / toxin buildup","Weak immunity","Weight management","Poor skin elasticity","Constipation / irregularity","Low energy / fatigue","Water retention","Skin dullness","Sun damage","Poor nutrient absorption"],
-hips:["Unwanted hair","Cellulite","Ingrown hairs","Uneven skin tone","Water retention","Poor circulation","Joint discomfort","Skin dullness","Weight management","Muscle tension","Detoxification"],
-thighs:["Unwanted hair","Cellulite","Ingrown hairs","Chafing / irritation","Uneven skin tone","Poor circulation","Water retention","Muscle soreness","Skin dullness / roughness","Weight management","Joint pain (knees)","Detoxification","Sun damage"],
-calves:["Unwanted hair","Ingrown hairs","Rough, dry skin","Poor circulation","Muscle cramping / soreness","Swelling / water retention","Joint pain (ankles/knees)","Varicose vein appearance","Fatigue after standing","Cellulite","Skin dullness","Uneven skin tone","Detoxification"]
+  "head": [
+    "Unwanted hair",
+    "Peach fuzz",
+    "Fine lines & wrinkles",
+    "Acne & breakouts",
+    "Uneven skin tone",
+    "Dull-looking skin",
+    "Enlarged pores",
+    "Rough texture",
+    "Sun damage / age spots",
+    "Thin, sparse lashes",
+    "Uneven or thin lips",
+    "Stained or dull teeth",
+    "Blackheads & clogged pores",
+    "Freckles / moderate discoloration"
+  ],
+  "arms": [
+    "Unwanted hair",
+    "Ingrown hairs",
+    "Rough or bumpy texture",
+    "Sun damage",
+    "Uneven skin tone",
+    "Skin dullness"
+  ],
+  "torso": [
+    "Unwanted hair",
+    "Ingrown hairs",
+    "Acne / body breakouts",
+    "Uneven skin tone",
+    "Rough texture",
+    "Sun damage",
+    "Skin dullness",
+    "Back acne & congestion"
+  ],
+  "stomach": [
+    "Unwanted hair",
+    "Uneven skin tone",
+    "Skin dullness",
+    "Sun damage"
+  ],
+  "hips": [
+    "Unwanted hair",
+    "Ingrown hairs",
+    "Uneven skin tone",
+    "Skin dullness"
+  ],
+  "thighs": [
+    "Unwanted hair",
+    "Ingrown hairs",
+    "Uneven skin tone",
+    "Skin dullness / roughness",
+    "Sun damage"
+  ],
+  "calves": [
+    "Unwanted hair",
+    "Ingrown hairs",
+    "Rough, dry skin",
+    "Skin dullness",
+    "Uneven skin tone"
+  ]
 };
 const ZONE_LABELS = {head:"Head / Face", arms:"Arms", torso:"Upper Torso / Chest", stomach:"Stomach", hips:"Hip Area", thighs:"Thighs", calves:"Calves & Feet"};
 
@@ -401,7 +454,7 @@ trigger this category. Every card gets both a Book Now and a Learn More
 link, no exceptions, so the two never drift out of sync again. */
 const CATEGORIES = [
 { id:'electrolysis', name:'Electrolysis', page:'/services-hair-removal.html#electrolysis',
-  blurb:'Reaches hair a laser can\'t — blonde, red, grey, fine — by sending current directly into the follicle. The only FDA-approved method for permanent removal of all hair types.',
+  blurb:'Reaches hair a laser can\'t — blonde, red, grey, fine — by sending current directly into the follicle. Electrolysis can permanently remove unwanted hair, including light-colored hairs.',
   expect:'Multiple sessions over months, since hair grows in three separate cycles.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/VQT3OY4IK4KP4ITGJWXWGQ5Z',
   tags:['hair','ingrown'] },
@@ -417,29 +470,33 @@ const CATEGORIES = [
    it returns this card and nothing else. */
 { id:'dermaplaning', name:'Dermaplaning Facial', page:'/services-facials.html#dermaplaning',
   blurb:'A skin treatment where a small, sharp blade is used to gently scrape off dead skin cells and fine facial hair — peach fuzz. Benefits: better product absorption, deep exfoliation, softer fine lines and wrinkles, and noticeably smoother makeup application.',
-  expect:'A quick in-office treatment with no downtime — skin looks brighter and feels smoother right away.',
+  expect:'Your consultation covers suitability, possible irritation, and aftercare. Results vary.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/Y72LAGIZQI2WA6U3O6EHYON4',
   onlyZones:['head'],
   tags:['peach fuzz','unwanted hair'] },
 { id:'facials', name:'Facials', page:'/services-facials.html',
   blurb:'Facials cover a lot of ground — texture, tone, congestion, hydration, fine lines and wrinkles. We offer HydraFacial, chemical peels, microneedling, dermaplaning, acne facials, anti-aging facials, and back facials — we\'ll confirm which one is the right fit at your free consultation.',
-  expect:'Most run 30–60 minutes with little to no downtime.',
+  expect:'Timing and recovery depend on the treatment. Peels and microneedling may require aftercare and healing time.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services',
   tags:['acne','breakout','dull','tired','pore','blackhead','uneven skin','redness','congestion',
         'wrinkle','fine line','hyperpigmentation','dark spot','dark patch','sun damage','age spot',
         'freckle','discoloration','rough','dry skin','elasticity','back acne','texture'] },
+{ id:'lash-lift', name:'Lash Lift', page:'/services-beautification.html#lash-lift',
+  blurb:'A lash lift changes the curl of your natural lashes. Discuss the look you want and whether the service suits your lashes at a consultation.',
+  expect:'The team will explain preparation, aftercare, and how long your result may last.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/URGO3WEIP2ODMHHXJDVFZPTE',
+  onlyZones:['head'], tags:['lashes'] },
+{ id:'lip-blushing', name:'Lip Blushing', page:'/services-beautification.html#lip-blushing',
+  blurb:'Lip blushing deposits cosmetic pigment to add color and definition to the lips. A consultation covers your preferred shade and expected result.',
+  expect:'Discuss suitability, healing, aftercare, and possible touch-ups before booking.',
+  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/QY7N47DI3HBAGCKQL7AWZ2N6',
+  onlyZones:['head'], tags:['lips'] },
 { id:'teeth-whitening', name:'Teeth Whitening', page:'/services-beautification.html#teeth-whitening',
-  blurb:'Professional whitening removes persistent stains and brightens your smile.',
-  expect:'Instant results, no downtime.',
+  blurb:'Teeth whitening can lighten some stains on natural teeth. Results depend on the cause of discoloration.',
+  expect:'Ask your dentist about suitability, especially if you have sensitive teeth, fillings, crowns, or gum concerns.',
   bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/WTPSHKZCRHFO6LQ3U7TOORGC',
   tags:['teeth','stained'] },
-{ id:'colonics', name:'Colon Hydrotherapy', page:'/services-detox.html#colon-hydrotherapy',
-  blurb:'A gentle, thorough cleanse — warm purified water clears accumulated waste, gas, and toxins to support digestion and immunity. It\'s also the treatment guests reach for on our end for broader wellness — circulation, muscle recovery, and an overall reset.',
-  expect:'A private, one-on-one session with a trained technician. Most people feel lighter within a day.',
-  bookUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services/ND5YRLKZGKZRZN2K3UR6NBT4',
-  tags:['bloating','digestion','constipation','irregularity','detox','toxin','immunity','nutrient','water retention',
-        'circulation','joint','muscle','sore','cramp','inflammation','weight','stress','tension','fatigue',
-        'energy','recovery','swelling','varicose','cellulite','elasticity'] }
+
 ];
 
 function matchCategories(){

@@ -204,3 +204,24 @@ section[id]{scroll-margin-top:110px}
 .rail-label{display:none}
 .sec{padding:56px 0}
 }
+
+/* Match the image download to the display size; retain full desktop artwork. */
+.pbanner-img{background-image:var(--banner-desktop)}
+@media(max-width:760px){.pbanner-img{background-image:var(--banner-mobile,var(--banner-desktop))}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+
+/* Service pages use the same phone actions as the home page. */
+.service-actions .rail-mobile-only,.service-actions .rail-mobile-label{display:none}
+@media(max-width:760px){
+  body:has(.service-actions){padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+  .action-rail.service-actions{top:auto;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));left:12px;transform:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;z-index:940}
+  .service-actions > a.rail-btn{width:100%;height:48px;min-width:0;flex-direction:column;gap:2px;box-sizing:border-box}
+  .service-actions > a:not(.rail-book):not(.rail-mobile-only){display:none}
+  .service-actions .rail-mobile-only{display:flex}
+  .service-actions .rail-mobile-label{display:block;font-size:11px;font-weight:800;line-height:1.2}
+  .service-actions .rail-label{display:none}
+  .service-actions > a.rail-btn:hover{transform:none}
+}

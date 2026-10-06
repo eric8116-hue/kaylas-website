@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="PLS-20261006-023901">
+<meta name="build" content="PLS-20261006-QUALITY-LOCAL">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -461,7 +461,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 <a href="#about">About</a>
 <a href="#" onclick="openOverlay('contact');return false;">Contact</a>
 <a href="/precise-self-assessment-v2.html">Self-Assessment</a>
-<a href="/client-intake.html">Existing Clients</a>
+<a href="/client-intake.html">Client Intake</a>
 <div class="mobile-lang-switch desk-lang" role="group" aria-label="Language / Idioma"><a href="/" class="ls is-on" lang="en" aria-label="English" aria-current="page">EN</a><a href="/servicios.html" class="ls" lang="es" aria-label="Español">ES</a></div>
 </nav>
 
@@ -521,7 +521,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 <a class="dlink" href="#about" onclick="closeDrawer()">About</a>
 <a class="dlink" href="#" onclick="closeDrawer();openOverlay('contact');return false;">Contact</a>
 <a class="dlink" href="/precise-self-assessment-v2.html">Self-Assessment</a>
-<a class="dlink" href="/client-intake.html">Existing Clients</a>
+<a class="dlink" href="/client-intake.html">Client Intake</a>
 <a class="dlink" href="/servicios.html" lang="es">Español</a>
 <div class="drawer-foot">
 <a class="btn btn-p" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book Now</a>
@@ -603,7 +603,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 <div class="way-box">
 <div class="way-img"><img src="https://images.squarespace-cdn.com/content/v1/670d3e6710135b6100abc199/9a751fe2-deb1-4125-bc21-a00e22a526a0/City_Cave_July_15_of_61.jpg?format=1000w" alt="Infrared sauna room" loading="lazy"></div>
 <h3>Detoxification Services</h3>
-<p>Infrared sauna, colon hydrotherapy, and the FIT Bodywrap — supporting circulation, digestion, recovery, and how you feel day to day, not just how you look.</p>
+<p>Explore infrared sauna, colon hydrotherapy, and FIT Bodywrap. Learn what each session involves and discuss suitability before booking.</p>
 </div>
 </a>
 
@@ -734,7 +734,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 </div>
 
 <a class="btn btn-p" style="margin-top:8px" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book a Consultation</a>
-<p class="trust-line" style="text-align:left">Join 300+ happy clients in Babylon. 100% personalized care.</p>
+<p class="trust-line" style="text-align:left">Personalized care, right here in Babylon.</p>
 
 <!-- SOCIAL LINKS — real Precise profile URLs -->
 <div class="socials">
@@ -886,7 +886,7 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <label class="f-legend" id="contactMessageLabel" for="cMsg">Anything else we should know?</label>
 <textarea class="f-in" id="cMsg" placeholder="Tell us about your goals, questions, or scheduling preferences (optional)"></textarea>
 <input type="text" id="cHp" name="company" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0" aria-hidden="true">
-<p class="trust-line" id="contactTrust">Join 300+ happy clients in Babylon. 100% personalized care.</p>
+<p class="trust-line" id="contactTrust">Personalized care, right here in Babylon.</p>
 <button class="btn-main" id="cSendBtn" onclick="submitContact()">Send message</button>
 <p class="fine" id="cErr" role="alert" tabindex="-1" style="display:none; color:#B3261E">Something went wrong sending your message — please call or text us instead.</p>
 <p class="fine">We'll get back to you within one business day. Your information is kept private and only shared with Precise.</p>
@@ -1215,6 +1215,7 @@ btn.textContent = 'Sending…';
 try {
 const res = await fetch(NOTIFY_API, {
 method: 'POST',
+signal: AbortSignal.timeout(20000),
 headers: { 'Content-Type': 'application/json' },
 body: JSON.stringify({
 kind: 'contact',
@@ -1228,9 +1229,12 @@ if (!res.ok) throw new Error('notify failed');
 
 document.getElementById('contactForm').style.display = 'none';
 document.getElementById('contactSuccess').classList.add('show');
+const success = document.getElementById('contactSuccess');
+success.setAttribute('tabindex', '-1');
+success.focus();
 document.querySelector('#ov-contact .ov-scroll').scrollTop = 0;
 } catch (err) {
-contactError('Something went wrong sending your message — please call or text us instead.');
+contactError(err.name === 'TimeoutError' ? 'We could not confirm delivery. Please call or text us before sending again.' : 'Something went wrong sending your message — please call or text us instead.');
 } finally {
 btn.disabled = false;
 btn.textContent = originalLabel;

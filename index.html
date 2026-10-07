@@ -1233,6 +1233,7 @@ hp: document.getElementById('cHp').value
 })
 });
 if (!res.ok) throw new Error('notify failed');
+if (!feedback && window.preciseTrack) window.preciseTrack('contact_form_sent');
 
 document.getElementById('contactForm').style.display = 'none';
 document.getElementById('contactSuccess').classList.add('show');
@@ -1298,5 +1299,6 @@ else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); f
 <script src="chatbot.js?v=PLS-20261006-NAV" defer></script>
 
 <script src="offer-popup-enhance.js" defer></script>
+<script src="site-tracking.js?v=PLS-20261006-TRACK" defer></script>
 </body>
 </html>

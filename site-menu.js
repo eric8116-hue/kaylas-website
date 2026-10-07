@@ -54,3 +54,9 @@
     if (!trigger.getClientRects().length) window.closeDrawer();
   });
 })();
+
+/* In the local Site Preview, the footer Staff link opens the local dashboard preview instead of the live sign-in. */
+(() => {
+  if (!['127.0.0.1', 'localhost'].includes(location.hostname)) return;
+  document.querySelectorAll('a.staff-link').forEach(a => { a.href = 'http://127.0.0.1:8818/'; });
+})();

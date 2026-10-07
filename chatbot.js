@@ -15,9 +15,9 @@ function init(){
  Object.assign(core.ui.es,{more:'Leer el resto del artículo',book:'Reservar',call:'Llamar'});
  try{const saved=sessionStorage.getItem('preciseChatLanguage');if(saved==='en'||saved==='es')lang=saved;}catch{}
  const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('chatbot.css?v=3',source).href;document.head.append(style);
- const languageStyle=document.createElement('link');languageStyle.rel='stylesheet';languageStyle.href=new URL('chatbot-language-toggle.css?v=1',source).href;document.head.append(languageStyle);
+ const languageStyle=document.createElement('link');languageStyle.rel='stylesheet';languageStyle.href=new URL('chatbot-language-toggle.css?v=PLS-20261006-NAV',source).href;document.head.append(languageStyle);
  const overlayStyle=document.createElement('link');overlayStyle.rel='stylesheet';overlayStyle.href=new URL('chatbot-open-overlay.css?v=1',source).href;document.head.append(overlayStyle);
- const centeredStyle=document.createElement('link');centeredStyle.rel='stylesheet';centeredStyle.href=new URL('chatbot-centered-controls.css?v=PLS-20261006-023901',source).href;document.head.append(centeredStyle);
+ const centeredStyle=document.createElement('link');centeredStyle.rel='stylesheet';centeredStyle.href=new URL('chatbot-centered-controls.css?v=PLS-20261006-NAV',source).href;document.head.append(centeredStyle);
  const launcher=document.createElement('button');launcher.id='cbRailBtn';launcher.className='rail-btn cb-btn';
  launcher.innerHTML='<span class="rail-label">Chat with Precise</span><span aria-hidden="true">✦</span><span class="cb-mobile-label">Chat</span>';
  launcher.setAttribute('aria-label','Chat with Precise — drag to move, tap to open');launcher.setAttribute('aria-expanded','false');launcher.setAttribute('aria-controls','cbPanel');rail.prepend(launcher);

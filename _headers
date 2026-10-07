@@ -1,0 +1,19 @@
+# Cloudflare Pages security headers. Only take effect on the published site;
+# the local Site Preview server ignores this file.
+#
+# The pages use inline <script> blocks and onclick handlers, so script-src
+# keeps 'unsafe-inline'. The policy still limits where the page may load
+# from, send data to, and be framed by.
+# Outside services allowed:
+#   fonts.googleapis.com / fonts.gstatic.com   Google Fonts
+#   www.google.com                             map embed
+#   chatbot-api.eric8116.workers.dev           chat answers + contact form
+#   precise-laser-crm.pages.dev                intake form, offer, reviews feed
+
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://chatbot-api.eric8116.workers.dev https://precise-laser-crm.pages.dev; frame-src https://www.google.com; form-action 'self' https://precise-laser-crm.pages.dev; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests

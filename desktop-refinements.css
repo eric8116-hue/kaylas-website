@@ -8,7 +8,7 @@
 .desk-lang .ls + .ls{border-left:1px solid #344154}
 .desk-lang .ls[lang="en"]{color:#2f80ed}
 .desk-lang .ls[lang="es"]{color:#e53935}
-.desk-lang .ls[lang="en"].is-on{background:#2f80ed; color:#fff}
+.desk-lang .ls[lang="en"].is-on{background:#2870d0; color:#fff}
 .desk-lang .ls[lang="es"].is-on{background:#e53935; color:#fff}
 .desk-lang .ls:not(.is-on):hover{background:rgba(255,255,255,.08)}
 .desk-lang .ls::after{display:none}

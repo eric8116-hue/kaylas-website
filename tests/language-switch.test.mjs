@@ -9,7 +9,7 @@ const has = (source, pattern, message) => assert.ok(pattern.test(source), messag
 
 test('English mobile header has the blue EN and red ES two-way switch', () => {
   has(english, /class="mobile-lang-switch"[^>]*>[\s\S]*?href="\/"[^>]*class="ls is-on"[^>]*>EN<\/a>[\s\S]*?href="\/servicios\.html"[^>]*class="ls"[^>]*>ES<\/a>/, 'English header switch missing or links wrong');
-  has(styles, /\.mobile-lang-switch \.ls\[lang="en"\]\.is-on\{background:#2f80ed;color:#fff\}/, 'English active blue missing');
+  has(styles, /\.mobile-lang-switch \.ls\[lang="en"\]\.is-on\{background:#2870d0;color:#fff\}/, 'English active blue missing');
   has(styles, /\.mobile-lang-switch \.ls\[lang="es"\]\{color:#e53935\}/, 'Spanish inactive red missing');
   assert.ok(!/class="hdr-call-mobile"[^>]*>ES<\/a>/.test(english), 'old standalone ES button remains');
 });

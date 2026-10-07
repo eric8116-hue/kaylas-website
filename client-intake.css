@@ -1,0 +1,93 @@
+/* ================= CLIENT INTAKE FORM — scoped styles ================= */
+/* Prefixed "ic-" throughout so nothing collides with service-page.css?v=PLS-20261007-FIX2 or chatbot.js?v=PLS-20261007-FIX2. */
+
+.ic-section{padding:48px 0 80px}
+.ic-card{max-width:760px; margin:0 auto; background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:clamp(24px,4vw,48px); box-shadow:0 10px 40px rgba(20,97,93,.08)}
+
+.ic-lang{width:max-content; margin:0 auto 22px}
+.ic-lang.on{display:flex}
+.ic-lang .ls{border:0; border-radius:0; background:transparent; cursor:pointer; appearance:none}
+.ic-lang .ls:focus-visible{outline:2px solid #2f80ed; outline-offset:-3px}
+
+.ic-steplabel{font-size:12.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--teal-deep); margin-bottom:10px}
+.ic-progress{height:6px; border-radius:99px; background:var(--teal-light); overflow:hidden; margin-bottom:30px}
+.ic-progress-bar{height:100%; background:linear-gradient(135deg,var(--teal),var(--teal-deep)); transition:width .25s}
+
+.ic-step{display:none}
+.ic-step.active{display:block}
+
+.ic-card label{display:block; font-size:13.5px; font-weight:600; color:var(--ink); margin:18px 0 6px}
+.ic-card label:first-child{margin-top:0}
+.ic-card input[type=text], .ic-card input[type=tel], .ic-card input[type=email], .ic-card input[type=date], .ic-card select{
+  width:100%; padding:13px 14px; border:1.5px solid var(--line); border-radius:10px; font-size:15px; font-family:inherit; color:var(--ink); background:#fff; -webkit-appearance:none; appearance:none;
+}
+.ic-card input:focus, .ic-card select:focus{outline:none; border-color:var(--teal)}
+.ic-card input:focus-visible, .ic-card select:focus-visible{box-shadow:0 0 0 3px rgba(30,138,133,.35)}
+.ic-row{display:flex; gap:14px; flex-wrap:wrap}
+.ic-row > div{flex:1; min-width:120px}
+
+.ic-card h2{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:23px; color:var(--teal-deep); margin:32px 0 12px}
+.ic-card h2:first-of-type{margin-top:0}
+.ic-sub{font-size:14px; color:var(--ink-soft); margin-bottom:14px; line-height:1.6}
+
+.ic-yn-block{margin-top:16px}
+.ic-yn-row{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px 0; border-bottom:1px solid var(--line)}
+.ic-yn-row .ic-q{font-size:14.5px; color:var(--ink); flex:1}
+.ic-yn-toggle{display:flex; gap:8px; flex-shrink:0}
+.ic-yn-toggle button{padding:8px 18px; border-radius:8px; border:1.5px solid var(--line); background:#fff; font-size:13.5px; font-weight:600; color:var(--ink-soft); cursor:pointer; font-family:inherit}
+.ic-yn-toggle button.sel-y.sel{background:var(--teal); border-color:var(--teal); color:#fff}
+.ic-yn-toggle button.sel-n.sel{background:#B4433A; border-color:#B4433A; color:#fff}
+.ic-followup{display:none; margin-top:8px}
+.ic-followup.show{display:block}
+
+.ic-chip-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+.ic-chip{padding:9px 16px; border-radius:99px; border:1.5px solid var(--line); font-size:13.5px; font-weight:600; color:var(--ink-soft); cursor:pointer; user-select:none}
+.ic-chip.sel{background:var(--teal); border-color:var(--teal); color:#fff}
+
+.ic-fitz{margin-top:16px; border:1px solid var(--line); border-radius:14px; padding:16px 14px 12px}
+.ic-fitz-title{text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:19px; font-weight:600; color:var(--teal-deep); margin:0 0 14px}
+.ic-fitz-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:7px}
+.ic-fitz-col{text-align:center}
+.ic-fitz-sw{height:56px; border-radius:9px; border:1px solid rgba(0,0,0,.08)}
+.ic-fitz-t{font-size:10.5px; font-weight:700; color:var(--teal); margin:7px 0 3px; letter-spacing:.02em}
+.ic-fitz-b{font-size:10.5px; font-weight:700; color:var(--ink); line-height:1.25}
+.ic-fitz-d{font-size:9.5px; color:var(--ink-soft); line-height:1.25; margin-top:3px}
+.ic-fitz-cap{font-size:12.5px; color:var(--ink-soft); margin-top:12px; text-align:center}
+@media (max-width:560px){ .ic-fitz-grid{grid-template-columns:repeat(3,1fr); gap:9px} .ic-fitz-sw{height:48px} }
+
+.ic-consent-item{display:flex; gap:14px; align-items:flex-start; padding:14px 0; border-bottom:1px solid var(--line); cursor:pointer}
+.ic-consent-item:last-child{border-bottom:none}
+.ic-initial-box{flex-shrink:0; width:48px; height:38px; border:1.5px solid var(--line); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; color:var(--teal-deep); background:var(--sand)}
+.ic-consent-item.done .ic-initial-box{background:var(--teal-light); border-color:var(--teal)}
+.ic-consent-item .ic-txt{font-size:14px; line-height:1.55; color:var(--ink); padding-top:8px}
+
+.ic-check-line{display:flex; gap:14px; align-items:flex-start; padding:14px 0; cursor:pointer}
+.ic-check-line .ic-box{flex-shrink:0; width:26px; height:26px; border:1.5px solid var(--line); border-radius:7px; margin-top:2px}
+.ic-check-line.on .ic-box{background:var(--teal); border-color:var(--teal)}
+.ic-check-line .ic-txt{font-size:14.5px; color:var(--ink); line-height:1.55}
+
+.ic-req{color:#B4433A}
+.ic-req-note{font-size:12px; color:var(--ink-soft); font-weight:500}
+
+.ic-btn-row{display:flex; gap:12px; margin-top:32px}
+.ic-card .ic-btn{flex:1; text-align:center; padding:15px 24px; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer; border:none; font-family:inherit; transition:transform .15s, box-shadow .15s, opacity .15s}
+.ic-card .ic-btn.primary{background:linear-gradient(135deg,var(--teal-deep),var(--teal-darker)); color:#fff; box-shadow:0 10px 26px rgba(13,62,59,.35)}
+.ic-card .ic-btn.primary:hover{transform:translateY(-1px)}
+.ic-card .ic-btn.primary:disabled{opacity:.4; cursor:not-allowed; transform:none}
+.ic-card .ic-btn.secondary{background:#fff; border:1.5px solid var(--line); color:var(--ink)}
+
+.ic-draft-banner{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; background:#FFF6E0; border:1px solid #E8C97A; color:#6B4E00; border-radius:12px; padding:14px 16px; margin-bottom:22px}
+.ic-draft-banner .ic-dtext{font-size:14.5px}
+.ic-draft-banner .ic-dwhen{display:block; font-size:12.5px; opacity:.8; margin-top:2px}
+.ic-draft-banner .ic-dactions{display:flex; gap:8px}
+.ic-draft-banner button{padding:9px 16px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; border:1.5px solid #6B4E00; background:#fff; color:#6B4E00}
+.ic-draft-banner button.primary{background:#6B4E00; color:#fff}
+
+/* Honeypot — a real field, positioned off-screen. Bots fill in every input
+   they find; a human never sees this one. Deliberately NOT display:none,
+   because the better scrapers skip hidden fields and would dodge the trap. */
+.ic-hp{position:absolute; left:-9999px; top:0; width:1px; height:1px; overflow:hidden}
+
+.ic-thanks{text-align:center; padding:40px 12px}
+.ic-thanks h2{margin-top:0}
+.ic-toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:var(--ink); color:#fff; padding:12px 20px; border-radius:10px; font-size:14px; display:none; z-index:900}

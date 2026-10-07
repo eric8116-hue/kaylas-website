@@ -1,9 +1,9 @@
 # Cloudflare Pages security headers. Only take effect on the published site;
 # the local Site Preview server ignores this file.
 #
-# The pages use inline <script> blocks and onclick handlers, so script-src
-# keeps 'unsafe-inline'. The policy still limits where the page may load
-# from, send data to, and be framed by.
+# No inline JavaScript anywhere: page code lives in .js files and buttons use
+# data-on-click="" (run by actions.js), so script-src forbids inline scripts.
+# Inline style="" attributes remain, so style-src keeps 'unsafe-inline'.
 # Outside services allowed:
 #   fonts.googleapis.com / fonts.gstatic.com   Google Fonts
 #   www.google.com                             map embed
@@ -18,4 +18,4 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://cloudflareinsights.com https://chatbot-api.eric8116.workers.dev https://precise-laser-crm.pages.dev https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://www.google.com https://googleads.g.doubleclick.net; frame-src https://www.google.com https://www.googletagmanager.com https://td.doubleclick.net; form-action 'self' https://precise-laser-crm.pages.dev; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://cloudflareinsights.com https://chatbot-api.eric8116.workers.dev https://precise-laser-crm.pages.dev https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://www.google.com https://googleads.g.doubleclick.net; frame-src https://www.google.com https://www.googletagmanager.com https://td.doubleclick.net; form-action 'self' https://precise-laser-crm.pages.dev; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests

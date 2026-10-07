@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
-const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+// The home page's styles and scripts moved to home.css / home.js; read them with the page.
+const html = ['../index.html', '../home.css', '../home.js'].map(f => readFileSync(new URL(f, import.meta.url), 'utf8')).join('\n');
 const chat = readFileSync(new URL('../chatbot.js', import.meta.url), 'utf8');
 const has = (source, pattern, message) => assert.ok(pattern.test(source), message);
 

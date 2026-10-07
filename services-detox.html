@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="PLS-20261007-FIX2">
+<meta name="build" content="PLS-20261007-TIDY">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -25,6 +25,7 @@
 <meta name="twitter:image" content="https://preciselaserspa.com/sign.jpg">
 <link rel="preload" as="image" href="source-images/infared-suana-1-1000w.jpg" media="(max-width: 760px)" fetchpriority="high">
 <link rel="preload" as="image" href="source-images/infared-suana-1-1466w.jpg" media="(min-width: 761px)" fetchpriority="high">
+<script src="actions.js?v=PLS-20261007-TIDY"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -55,14 +56,14 @@
 <a class="btn btn-p" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book Now</a>
 </div>
 <a class="hdr-call-mobile" href="tel:6319231174" aria-label="Call (631) 923-1174"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
-<button class="burger" onclick="openDrawer()" aria-label="Open menu"><span class="burger-lines"></span><span class="burger-label">Menu</span></button>
+<button class="burger" data-on-click="openDrawer()" aria-label="Open menu"><span class="burger-lines"></span><span class="burger-label">Menu</span></button>
 </div>
 </header>
 
 <div class="drawer" id="drawer">
 <div class="drawer-top">
 <img src="source-images/precise-laser-hair-logo-1-blue-649w.jpg" srcset="source-images/precise-laser-hair-logo-1-blue-320w.jpg 320w, source-images/precise-laser-hair-logo-1-blue-649w.jpg 649w" sizes="228px" width="649" height="427" alt="Precise">
-<button class="drawer-x" onclick="closeDrawer()" aria-label="Close"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+<button class="drawer-x" data-on-click="closeDrawer()" aria-label="Close"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
 </div>
 <a class="dlink" href="/">Home</a>
 <a class="dlink" href="/#about">About</a>
@@ -279,19 +280,7 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </a>
 </nav>
 
-<script>
-
-document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
-(function(){
-  function goHash(){
-    if (!location.hash) return;
-    const el = document.getElementById(location.hash.slice(1));
-    if (el) el.scrollIntoView({behavior:'instant', block:'start'});
-  }
-  if (document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', goHash); } else { goHash(); }
-  window.addEventListener('load', function(){ goHash(); setTimeout(goHash, 350); });
-})();
-</script>
+<script src="service-page.js?v=PLS-20261007-TIDY"></script>
 <script src="chatbot.js?v=PLS-20261007-FIX2" defer></script>
 <script src="offer-popup.js?v=1" defer></script>
 

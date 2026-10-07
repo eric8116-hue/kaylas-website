@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 test('public and practice homepage do not launch the promotion', () => {
-  const homepage = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const homepage = readFileSync(new URL('../home.js', import.meta.url), 'utf8'); // home page script (moved out of index.html)
   const initializer = homepage.match(/\(function initPromo\(\)\{([\s\S]*?)\n\}\)\(\);/)?.[1] || '';
   assert.match(initializer, /if \(PROMOTIONS_DISABLED\) return;/);
   assert.match(homepage, /const PROMOTIONS_DISABLED = true;/);

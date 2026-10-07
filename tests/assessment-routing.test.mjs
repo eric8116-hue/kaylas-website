@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 
-const html = readFileSync(new URL('../self-assessment.html', import.meta.url), 'utf8');
+// The self-assessment script moved to self-assessment.js; read it with the page.
+const html = ['../self-assessment.html', '../self-assessment.js'].map(f => readFileSync(new URL(f, import.meta.url), 'utf8')).join('\n');
 const matchingCode = html.slice(html.indexOf('const CATEGORIES ='), html.indexOf('function goResults()'));
 const match = (zone, concern) => vm.runInNewContext(matchingCode + '\nmatchCategories()', {
   state: {concernsByZone: {[zone]: [concern]}}

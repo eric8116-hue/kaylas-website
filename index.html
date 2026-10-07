@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="PLS-20261007-FIX2">
+<meta name="build" content="PLS-20261007-TIDY">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -58,410 +58,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
---teal:#1E8A85; --teal-deep:#14615D; --teal-darker:#0D3E3B; --teal-light:#E4F4F2;
---paper:#FFFFFF; --sand:#FAF8F5; --ink:#16302E; --ink-soft:#5A716F; --line:#E3E8E7;
---star:#F5A623;
---hdr-h:172px;
-}
-*{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent}
-html{-webkit-text-size-adjust:100%; scroll-behavior:smooth; overflow-x:hidden}
-body{font-family:'Inter',system-ui,sans-serif; background:var(--sand); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden}
-body.locked{overflow:hidden}
-.overlay [hidden]{display:none!important}
-a{color:inherit; text-decoration:none}
-button{font-family:inherit; cursor:pointer; border:none; background:none; touch-action:manipulation}
-a{touch-action:manipulation}
-img{max-width:100%; display:block}
-svg{max-width:100%}
-.wrap{max-width:1180px; margin:0 auto; padding:0 24px}
-section{scroll-margin-top:var(--hdr-h)}
-
-.eyebrow{font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#187772}
-.h2{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:clamp(30px,4.4vw,46px); line-height:1.12}
-.lede{font-size:16px; color:var(--ink-soft); line-height:1.7}
-
-.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; border-radius:999px; font-size:14px; font-weight:700; transition:transform .22s cubic-bezier(.34,1.3,.64,1), box-shadow .22s, background .3s, color .22s; white-space:nowrap}
-.btn-p{background:linear-gradient(135deg,var(--teal-deep),var(--teal-darker)); color:#fff; box-shadow:0 10px 26px rgba(13,62,59,.4)}
-.btn-p:hover{transform:translateY(-2px) scale(1.03); box-shadow:0 16px 36px rgba(13,62,59,.45); background:linear-gradient(135deg,var(--teal),var(--teal-deep))}
-.btn-o{border:1.5px solid var(--ink); color:var(--ink)}
-.btn-o:hover{background:var(--ink); color:#fff}
-.btn-w{border:1.5px solid rgba(255,255,255,.6); color:#fff; backdrop-filter:blur(4px); background:rgba(255,255,255,.08)}
-.btn-w:hover{background:#fff; color:var(--teal-deep); border-color:#fff}
-
-/* ==================== HEADER ==================== */
-/* header scaled up ~30% */
-.hdr{position:sticky; top:0; z-index:800; background:var(--paper); padding:13px 0; box-shadow:0 1px 0 var(--line), 0 6px 20px rgba(20,97,93,.05)}
-/* header spans the full window, not the 1180px content column, so the logo
-sits hard left and Book Now sits hard right on wide screens */
-.hdr-in{display:flex; align-items:center; justify-content:space-between; gap:20px;
-max-width:none; width:100%; margin:0; padding:0 clamp(24px,3.5vw,64px)}
-.hdr-logo img{height:146px; width:auto}
-.nav{display:flex; align-items:center; gap:28px}
-.nav a{font-size:15.5px; font-weight:600; color:var(--ink); position:relative; padding:4px 0}
-.nav a::after{content:''; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--teal); transition:width .22s}
-.nav a:hover::after{width:100%}
-.hdr-right{display:flex; align-items:center; gap:18px}
-
-/* Google reviews block — enlarged, vertically centred in the header */
-.rev-chip{display:flex; align-items:center; align-self:center; gap:20px; padding:20px 32px;
-border:2px solid var(--teal); border-radius:18px; background:var(--teal-light);
-box-shadow:0 8px 22px rgba(20,97,93,.16);
-transition:border-color .18s, box-shadow .18s, transform .18s, background .18s}
-.rev-chip:hover{border-color:var(--teal-deep); background:#D7EDEA; box-shadow:0 14px 32px rgba(20,97,93,.26); transform:translateY(-2px)}
-.rev-chip-score{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:66px; line-height:.9; color:var(--teal-deep)}
-.rev-chip-stars{display:flex; gap:4px; margin-bottom:6px}
-.rev-chip-stars svg{fill:var(--star); stroke:none; width:21px; height:21px}
-.rev-chip-txt{font-size:16px; font-weight:700; color:var(--ink-soft); letter-spacing:.01em; white-space:nowrap; display:block}
-.rev-chip-txt b{color:var(--ink); font-size:18px}
-
-.hdr-phone{font-size:16px; font-weight:700; color:var(--teal-deep); white-space:nowrap}
-.hdr-right .btn{padding:11px 22px; font-size:14px}
-.burger{display:none; align-items:center; gap:10px; height:42px; padding:0 17px 0 14px; border-radius:999px; background:var(--teal-light); border:1.5px solid var(--teal)}
-.burger-lines{display:block; width:21px; height:2px; background:var(--teal-deep); position:relative; flex-shrink:0}
-.burger-lines::before,.burger-lines::after{content:''; position:absolute; left:0; width:21px; height:2px; background:var(--teal-deep)}
-.burger-lines::before{top:-6.5px} .burger-lines::after{top:6.5px}
-.burger-label{font-size:14.5px; font-weight:700; color:var(--teal-deep)}
-
-/* Mobile-only tap-to-call icon — the full phone number and .hdr-right are
-   hidden below 1100px (folded into the burger drawer instead), so without
-   this the number isn't reachable without opening the menu. */
-.hdr-call-mobile{display:none; align-items:center; justify-content:center; width:42px; height:42px; border-radius:999px; background:#e8f7ed; border:1.5px solid #287e4e; color:#176138; flex-shrink:0}
-.hdr-call-mobile svg{width:20px; height:20px; display:block}
-
-.drawer{position:fixed; inset:0; z-index:990; background:var(--paper); display:none; flex-direction:column; padding:18px 24px 40px; padding-top:calc(18px + env(safe-area-inset-top)); padding-bottom:calc(40px + env(safe-area-inset-bottom)); overflow-y:auto; -webkit-overflow-scrolling:touch}
-.drawer.open{display:flex}
-.drawer-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:22px}
-.drawer-top img{height:114px; width:auto}
-.drawer-x{width:44px; height:44px; border-radius:999px; background:var(--sand); display:flex; align-items:center; justify-content:center}
-.drawer .rev-chip{margin-bottom:22px; justify-content:center}
-.drawer a.dlink{font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:600; padding:14px 0; border-bottom:1px solid var(--line)}
-.drawer-foot{margin-top:28px; display:flex; flex-direction:column; gap:12px}
-
-@media (max-width:1420px){ .nav{gap:20px} .nav a{font-size:14.5px} .hdr-phone{display:none} }
-@media (max-width:1240px){ .rev-chip{padding:16px 24px; gap:14px} .rev-chip-score{font-size:52px} .rev-chip-txt{font-size:14px} .rev-chip-txt b{font-size:15.5px} }
-@media (max-width:1100px){ .nav,.hdr-right{display:none} .burger{display:flex} .hdr-call-mobile{display:flex} :root{--hdr-h:140px} .hdr-logo img{height:114px} }
-@media (max-width:560px){
-  .hdr-in{gap:8px}
-  .hdr-logo img{height:84px}
-  .hdr-call-mobile{width:40px; height:40px; border-radius:10px}
-  .hdr-call-mobile svg{width:18px; height:18px}
-  .burger{height:40px; padding:0 12px}
-  .burger-label{display:none}
-}
-
-/* ==================== HERO (Ken Burns motion) ==================== */
-.hero{position:relative; min-height:clamp(560px,82vh,760px); display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; background:var(--ink)}
-.kb{position:absolute; inset:0; z-index:0}
-/* 4 slides × 2s each = 8s full loop. To change pace, edit --kb-loop
-and set each delay below to loop ÷ 4. */
-.kb{--kb-loop:8s}
-.kb-slide{
-position:absolute; inset:0; background-size:cover; background-position:center;
-opacity:0; animation:kbCycle var(--kb-loop) infinite; will-change:transform,opacity;
-}
-.kb-slide:nth-child(1){animation-delay:0s; animation-name:kbCycleFirst} /* first photo shows at once; only later slides fade in */
-.kb-slide:nth-child(2){animation-delay:2s}
-.kb-slide:nth-child(3){animation-delay:4s}
-.kb-slide:nth-child(4){animation-delay:6s}
-@keyframes kbCycleFirst{
-0% {opacity:1; transform:scale(1.00)}
-25% {opacity:1}
-30% {opacity:0}
-100% {opacity:0; transform:scale(1.16)}
-}
-@keyframes kbCycle{
-0% {opacity:0; transform:scale(1.00)}
-5% {opacity:1}
-25% {opacity:1}
-30% {opacity:0}
-100% {opacity:0; transform:scale(1.16)}
-}
-.kb-veil{position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(10,40,38,.62), rgba(10,40,38,.48) 45%, rgba(10,40,38,.78))}
-.hero-in{position:relative; z-index:2; color:#fff; padding:70px 24px}
-.hero-eyebrow{font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.88); margin-bottom:18px}
-.hero-title{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(38px,6.4vw,70px); line-height:1.05; letter-spacing:-.015em; max-width:15ch; margin:0 auto 20px; text-shadow:0 2px 24px rgba(0,0,0,.3)}
-.hero-title em{font-style:italic}
-.hero-sub{font-size:clamp(15.5px,2vw,18px); color:rgba(255,255,255,.9); max-width:54ch; margin:0 auto 32px; line-height:1.65}
-.hero-cta{display:flex; gap:13px; justify-content:center; flex-wrap:wrap; margin-bottom:30px}
-.hero-micro{font-size:13px; color:rgba(255,255,255,.82); display:flex; gap:22px; justify-content:center; flex-wrap:wrap}
-.hero-micro span{display:flex; align-items:center; gap:7px}
-.hero-micro svg{stroke:#7FD6CF; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
-
-@media (prefers-reduced-motion:reduce){
-.kb-slide{animation:kbFadeOnly var(--kb-loop) infinite}
-@keyframes kbFadeOnly{0%{opacity:0}5%{opacity:1}25%{opacity:1}30%{opacity:0}100%{opacity:0}}
-}
-
-/* ==================== SKIN STRIP ==================== */
-.skin{background:var(--paper); padding:58px 0 40px}
-.skin-head{text-align:center; margin-bottom:30px}
-/* Show the source image in full — no cropping. It sits on a soft teal wash
-so it doesn't read as a bare white rectangle. */
-.skin-frame{max-width:1000px; margin:0 auto; border-radius:20px; overflow:hidden;
-box-shadow:0 22px 54px -22px rgba(20,97,93,.3);
-background:linear-gradient(150deg,var(--teal-light),#D6EAE8);
-padding:clamp(14px,2.4vw,28px)}
-.skin-frame img{width:100%; height:auto; display:block; border-radius:10px}
-.scale-row{display:grid; grid-template-columns:repeat(6,1fr); gap:8px; max-width:1000px; margin:18px auto 0}
-@media (max-width:640px){ .scale-row{grid-template-columns:repeat(3,1fr)} }
-.scale-chip{text-align:center; font-size:11.5px; font-weight:700; letter-spacing:.08em; padding:10px 4px; border-radius:8px; color:#fff}
-.skin-note{max-width:640px; margin:24px auto 0; text-align:center; font-size:13.5px; color:var(--ink-soft); line-height:1.65}
-
-/* ==================== SECTIONS ==================== */
-.sec{padding:82px 0}
-.tagline-line{font-size:clamp(20px,3.5vw,42px); white-space:nowrap; margin-bottom:24px}
-#services{padding-top:44px}
-#services .sec-head{margin-bottom:40px}
-@media(max-width:760px){.tagline-line{white-space:normal; font-size:clamp(20px,5.4vw,26px); margin-bottom:16px}}
-.sec-head{text-align:center; max-width:60ch; margin:0 auto 46px}
-.sec-head .h2{margin:12px 0 14px}
-
-/* service boxes */
-.ways-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px; scroll-margin-top:96px}
-@media (max-width:1000px){ .ways-grid{grid-template-columns:repeat(2,1fr)} }
-@media (max-width:600px){ .ways-grid{grid-template-columns:1fr; gap:26px} }
-.way{display:flex; flex-direction:column}
-/* whole card is the link — thicker teal frame, click anywhere */
-a.way{color:inherit; text-decoration:none; cursor:pointer}
-.way-box{border:6px solid var(--teal); border-radius:4px; padding:18px 18px 26px; background:var(--paper); flex:1; display:flex; flex-direction:column; transition:box-shadow .2s, transform .2s, border-color .2s}
-/* hover: inset ring doubles the apparent frame to 12px without reflowing text */
-.way:hover .way-box{transform:translateY(-3px); border-color:var(--teal-deep); box-shadow:inset 0 0 0 6px var(--teal-deep), 0 18px 40px -18px rgba(20,97,93,.38)}
-a.way:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; border-radius:6px}
-.way-img{aspect-ratio:1/1; border-radius:2px; overflow:hidden; margin-bottom:22px; background:var(--teal-light)}
-.way-img img{width:100%; height:100%; object-fit:cover}
-.way h3{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:25px; text-align:center; margin-bottom:12px; line-height:1.2}
-.way p{font-size:14px; color:var(--ink-soft); line-height:1.7; text-align:center; margin:0}
-
-/* assessment band */
-.assess-band{background:var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:74px 0}
-.assess-in{display:grid; grid-template-columns:1.1fr .9fr; gap:52px; align-items:center}
-@media (max-width:860px){ .assess-in{grid-template-columns:1fr; gap:32px; text-align:center} }
-.assess-in .h2{margin:12px 0 16px}
-.assess-steps{list-style:none; margin:24px 0 30px; display:flex; flex-direction:column; gap:13px}
-@media (max-width:860px){ .assess-steps{align-items:center} }
-.assess-steps li{display:flex; align-items:center; gap:12px; font-size:15px}
-.step-n{width:28px; height:28px; border-radius:50%; background:var(--teal-light); color:var(--teal-deep); font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0}
-.assess-art{background:linear-gradient(160deg,var(--teal-light),#D3E9E6); border-radius:22px; padding:38px; display:flex; align-items:center; justify-content:center; box-shadow:0 20px 50px -20px rgba(20,97,93,.34)}
-.assess-art img{width:100%; max-width:300px; height:auto; display:block; filter:drop-shadow(0 14px 24px rgba(20,97,93,.22))}
-
-/* reviews section (full, in-page) */
-.revsec{background:linear-gradient(165deg,var(--teal-deep),var(--teal) 60%,#2AA09A); color:#fff; padding:59px 0}
-.revsec .eyebrow,.revsec .eyebrow a,.revsec .lede{color:#fff}
-.revsec-top{display:flex; align-items:center; justify-content:center; gap:clamp(16px,4vw,42px); flex-wrap:wrap; text-align:center; margin-bottom:32px}
-.revsec-score{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(56px,8vw,84px); line-height:.95}
-.revsec-mid{display:flex; flex-direction:column; align-items:center; gap:8px}
-.revsec-stars{display:flex; gap:4px}
-.revsec-stars svg{fill:#FFD37A; stroke:none}
-.revsec-count{font-size:16px}
-.revsec-count b{font-weight:700}
-.quotes{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
-@media (max-width:900px){ .quotes{grid-template-columns:1fr} }
-.quote{background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.22); border-radius:16px; padding:22px 24px}
-.quote-stars{display:flex; gap:3px; margin-bottom:11px}
-.quote-stars svg{fill:#FFD37A; stroke:none}
-.quote-body{font-size:14.5px; line-height:1.65; margin-bottom:13px}
-.quote-who{font-size:12.5px; font-weight:600; color:rgba(255,255,255,.82)}
-.quote-flag{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.24); padding:4px 9px; border-radius:5px; margin-bottom:11px}
-.revsec-links{display:flex; gap:12px; justify-content:center; margin-top:34px; flex-wrap:wrap}
-.revsec-links .btn{color:#16302E; border:1px solid #4E7771; backdrop-filter:none}
-.revsec-links .btn-read{background:#FBEFC8}
-.revsec-links .btn-read:hover{background:#F3E2AE}
-.revsec-links .btn-leave{background:#E6E0F8}
-.revsec-links .btn-leave:hover{background:#D9D0F3}
-.revsec-links .btn:focus-visible{outline:3px solid #fff; outline-offset:2px}
-
-/* micro-trust line placed next to booking CTAs / forms */
-.trust-line{font-size:13px; font-weight:600; color:var(--teal-deep); text-align:center; margin:12px 0 0; line-height:1.5}
-
-/* footer "leave a review" nudge */
-.foot-review{background:none; border:0; border-radius:0; padding:0; display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; margin-bottom:30px}
-.foot-review p{font-size:15px; color:#fff; font-weight:600; margin:0}
-.foot-review a.btn{font-size:14px; padding:11px 22px; text-decoration:none; color:#fff}
-.foot-review a.btn:hover{color:var(--teal-deep)}
-@media (max-width:600px){ .foot-review{justify-content:center; text-align:center} }
-
-/* about */
-.pillars{display:grid; grid-template-columns:1fr 1fr; gap:16px}
-@media (max-width:520px){ .pillars{grid-template-columns:1fr} }
-
-/* About / Our Mission — tinted band so it separates from the white contact section below */
-#about{background:var(--sand); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:66px 0}
-.about-in{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center}
-@media (max-width:860px){ .about-in{grid-template-columns:1fr; gap:30px} #about{padding:48px 0} }
-.about-in .h2{margin:12px 0 14px}
-.about-in p{margin-bottom:12px}
-.mission-photo{margin:18px 0 0; width:190px; aspect-ratio:1/1; border-radius:50%; overflow:hidden; box-shadow:0 16px 36px -14px rgba(20,97,93,.32)}
-.mission-photo img{width:100%; height:100%; object-fit:cover; display:block}
-@media (max-width:860px){ .mission-photo{margin-left:auto; margin-right:auto} }
-.pillar{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:24px 22px; box-shadow:0 10px 30px -14px rgba(20,97,93,.2)}
-.pillar-n{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:34px; color:var(--teal); line-height:1; margin-bottom:9px}
-.pillar h3{font-size:14.5px; font-weight:700; margin-bottom:6px}
-.pillar p{font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin:0}
-
-/* contact + footer */
-.contact{background:var(--paper); border-top:1px solid var(--line)}
-.contact-in{display:grid; grid-template-columns:1fr 1.15fr; gap:52px; align-items:start}
-@media (max-width:860px){ .contact-in{grid-template-columns:1fr; gap:32px} }
-.info-row{display:flex; gap:14px; margin-bottom:22px}
-.info-ico{width:42px; height:42px; border-radius:12px; background:var(--teal-light); display:flex; align-items:center; justify-content:center; flex-shrink:0}
-.info-ico svg{stroke:var(--teal-deep); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
-.info-row h3{font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px}
-.info-row p, .info-row a{font-size:15.5px; font-weight:600; line-height:1.5}
-.info-row a:hover{color:var(--teal-deep)}
-.socials{display:flex; gap:12px; margin-top:24px}
-.social{width:44px; height:44px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; transition:background .16s, transform .16s}
-.social:hover{background:var(--teal); transform:translateY(-2px)}
-.social svg{fill:#fff; stroke:none}
-.map-box{border-radius:20px; overflow:hidden; border:1px solid var(--line); box-shadow:0 18px 44px -20px rgba(20,97,93,.28); min-height:380px}
-.map-box:focus-within{outline:3px solid #14615D; outline-offset:3px}
-.map-box iframe{width:100%; height:100%; min-height:380px; border:0; display:block}
-
-.foot{background:var(--ink); color:rgba(255,255,255,.72); padding:52px 0 30px; font-size:13.5px}
-.foot-in{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:38px; margin-bottom:36px}
-@media (max-width:760px){ .foot-in{grid-template-columns:1fr; gap:26px} }
-.foot h2{color:#fff; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px}
-.foot ul{list-style:none; display:flex; flex-direction:column; gap:9px}
-.foot a:hover{color:#fff}
-.foot-logo{background:#fff; border-radius:14px; padding:10px 14px; display:inline-block; margin-bottom:16px}
-.foot-logo img{height:76px; width:auto}
-.foot-bottom{border-top:1px solid rgba(255,255,255,.14); padding-top:22px; display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; font-size:12.5px}
-
-/* ==================== COUPON POPUP ==================== */
-.promo-scrim{position:fixed; inset:0; z-index:1100; background:rgba(10,40,38,.55); backdrop-filter:blur(3px); display:none; align-items:flex-start; justify-content:center; padding:60px 20px 20px; padding-bottom:calc(20px + env(safe-area-inset-bottom)); overflow-y:auto; -webkit-overflow-scrolling:touch}
-.promo-scrim.open{display:flex; animation:fadeIn .25s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.promo{width:100%; max-width:460px; background:var(--paper); border-radius:22px; overflow:hidden; box-shadow:0 34px 80px rgba(10,40,38,.4); position:relative; animation:promoIn .38s cubic-bezier(.34,1.3,.64,1)}
-@keyframes promoIn{from{opacity:0; transform:translateY(-22px) scale(.96)}to{opacity:1; transform:translateY(0) scale(1)}}
-.promo-x{position:absolute; top:14px; right:14px; z-index:3; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.9); color:var(--ink); display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px rgba(0,0,0,.16)}
-.promo-x:hover{background:#fff}
-.promo-top{background:linear-gradient(140deg,var(--teal),var(--teal-deep)); color:#fff; padding:34px 30px 30px; text-align:center; position:relative; overflow:hidden}
-.promo-top::after{content:''; position:absolute; bottom:-70px; right:-50px; width:190px; height:190px; border-radius:50%; background:rgba(255,255,255,.09)}
-.promo-badge{position:relative; z-index:1; display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; background:rgba(255,255,255,.22); padding:6px 13px; border-radius:99px; margin-bottom:14px}
-.promo-head{position:relative; z-index:1; font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:clamp(30px,6vw,40px); line-height:1.08; margin-bottom:10px}
-.promo-sub{position:relative; z-index:1; font-size:14.5px; opacity:.94; line-height:1.55; max-width:32ch; margin:0 auto}
-.promo-body{padding:26px 30px 30px}
-.promo-code{display:flex; align-items:center; justify-content:center; gap:10px; border:1.5px dashed var(--teal); border-radius:12px; padding:14px; margin-bottom:20px; background:var(--teal-light)}
-.promo-code-label{font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft)}
-.promo-code-val{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:24px; color:var(--teal-deep); letter-spacing:.04em}
-.promo-in{width:100%; padding:14px 16px; border:1.5px solid var(--line); border-radius:11px; font-family:inherit; font-size:16px; background:var(--sand); margin-bottom:11px; transition:border-color .15s, box-shadow .15s, background .15s}
-.promo-in:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 4px var(--teal-light); background:var(--paper)}
-.promo-send{display:block; width:100%; padding:15px; border-radius:999px; color:#fff; text-align:center; text-decoration:none; font-size:14px; font-weight:800; background:linear-gradient(135deg,var(--teal),var(--teal-deep)); box-shadow:0 10px 24px rgba(20,97,93,.28); transition:transform .15s}
-.promo-code[hidden]{display:none!important}
-.promo-send:hover{transform:translateY(-1px)}
-.promo-fine{font-size:11.5px; color:var(--ink-soft); text-align:center; margin-top:13px; line-height:1.5}
-.promo-skip{display:block; width:100%; text-align:center; margin-top:14px; font-size:12.5px; font-weight:600; color:var(--ink-soft); text-decoration:underline; text-underline-offset:3px}
-.promo-skip:hover{color:var(--ink)}
-.promo-done{display:none; padding:44px 30px; text-align:center}
-.promo-done.show{display:block}
-.promo-done .succ-ring{margin-bottom:18px}
-
-/* ==================== ACTION RAIL ==================== */
-.action-rail{position:fixed; right:16px; top:50%; transform:translateY(-50%); z-index:900; display:flex; flex-direction:column; gap:12px}
-.action-rail > .rail-mobile-only{display:none}
-.rail-mobile-label{display:none}
-.rail-btn{position:relative; width:54px; height:54px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--teal-deep)); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(20,97,93,.32); transition:transform .18s cubic-bezier(.34,1.4,.64,1), box-shadow .18s}
-.rail-btn:hover{transform:scale(1.08); box-shadow:0 12px 28px rgba(20,97,93,.42)}
-.rail-btn svg{stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
-.rail-label{position:absolute; right:calc(100% + 12px); top:50%; transform:translateY(-50%) translateX(6px); background:var(--ink); color:#fff; font-size:12.5px; font-weight:600; white-space:nowrap; padding:8px 13px; border-radius:8px; opacity:0; pointer-events:none; transition:opacity .18s, transform .18s; box-shadow:0 6px 18px rgba(0,0,0,.18)}
-.rail-label::after{content:''; position:absolute; left:100%; top:50%; transform:translateY(-50%); border:6px solid transparent; border-left-color:var(--ink)}
-.rail-btn:hover .rail-label{opacity:1; transform:translateY(-50%) translateX(0)}
-
-/* ==================== OVERLAYS ==================== */
-.overlay{position:fixed; inset:0; z-index:1000; background:var(--paper); display:none; flex-direction:column}
-.overlay.open{display:flex; animation:ovIn .3s cubic-bezier(.4,0,.2,1)}
-@keyframes ovIn{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:translateY(0)}}
-.ov-bar{flex-shrink:0; display:flex; align-items:center; justify-content:space-between; padding:18px 26px; border-bottom:1px solid var(--line)}
-.ov-bar-title{font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:600}
-.ov-bar-right{display:flex; align-items:center; gap:16px}
-.ov-back{font-size:13.5px; font-weight:600; color:var(--ink-soft)}
-.ov-x{width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:background .15s}
-.ov-x:hover{background:var(--sand)}
-.ov-scroll{flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:44px 26px 70px; padding-bottom:calc(70px + env(safe-area-inset-bottom))}
-.ov-inner{max-width:760px; margin:0 auto}
-@media (max-width:640px){ .ov-bar{padding:14px 16px} .ov-scroll{padding:28px 16px 60px} .ov-back{display:none} }
-
-.f-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px}
-@media (max-width:600px){ .f-row{grid-template-columns:1fr; gap:12px} }
-.f-in{width:100%; padding:15px 17px; border:1.5px solid var(--line); border-radius:11px; font-family:inherit; font-size:16px; background:var(--sand); transition:border-color .15s, box-shadow .15s, background .15s}
-.f-in:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 4px var(--teal-light); background:var(--paper)}
-textarea.f-in{min-height:130px; resize:vertical}
-.f-legend{font-size:14px; font-weight:600; margin:30px 0 12px}
-.f-legend span.req{color:var(--teal)}
-.opt-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-@media (max-width:600px){ .opt-grid{grid-template-columns:1fr; gap:10px} }
-.opt{display:flex; align-items:center; gap:12px; padding:15px 17px; border:1.5px solid var(--line); border-radius:11px; background:var(--sand); font-size:14.5px; font-weight:500; transition:border-color .15s, background .15s, box-shadow .15s}
-.opt:hover{border-color:var(--teal)}
-.opt.sel{border-color:var(--teal); background:var(--teal-light); font-weight:600; box-shadow:0 4px 12px rgba(20,97,93,.1)}
-.opt-dot{width:19px; height:19px; border-radius:50%; border:2px solid #C9D4D3; flex-shrink:0; background:#fff; transition:border-color .15s, border-width .15s}
-.opt.sel .opt-dot{border-color:var(--teal); border-width:6px}
-.opt-box{width:19px; height:19px; border-radius:6px; border:2px solid #C9D4D3; flex-shrink:0; background:#fff; display:flex; align-items:center; justify-content:center; transition:background .15s, border-color .15s}
-.opt.sel .opt-box{background:var(--teal); border-color:var(--teal)}
-.opt-box svg{display:none}
-.opt.sel .opt-box svg{display:block}
-.btn-main{display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:11px 22px; border-radius:999px; color:#fff; font-size:14px; font-weight:700; background:linear-gradient(135deg,var(--teal),var(--teal-deep)); box-shadow:0 10px 26px rgba(20,97,93,.3); transition:transform .15s; margin-top:30px}
-.btn-main:hover{transform:translateY(-1px)}
-.btn-ghost{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; border-radius:999px; border:1.5px solid var(--ink); color:var(--ink); font-size:14px; font-weight:700; transition:background .15s, color .15s}
-.btn-ghost:hover{background:var(--ink); color:#fff}
-.fine{font-size:12px; color:var(--ink-soft); text-align:center; margin-top:14px; line-height:1.5}
-.ov-success{display:none; text-align:center; padding:60px 20px}
-.ov-success.show{display:block}
-.succ-ring{width:76px; height:76px; border-radius:50%; background:var(--teal-light); display:flex; align-items:center; justify-content:center; margin:0 auto 22px; box-shadow:0 10px 26px rgba(20,97,93,.18)}
-.succ-t{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:32px; margin-bottom:10px}
-.succ-p{font-size:15px; color:var(--ink-soft); max-width:44ch; margin:0 auto 28px}
-.succ-cta{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
-.succ-cta .btn-main{width:auto; margin-top:0}
-
-.rev-hero{text-align:center; margin-bottom:34px}
-.rev-score{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:66px; line-height:1}
-.rev-stars{display:flex; justify-content:center; gap:4px; margin:10px 0 8px}
-.rev-stars svg{fill:var(--star); stroke:none}
-.rev-count{font-size:14.5px; color:var(--ink-soft)}
-.rev-tabs{display:flex; gap:6px; background:var(--sand); border:1px solid var(--line); border-radius:99px; padding:5px; max-width:420px; margin:0 auto 30px}
-.rev-tabs button{flex:1; padding:12px 0; border-radius:99px; font-size:14px; font-weight:600; color:var(--ink-soft); transition:background .2s, color .2s}
-.rev-tabs button.on{background:linear-gradient(135deg,var(--teal),var(--teal-deep)); color:#fff; box-shadow:0 4px 12px rgba(20,97,93,.3)}
-.rev-pane{display:none} .rev-pane.on{display:block}
-.rev-card{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:24px 26px; margin-bottom:16px; box-shadow:0 8px 24px -8px rgba(20,97,93,.1)}
-.rev-card-top{display:flex; align-items:center; gap:13px; margin-bottom:13px}
-.rev-av{width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--teal-light),#C3E0DD); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:var(--teal-deep); flex-shrink:0}
-.rev-name{font-size:14.5px; font-weight:700}
-.rev-meta{font-size:12.5px; color:var(--ink-soft); display:flex; align-items:center; gap:7px; margin-top:2px}
-.rev-meta svg{fill:var(--star); stroke:none}
-.rev-body{font-size:14.5px; color:#3F5654; line-height:1.65}
-.rev-placeholder{border-style:dashed; border-color:#C9D4D3; background:#FCFCFB}
-.rev-flag{display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#B0761A; background:#FDF3E2; padding:4px 9px; border-radius:5px; margin-bottom:11px}
-
-@media (max-width:760px){
-  .hero-cta{display:none}
-  .hdr-call-mobile[href^="tel:"],.hdr-call-mobile[href^="https://wa.me/"]{display:none}
-  .action-rail{top:auto; left:0; right:0; bottom:0; transform:none; z-index:941; flex-direction:row; gap:6px; padding:6px 8px calc(6px + env(safe-area-inset-bottom)); background:rgba(255,255,255,.97); border-top:1px solid var(--line); box-shadow:0 -8px 26px rgba(20,97,93,.14)}
-  .action-rail > .rail-btn{display:none}
-  .action-rail > .rail-book,.action-rail > .rail-mobile-only,.action-rail > .cb-btn{display:flex; flex:1 1 0; min-width:0; width:auto; height:56px; border-radius:9px; flex-direction:column; gap:2px; color:#fff; font-size:11px; font-weight:800; box-shadow:none}
-  .action-rail .rail-book{order:1; background:linear-gradient(135deg,var(--teal),var(--teal-deep))}
-  .action-rail .cb-btn{order:2; background:#2D64B8}
-  .action-rail .rail-whatsapp{order:3; background:#128C4B}
-  .action-rail .rail-call{order:4; background:var(--teal-darker)}
-  .action-rail .rail-mobile-label{display:block; line-height:1}
-  .action-rail .rail-label{display:none}
-  .action-rail .rail-btn svg{width:20px; height:20px}
-  body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
-}
-
-@media (max-width:640px){
-.rail-btn{width:46px; height:46px}
-.rail-btn svg{width:20px; height:20px}
-.rail-label{display:none}
-.sec{padding:60px 0}
-.promo-scrim{padding:24px 16px}
-}
-</style>
+<link rel="stylesheet" href="home.css?v=PLS-20261007-TIDY">
 <link rel="stylesheet" href="language-switch.css?v=PLS-20261007-FIX2">
 <link rel="stylesheet" href="offer-popup.css">
 <link rel="stylesheet" href="desktop-refinements.css?v=PLS-20261007-FIX2">
 <meta property="og:image" content="https://preciselaserspa.com/sign.jpg">
 <meta property="og:image:alt" content="Precise Laser Hair Removal &amp; Esthetics in Babylon, New York">
 <meta name="twitter:image" content="https://preciselaserspa.com/sign.jpg">
+<script src="actions.js?v=PLS-20261007-TIDY"></script>
 </head>
 <body class="public-home">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -479,7 +83,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 <a href="/self-assessment.html">Self-Assessment</a>
 <a href="/client-intake.html">Client Intake</a>
 <a href="#reviews">Reviews</a>
-<a href="#" onclick="openOverlay('contact');return false;">Contact</a>
+<a href="#" data-on-click="openOverlay('contact'); return false">Contact</a>
 <div class="mobile-lang-switch desk-lang" role="group" aria-label="Language / Idioma"><a href="/" class="ls is-on" lang="en" aria-label="English" aria-current="page">EN</a><a href="/servicios.html" class="ls" lang="es" aria-label="Español">ES</a></div>
 </nav>
 
@@ -487,7 +91,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 <a class="hdr-phone" href="tel:6319231174">(631) 923-1174</a>
 
 <!-- COMPACT REVIEWS CHIP — centered between the phone number and the Book Now button -->
-<a class="rev-chip" href="#" onclick="openOverlay('reviews');return false;" aria-label="Google reviews">
+<a class="rev-chip" href="#" data-on-click="openOverlay('reviews'); return false" aria-label="Google reviews">
 
 <span>
 <span class="rev-chip-stars">
@@ -510,18 +114,18 @@ textarea.f-in{min-height:130px; resize:vertical}
 <a href="/" class="ls is-on" lang="en" aria-label="English" aria-current="page">EN</a>
 <a href="/servicios.html" class="ls" lang="es" aria-label="Español">ES</a>
 </div>
-<button class="burger" onclick="openDrawer()" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span class="burger-lines"></span><span class="burger-label">Menu</span></button>
+<button class="burger" data-on-click="openDrawer()" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span class="burger-lines"></span><span class="burger-label">Menu</span></button>
 </div>
 </header>
 
 <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Site navigation">
 <div class="drawer-top">
 <img src="source-images/precise-laser-hair-logo-1-blue-649w.jpg" srcset="source-images/precise-laser-hair-logo-1-blue-320w.jpg 320w, source-images/precise-laser-hair-logo-1-blue-649w.jpg 649w" sizes="228px" width="649" height="427" alt="Precise">
-<button class="drawer-x" onclick="closeDrawer()" aria-label="Close">
+<button class="drawer-x" data-on-click="closeDrawer()" aria-label="Close">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
 </button>
 </div>
-<a class="rev-chip" href="#" onclick="closeDrawer();openOverlay('reviews');return false;">
+<a class="rev-chip" href="#" data-on-click="closeDrawer(); openOverlay('reviews'); return false">
 
 <span>
 <span class="rev-chip-stars">
@@ -534,12 +138,12 @@ textarea.f-in{min-height:130px; resize:vertical}
 <span class="rev-chip-txt"><b>332</b> Google reviews</span>
 </span>
 </a>
-<a class="dlink" href="#about" onclick="closeDrawer()">About</a>
-<a class="dlink" href="#servicesGrid" onclick="closeDrawer()">Services</a>
+<a class="dlink" href="#about" data-on-click="closeDrawer()">About</a>
+<a class="dlink" href="#servicesGrid" data-on-click="closeDrawer()">Services</a>
 <a class="dlink" href="/self-assessment.html">Self-Assessment</a>
 <a class="dlink" href="/client-intake.html">Client Intake</a>
-<a class="dlink" href="#reviews" onclick="closeDrawer()">Reviews</a>
-<a class="dlink" href="#" onclick="closeDrawer();openOverlay('contact');return false;">Contact</a>
+<a class="dlink" href="#reviews" data-on-click="closeDrawer()">Reviews</a>
+<a class="dlink" href="#" data-on-click="closeDrawer(); openOverlay('contact'); return false">Contact</a>
 <a class="dlink" href="/servicios.html" lang="es">Español</a>
 <div class="drawer-foot">
 <a class="btn btn-p" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book Now</a>
@@ -703,7 +307,7 @@ textarea.f-in{min-height:130px; resize:vertical}
 </div>
 
 <div class="revsec-links">
-<button class="btn btn-w btn-read" onclick="openOverlay('reviews')">Read all reviews</button>
+<button class="btn btn-w btn-read" data-on-click="openOverlay('reviews')">Read all reviews</button>
 <a class="btn btn-w btn-leave" id="proofWrite" href="#" target="_blank" rel="noopener">Leave a review</a>
 </div>
 </div>
@@ -718,9 +322,9 @@ textarea.f-in{min-height:130px; resize:vertical}
 <p class="lede">Visit us at 626 Deer Park Avenue in Babylon for laser hair removal, electrolysis, facials, and wellness services. Start with a complimentary consultation to discuss your goals, suitable treatment options, and what to expect.</p>
 <div class="mission-photo">
 <img src="sign.jpg" srcset="source-images/sign-400w.jpg 400w, sign.jpg 596w" sizes="190px" width="596" height="596" alt="Precise Laser Hair Removal &amp; Esthetics — 626 Deer Park Ave, Babylon NY" loading="lazy"
-     onerror="this.closest('.mission-photo').style.display='none'">
+     data-on-error="hideClosest('.mission-photo')">
 </div>
-<a class="btn btn-o" style="margin-top:18px" href="#" onclick="openOverlay('contact');return false;">Ask us a question</a>
+<a class="btn btn-o" style="margin-top:18px" href="#" data-on-click="openOverlay('contact'); return false">Ask us a question</a>
 </div>
 <div class="pillars">
 <div class="pillar"><div class="pillar-n">5.0</div><h3>Google rating</h3><p>Rating checked on Google October 5, 2026.</p></div>
@@ -800,7 +404,7 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <li><a href="https://www.google.com/maps/search/?api=1&query=626+Deer+Park+Ave+Babylon+NY+11702" target="_blank" rel="noopener">626 Deer Park Ave<br>Babylon, NY 11702</a></li>
 <li><a href="tel:6319231174">(631) 923-1174</a></li>
 <li><a href="mailto:Preciselaserspa@gmail.com">Preciselaserspa@gmail.com</a></li>
-<li><a href="#" onclick="openOverlay('contact');return false;">Contact Us</a></li>
+<li><a href="#" data-on-click="openOverlay('contact'); return false">Contact Us</a></li>
 <li><a href="#reviews">Reviews</a></li><li><a class="staff-link" href="https://precise-laser-crm.pages.dev/dashboard.html" rel="nofollow">Staff &#8594;</a></li>
 </ul>
 </div>
@@ -827,11 +431,11 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <svg width="23" height="23" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9.5 15.5 1.6 1.6 3.4-3.4"/></svg>
 <span class="rail-mobile-label" aria-hidden="true">Free consult</span>
 </a>
-<button class="rail-btn" onclick="openOverlay('contact')" aria-label="Contact us">
+<button class="rail-btn" data-on-click="openOverlay('contact')" aria-label="Contact us">
 <span class="rail-label">Contact Us</span>
 <svg width="23" height="23" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 8.1 5.6a1.6 1.6 0 0 0 1.8 0L21 7"/></svg>
 </button>
-<button class="rail-btn" onclick="openOverlay('reviews')" aria-label="Reviews">
+<button class="rail-btn" data-on-click="openOverlay('reviews')" aria-label="Reviews">
 <span class="rail-label">332 Google reviews</span>
 <svg width="23" height="23" viewBox="0 0 24 24"><path d="m12 3 2.6 5.3 5.9.8-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.1l5.9-.8Z"/></svg>
 </button>
@@ -850,9 +454,9 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </nav>
 
 <!-- ============================ COUPON POPUP ============================ -->
-<div class="promo-scrim" id="promoScrim" onclick="if(event.target===this) closePromo()">
+<div class="promo-scrim" id="promoScrim" data-on-click="selfOnly(); closePromo()">
 <div class="promo" id="promoCard" role="dialog" aria-label="Current special">
-<button class="promo-x" onclick="closePromo()" aria-label="Close">
+<button class="promo-x" data-on-click="closePromo()" aria-label="Close">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
 </button>
 
@@ -872,7 +476,7 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 <a class="promo-send" id="promoCta" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book a consultation</a>
 <p class="promo-fine" id="promoFine"></p>
-<a class="promo-skip" href="#" onclick="closePromo();return false;">No thanks, just browsing</a>
+<a class="promo-skip" href="#" data-on-click="closePromo(); return false">No thanks, just browsing</a>
 </div>
 </div>
 </div>
@@ -882,8 +486,8 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <div class="ov-bar">
 <span class="ov-bar-title">Contact</span>
 <div class="ov-bar-right">
-<a href="#" class="ov-back" onclick="closeOverlay(event)">Back to website</a>
-<button class="ov-x" onclick="closeOverlay(event)" aria-label="Close"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+<a href="#" class="ov-back" data-on-click="closeOverlay(event)">Back to website</a>
+<button class="ov-x" data-on-click="closeOverlay(event)" aria-label="Close"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
 </div>
 </div>
 <div class="ov-scroll">
@@ -900,10 +504,10 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <div id="contactMarketing">
 <div class="f-legend" id="hearLabel">How did you hear about us?<span class="req">*</span></div>
 <div class="opt-grid" id="hearGrid" role="group" aria-labelledby="hearLabel">
-<button type="button" class="opt" aria-pressed="false" onclick="pickOne(this,'hearGrid')"><span class="opt-dot"></span>Instagram</button>
-<button type="button" class="opt" aria-pressed="false" onclick="pickOne(this,'hearGrid')"><span class="opt-dot"></span>Facebook</button>
-<button type="button" class="opt" aria-pressed="false" onclick="pickOne(this,'hearGrid')"><span class="opt-dot"></span>Google</button>
-<button type="button" class="opt" aria-pressed="false" onclick="pickOne(this,'hearGrid')"><span class="opt-dot"></span>From a friend</button>
+<button type="button" class="opt" aria-pressed="false" data-on-click="pickOne(this,'hearGrid')"><span class="opt-dot"></span>Instagram</button>
+<button type="button" class="opt" aria-pressed="false" data-on-click="pickOne(this,'hearGrid')"><span class="opt-dot"></span>Facebook</button>
+<button type="button" class="opt" aria-pressed="false" data-on-click="pickOne(this,'hearGrid')"><span class="opt-dot"></span>Google</button>
+<button type="button" class="opt" aria-pressed="false" data-on-click="pickOne(this,'hearGrid')"><span class="opt-dot"></span>From a friend</button>
 </div>
 <div class="f-legend" id="interestLabel">What are you interested in?<span class="req">*</span> <span style="font-weight:400; color:var(--ink-soft); font-size:13px">— select all that apply</span></div>
 <div class="opt-grid" id="interestGrid" role="group" aria-labelledby="interestLabel"></div>
@@ -912,7 +516,7 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <textarea class="f-in" id="cMsg" placeholder="Tell us about your goals, questions, or scheduling preferences (optional)"></textarea>
 <input type="text" id="cHp" name="company" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0" aria-hidden="true" aria-label="Leave this field empty">
 <p class="trust-line" id="contactTrust">Personalized care, right here in Babylon.</p>
-<button class="btn-main" id="cSendBtn" onclick="submitContact()">Send message</button>
+<button class="btn-main" id="cSendBtn" data-on-click="submitContact()">Send message</button>
 <p class="fine" id="cErr" role="alert" tabindex="-1" style="display:none; color:#B3261E">Something went wrong sending your message — please call or text us instead.</p>
 <p class="fine">We'll get back to you within one business day. Your information is kept private and only shared with Precise.</p>
 </div>
@@ -934,8 +538,8 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <div class="ov-bar">
 <span class="ov-bar-title">Reviews</span>
 <div class="ov-bar-right">
-<a href="#" class="ov-back" onclick="closeOverlay(event)">Back to website</a>
-<button class="ov-x" onclick="closeOverlay(event)" aria-label="Close"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+<a href="#" class="ov-back" data-on-click="closeOverlay(event)">Back to website</a>
+<button class="ov-x" data-on-click="closeOverlay(event)" aria-label="Close"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
 </div>
 </div>
 <div class="ov-scroll">
@@ -953,8 +557,8 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 
 <div class="rev-tabs" id="revTabs">
-<button id="tabRead" class="on" onclick="revTab('read')">Read reviews</button>
-<button id="tabWrite" onclick="revTab('write')">Leave a review</button>
+<button id="tabRead" class="on" data-on-click="revTab('read')">Read reviews</button>
+<button id="tabWrite" data-on-click="revTab('write')">Leave a review</button>
 </div>
 
 <div class="rev-pane on" id="paneRead">
@@ -982,341 +586,16 @@ Write a review on Google
 <div class="succ-t" style="font-size:26px; margin-bottom:8px">Need to reach our team?</div>
 <p class="lede" style="font-size:14px; max-width:46ch; margin:0 auto">Send us a private message about any question or visit. The contact form confirms delivery before showing a thank-you message.</p>
 </div>
-<button class="btn-main" type="button" onclick="openFeedback()">Send a private message</button>
+<button class="btn-main" type="button" data-on-click="openFeedback()">Send a private message</button>
 </div>
 </div>
 </div>
 </div>
 </div>
 
-<script>
-/* ═══════════════════════════════════════════════════════════════════════
-★★★ THE ONLY BLOCK YOU NEED TO EDIT ★★★
-Change the special here. Nothing else in the file has to change.
-═══════════════════════════════════════════════════════════════════════ */
-/* Where the contact form + text widget actually deliver to. */
-const NOTIFY_API = 'https://chatbot-api.eric8116.workers.dev/notify';
+<script src="home.js?v=PLS-20261007-TIDY"></script>
 
-/* Other editable values */
-const CONFIG = {
-// Direct "write a review" composer for the Business Profile (place ID
-// ChIJ672a9s0o6IkRq2rrf_v_490 — sourced from a third-party geocode tied to
-// this exact address; Eric: click it once live and confirm it opens Kayla's
-// listing before treating this as final).
-googleWriteReview : 'https://search.google.com/local/writereview?placeid=ChIJ672a9s0o6IkRq2rrf_v_490',
-googleReadReviews : 'https://www.google.com/maps/search/?api=1&query=Precise+Laser+Hair+Removal+%26+Esthetics+626+Deer+Park+Ave+Babylon+NY',
-reviewsApi : 'https://precise-laser-crm.pages.dev/api/public-reviews',
-// Off until the dashboard's sign-in lets /api/public-reviews through to the public.
-// While it is behind the sign-in every call fails, so leave this false until then.
-reviewsFeedEnabled : false
-};
-
-const SERVICES = [
-'Laser Hair Removal','Electrolysis','HydraFacial','Chemical Peels','Microneedling',
-'Anti-Aging Facial','Acne Facial','Back Facial','Dermaplaning','Keratin Lash Lift',
-'Lip Blushing (PMU)','Teeth Whitening','Swarovski Tooth Gems','Hyperpigmentation Correction',
-'Infrared Sauna','Colon Hydrotherapy','FIT Bodywrap','Not sure yet — help me choose'
-];
-/* ═══════════════════ END OF EDITABLE BLOCK ═══════════════════ */
-
-/* ---------- wire up config ---------- */
-async function loadFeaturedReviews(){
-  if (!CONFIG.reviewsFeedEnabled) return;
-  if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') return;
-  try {
-    const response = await fetch(CONFIG.reviewsApi, {cache:'no-store'});
-    if (!response.ok) return;
-    const data = await response.json();
-    const reviews = (Array.isArray(data.reviews) ? data.reviews : [])
-      .filter(review => [4,5].includes(Number(review.rating)) && typeof review.comment === 'string' && review.comment.trim())
-      .slice(0,12);
-    if (!reviews.length) return;
-    const home = document.querySelector('#reviews .quotes');
-    home.replaceChildren(...reviews.slice(0,3).map(review => {
-      const card=document.createElement('div');card.className='quote';
-      const stars=document.createElement('div');stars.className='quote-stars';stars.textContent='★'.repeat(review.rating);stars.style.color='#FFD37A';stars.style.fontSize='20px';
-      const body=document.createElement('p');body.className='quote-body';body.textContent=review.comment;
-      const author=document.createElement('div');author.className='quote-who';author.textContent=`— ${review.reviewer_name || 'Google reviewer'}, Google`;
-      card.append(stars,body,author);return card;
-    }));
-    const pane=document.getElementById('paneRead');
-    document.getElementById('reviewEmpty').hidden=true;
-    pane.querySelector('.eyebrow').textContent='Featured Google reviews';
-    pane.querySelectorAll('.rev-card').forEach(card=>card.remove());
-    const allLink=document.getElementById('readAllLink').parentElement;
-    reviews.forEach(review=>{
-      const card=document.createElement('div');card.className='rev-card';
-      const name=document.createElement('div');name.className='rev-name';name.textContent=review.reviewer_name || 'Google reviewer';
-      const meta=document.createElement('div');meta.className='rev-meta';meta.textContent=`${review.rating}.0 ★ · ${review.update_time ? new Date(review.update_time).toLocaleDateString() : 'Google review'}`;
-      const body=document.createElement('p');body.className='rev-body';body.textContent=review.comment;
-      card.append(name,meta,body);pane.insertBefore(card,allLink);
-    });
-  } catch { /* The direct Google link remains available when the feed is unavailable. */ }
-}
-loadFeaturedReviews();
-document.getElementById('interestGrid').innerHTML = SERVICES.map(s => `
-<button type="button" class="opt" aria-pressed="false" onclick="pickMany(this)">
-<span class="opt-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>${s}
-</button>`).join('');
-
-document.getElementById('writeGoogleLink').href = CONFIG.googleWriteReview;
-document.getElementById('readAllLink').href = CONFIG.googleReadReviews;
-document.getElementById('proofWrite').href = CONFIG.googleWriteReview;
-document.getElementById('footReviewLink').href = CONFIG.googleWriteReview;
-document.getElementById('yr').textContent = new Date().getFullYear();
-
-/* ---------- allow service pages to deep-link an overlay open ----------
-e.g. index.html?open=contact or index.html?open=reviews */
-(function deepLinkOverlay(){
-const which = new URLSearchParams(location.search).get('open');
-if (which === 'contact' || which === 'reviews'){
-document.getElementById('ov-' + which).classList.add('open');
-document.body.classList.add('locked');
-}
-})();
-
-/* ---------- coupon popup ---------- */
-const PROMOTIONS_DISABLED = true;
-(function initPromo(){
-if (PROMOTIONS_DISABLED) return;
-const preview = new URLSearchParams(location.search).has('preview');
-const local = ['127.0.0.1','localhost'].includes(location.hostname);
-const endpoint = local ? 'http://127.0.0.1:8818/api/offer' : 'https://precise-laser-crm.pages.dev/api/offer';
-const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
-const seenKey = 'preciseOfferSeen';
-try { if (!preview && sessionStorage.getItem(seenKey)) return; } catch(e){}
-fetch(endpoint + '?lang=' + lang, { cache:'no-store' })
-  .then(r => r.ok ? r.json() : {active:false})
-  .then(offer => {
-    if (!offer.active) {
-      if (!(preview && local)) return;
-      offer = { active:true, badge:'PREVIEW OFFER', headline:'A little extra for your next visit', subline:'A flexible offer card for laser, skincare, or wellness services—set the real details in Kayla’s dashboard.', code:'', cta:'Explore appointment times', bookingUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services', fine:'Sample preview only. No discount is live or being advertised.', delaySeconds:0 };
-    }
-    document.getElementById('promoBadge').textContent = offer.badge || (lang === 'es' ? 'Oferta especial' : 'A little something');
-    document.getElementById('promoHead').textContent = offer.headline;
-    document.getElementById('promoSub').textContent = offer.subline;
-    document.getElementById('promoCta').textContent = offer.cta || (lang === 'es' ? 'Reservar una consulta' : 'Book a consultation');
-    document.getElementById('promoCta').href = offer.bookingUrl;
-    document.getElementById('promoFine').textContent = offer.fine || '';
-    if (offer.code) document.getElementById('promoCode').textContent = offer.code;
-    else document.getElementById('promoCodeBox').hidden = true;
-    window.setTimeout(() => {
-      if (document.querySelector('.overlay.open')) return;
-      document.getElementById('promoScrim').classList.add('open');
-      document.body.classList.add('locked');
-    }, preview ? 0 : Math.min(60, Number(offer.delaySeconds) || 0) * 1000);
-  }).catch(() => {
-    if (!(preview && local)) return;
-    const sample = { badge:'PREVIEW OFFER', headline:'A little extra for your next visit', subline:'A flexible offer card for laser, skincare, or wellness services—set the real details in Kayla’s dashboard.', cta:'Explore appointment times', bookingUrl:'https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services', fine:'Sample preview only. No discount is live or being advertised.' };
-    document.getElementById('promoBadge').textContent = sample.badge;
-    document.getElementById('promoHead').textContent = sample.headline;
-    document.getElementById('promoSub').textContent = sample.subline;
-    document.getElementById('promoCta').textContent = sample.cta;
-    document.getElementById('promoCta').href = sample.bookingUrl;
-    document.getElementById('promoFine').textContent = sample.fine;
-    document.getElementById('promoCodeBox').hidden = true;
-    document.getElementById('promoScrim').classList.add('open');
-    document.body.classList.add('locked');
-  });
-})();
-
-function closePromo(){
-document.getElementById('promoScrim').classList.remove('open');
-document.body.classList.remove('locked');
-try { sessionStorage.setItem('preciseOfferSeen','1'); } catch(e){}
-}
-
-/* ---------- drawer and overlays ---------- */
-let modalReturnFocus = null;
-let modalInertState = [];
-let contactMode = 'general';
-function restoreModalBackground(){
-modalInertState.forEach(([el, wasInert]) => { el.inert = wasInert; });
-modalInertState = [];
-}
-function isolateModal(modal){
-restoreModalBackground();
-Array.from(document.body.children).forEach(el => {
-if (el === modal || el.tagName === 'SCRIPT') return;
-modalInertState.push([el, el.inert]);
-el.inert = true;
-});
-}
-function openDrawer(){
-const drawer = document.getElementById('drawer');
-modalReturnFocus = document.activeElement;
-closePromo();
-drawer.classList.add('open');
-document.querySelector('.burger').setAttribute('aria-expanded', 'true');
-document.body.classList.add('locked');
-isolateModal(drawer);
-drawer.querySelector('.drawer-x').focus();
-}
-function closeDrawer(){
-const drawer = document.getElementById('drawer');
-if (!drawer.classList.contains('open')) return;
-drawer.classList.remove('open');
-document.querySelector('.burger').setAttribute('aria-expanded', 'false');
-restoreModalBackground();
-if (!document.querySelector('.overlay.open')) document.body.classList.remove('locked');
-if (modalReturnFocus?.isConnected) modalReturnFocus.focus();
-modalReturnFocus = null;
-}
-function openOverlay(which){
-closeDrawer();
-closePromo();
-if (which === 'contact') setContactMode('general');
-const current = document.querySelector('.overlay.open');
-if (!current) modalReturnFocus = document.activeElement;
-document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
-const overlay = document.getElementById('ov-' + which);
-overlay.classList.add('open');
-document.body.classList.add('locked');
-isolateModal(overlay);
-overlay.querySelector('.ov-x').focus();
-}
-function setContactMode(mode){
-contactMode = mode;
-const feedback = mode === 'feedback';
-document.querySelector('#ov-contact .ov-bar-title').textContent = feedback ? 'Private message' : 'Contact';
-document.getElementById('ov-contact').setAttribute('aria-label', feedback ? 'Private message' : 'Contact');
-document.getElementById('contactMarketing').hidden = feedback;
-document.getElementById('contactTrust').hidden = feedback;
-document.getElementById('contactMessageLabel').textContent = feedback ? 'Tell us about your experience *' : 'Anything else we should know?';
-document.getElementById('cMsg').setAttribute('aria-required',String(feedback));
-document.getElementById('cMsg').placeholder = feedback ? 'What happened? How can we help?' : 'Tell us about your goals, questions, or scheduling preferences (optional)';
-document.getElementById('contactSuccessText').textContent = feedback ? 'Your message was sent to Precise. Someone from the team will follow up within one business day.' : "Your message is on its way. We'll reach out within one business day — or book now if you'd rather lock in a time.";
-document.getElementById('contactSuccessActions').hidden = feedback;
-}
-function openFeedback(){
-openOverlay('contact');
-setContactMode('feedback');
-document.getElementById('cFirst').focus();
-}
-function closeOverlay(e){
-if (e) e.preventDefault();
-if (!document.querySelector('.overlay.open')) return;
-document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
-restoreModalBackground();
-document.body.classList.remove('locked');
-if (modalReturnFocus?.isConnected) modalReturnFocus.focus();
-modalReturnFocus = null;
-}
-
-/* ---------- option pickers ---------- */
-function pickOne(el, gridId){
-document.querySelectorAll('#' + gridId + ' .opt').forEach(o => {o.classList.remove('sel');o.setAttribute('aria-pressed','false');});
-el.classList.add('sel');
-el.setAttribute('aria-pressed','true');
-}
-function pickMany(el){ el.setAttribute('aria-pressed',String(el.classList.toggle('sel'))); }
-
-/* ---------- contact form ---------- */
-function contactError(message,fieldId){
-  const error=document.getElementById('cErr');error.textContent=message;error.style.display='block';
-  const field=fieldId && document.getElementById(fieldId);
-  if(field){field.setAttribute('aria-invalid','true');field.focus();}else{error.focus();}
-}
-document.getElementById('contactForm').addEventListener('input',event=>event.target.removeAttribute('aria-invalid'));
-
-async function submitContact(){
-const feedback = contactMode === 'feedback';
-const first = document.getElementById('cFirst').value.trim();
-const email = document.getElementById('cEmail').value.trim();
-const phone = document.getElementById('cPhone').value.trim();
-const hear = document.querySelector('#hearGrid .opt.sel');
-const interests = [...document.querySelectorAll('#interestGrid .opt.sel')].map(o => o.textContent.trim());
-
-if (!first || !email || !phone){ contactError('Please add your first name, email, and phone number.',!first?'cFirst':!email?'cEmail':'cPhone'); return; }
-if (!/^\S+@\S+\.\S+$/.test(email)){ contactError('Please enter a valid email address.','cEmail'); return; }
-if (contactMode === 'general' && !hear){ contactError('Please let us know how you heard about us.'); return; }
-if (contactMode === 'general' && !interests.length){ contactError('Please select at least one service you\'re interested in.'); return; }
-if (contactMode === 'feedback' && !document.getElementById('cMsg').value.trim()){ contactError('Please tell us what happened.','cMsg'); return; }
-
-const btn = document.getElementById('cSendBtn');
-const errEl = document.getElementById('cErr');
-errEl.style.display = 'none';
-btn.disabled = true;
-const originalLabel = btn.textContent;
-btn.textContent = 'Sending…';
-
-try {
-const res = await fetch(NOTIFY_API, {
-method: 'POST',
-signal: AbortSignal.timeout(20000),
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({
-kind: 'contact',
-firstName: first, lastName: document.getElementById('cLast').value.trim(),
-email, phone, heardVia: feedback ? 'Private feedback' : hear.textContent.trim(), interests: feedback ? [] : interests,
-message: feedback ? 'Private feedback: ' + document.getElementById('cMsg').value.trim() : document.getElementById('cMsg').value.trim(),
-hp: document.getElementById('cHp').value
-})
-});
-if (!res.ok) throw new Error('notify failed');
-if (!feedback && window.preciseTrack) window.preciseTrack('contact_form_sent');
-
-document.getElementById('contactForm').style.display = 'none';
-document.getElementById('contactSuccess').classList.add('show');
-const success = document.getElementById('contactSuccess');
-success.setAttribute('tabindex', '-1');
-success.focus();
-document.querySelector('#ov-contact .ov-scroll').scrollTop = 0;
-} catch (err) {
-contactError(err.name === 'TimeoutError' ? 'We could not confirm delivery. Please call or text us before sending again.' : 'Something went wrong sending your message — please call or text us instead.');
-} finally {
-btn.disabled = false;
-btn.textContent = originalLabel;
-}
-}
-
-/* ---------- reviews ---------- */
-function revTab(which){
-const read = which === 'read';
-document.getElementById('tabRead').classList.toggle('on', read);
-document.getElementById('tabWrite').classList.toggle('on', !read);
-document.getElementById('paneRead').classList.toggle('on', read);
-document.getElementById('paneWrite').classList.toggle('on', !read);
-}
-
-document.addEventListener('keydown', e => {
-if (e.key === 'Escape'){ closeOverlay(); closeDrawer(); closePromo(); return; }
-if (e.key !== 'Tab') return;
-const modal = document.querySelector('.overlay.open') || document.querySelector('.drawer.open');
-if (!modal) return;
-const focusable = Array.from(modal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled])'))
-.filter(el => el.getClientRects().length && !el.closest('[hidden]'));
-if (!focusable.length) return;
-const first = focusable[0], last = focusable[focusable.length - 1];
-if (!modal.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
-else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-});
-</script>
-
-<script>
-// Keep the skin-tone chart below the opening phone view, behind the action bar.
-// Measure the real header and text so font loading and device widths are respected.
-(function(){
-  const hero=document.querySelector('.hero'), skin=document.querySelector('.skin');
-  const heading=skin.querySelector('.skin-head'), rail=document.querySelector('.action-rail');
-  let frame;
-  function fitOpening(){
-    cancelAnimationFrame(frame);
-    frame=requestAnimationFrame(function(){
-      if(!matchMedia('(max-width:760px)').matches){hero.style.removeProperty('--opening-hero-height');return;}
-      const headerHeight=document.querySelector('.hdr').getBoundingClientRect().height;
-      const headingStyle=getComputedStyle(heading);
-      const introHeight=parseFloat(getComputedStyle(skin).paddingTop)+heading.getBoundingClientRect().height+parseFloat(headingStyle.marginBottom);
-      const available=document.documentElement.clientHeight-headerHeight-rail.getBoundingClientRect().height-introHeight+12;
-      hero.style.setProperty('--opening-hero-height',Math.max(0,available)+'px');
-    });
-  }
-  fitOpening();
-  window.addEventListener('resize',fitOpening,{passive:true});
-  if(document.fonts)document.fonts.ready.then(fitOpening);
-})();
-</script>
+<script src="home-fit.js?v=PLS-20261007-TIDY"></script>
 <script src="chatbot.js?v=PLS-20261007-FIX2" defer></script>
 
 <script src="offer-popup-enhance.js" defer></script>

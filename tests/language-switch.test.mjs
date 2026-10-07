@@ -16,6 +16,6 @@ test('English mobile header has the blue EN and red ES two-way switch', () => {
 
 test('Spanish mobile header has the red ES and blue EN switch beside a menu', () => {
   has(spanish, /class="mobile-lang-switch"[^>]*>[\s\S]*?href="\/"[^>]*class="ls"[^>]*>EN<\/a>[\s\S]*?href="\/servicios\.html"[^>]*class="ls is-on"[^>]*>ES<\/a>/, 'Spanish header switch missing or links wrong');
-  has(styles, /\.mobile-lang-switch \.ls\[lang="es"\]\.is-on\{background:#e53935;color:#fff\}/, 'Spanish active red missing');
+  has(styles, /\.mobile-lang-switch \.ls\[lang="es"\]\.is-on\{background:#d32f2f;color:#fff\}/, 'Spanish active red missing');
   has(spanish, /<details class="es-mobile-menu">[\s\S]*?<summary[^>]*aria-label="Abrir menú"/, 'Spanish mobile menu missing');
 });

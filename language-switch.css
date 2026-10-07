@@ -5,7 +5,7 @@
 .mobile-lang-switch .ls[lang="en"]{color:#2f80ed}
 .mobile-lang-switch .ls[lang="es"]{color:#e53935}
 .mobile-lang-switch .ls[lang="en"].is-on{background:#2870d0;color:#fff}
-.mobile-lang-switch .ls[lang="es"].is-on{background:#e53935;color:#fff}
+.mobile-lang-switch .ls[lang="es"].is-on{background:#d32f2f;color:#fff}
 .mobile-lang-switch .ls:focus-visible,.es-mobile-menu summary:focus-visible{outline:2px solid #2f80ed;outline-offset:2px}
 
 /* The English page already has a three-line menu. Keep both controls level. */

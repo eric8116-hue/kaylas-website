@@ -22,3 +22,7 @@
 # Convenience paths people may type or that staff may hand out verbally.
 /intake                   /client-intake             301
 /espanol                  /servicios                 301
+
+# Self-assessment moved to a clean address (2026-10-07). Keep the old one working.
+/precise-self-assessment-v2.html  /self-assessment  301
+/precise-self-assessment-v2       /self-assessment  301

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 
-const html = readFileSync(new URL('../precise-self-assessment-v2.html', import.meta.url), 'utf8');
+const html = readFileSync(new URL('../self-assessment.html', import.meta.url), 'utf8');
 const matchingCode = html.slice(html.indexOf('const CATEGORIES ='), html.indexOf('function goResults()'));
 const match = (zone, concern) => vm.runInNewContext(matchingCode + '\nmatchCategories()', {
   state: {concernsByZone: {[zone]: [concern]}}

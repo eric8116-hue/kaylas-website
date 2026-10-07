@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="PLS-20261007-FIX">
+<meta name="build" content="PLS-20261007-FIX2">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -18,8 +18,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="service-page.css?v=PLS-20261006-NAV">
-<link rel="stylesheet" href="desktop-refinements.css?v=PLS-20261006-NAV">
+<link rel="stylesheet" href="service-page.css?v=PLS-20261007-FIX2">
+<link rel="stylesheet" href="desktop-refinements.css?v=PLS-20261007-FIX2">
 <meta property="og:image" content="https://preciselaserspa.com/sign.jpg">
 <meta property="og:image:alt" content="Precise Laser Hair Removal &amp; Esthetics in Babylon, New York">
 <meta name="twitter:image" content="https://preciselaserspa.com/sign.jpg">
@@ -35,7 +35,7 @@
 <nav class="nav">
 <a href="/#about">About</a>
 <a href="/#services" class="on">Services</a>
-<a href="/precise-self-assessment-v2.html">Self-Assessment</a>
+<a href="/self-assessment.html">Self-Assessment</a>
 <a href="/client-intake.html">Client Intake</a>
 <a href="/#reviews">Reviews</a>
 <a href="/?open=contact">Contact</a>
@@ -67,7 +67,7 @@
 <a class="dlink" href="/">Home</a>
 <a class="dlink" href="/#about">About</a>
 <a class="dlink" href="/#services">Services</a>
-<a class="dlink" href="/precise-self-assessment-v2.html">Self-Assessment</a>
+<a class="dlink" href="/self-assessment.html">Self-Assessment</a>
 <a class="dlink" href="/client-intake.html">Client Intake</a>
 <a class="dlink" href="/#reviews">Reviews</a>
 <a class="dlink" href="/?open=contact">Contact</a>
@@ -219,7 +219,7 @@ and a stacked list would make this one noticeably taller than its neighbours. --
 <p>Take the two-minute assessment, or book a complimentary consultation and we'll look at your skin in person before recommending anything.</p>
 <div class="row">
 <a class="btn btn-p" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener">Book a Free Consultation</a>
-<a class="btn btn-w" href="/precise-self-assessment-v2.html">Take the Free Assessment</a>
+<a class="btn btn-w" href="/self-assessment.html">Take the Free Assessment</a>
 </div>
 </div>
 </section>
@@ -298,7 +298,7 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </footer>
 
 <nav class="action-rail service-actions" aria-label="Quick actions">
-<a class="rail-btn" href="/precise-self-assessment-v2.html" aria-label="Free self-assessment"><span class="rail-label">Free Self-Assessment</span><svg width="23" height="23" viewBox="0 0 24 24"><path d="M9 3h6a1 1 0 0 1 1 1v1H8V4a1 1 0 0 1 1-1Z"/><path d="M16 5h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2"/><path d="M9 12h6M9 16h4"/></svg></a>
+<a class="rail-btn" href="/self-assessment.html" aria-label="Free self-assessment"><span class="rail-label">Free Self-Assessment</span><svg width="23" height="23" viewBox="0 0 24 24"><path d="M9 3h6a1 1 0 0 1 1 1v1H8V4a1 1 0 0 1 1-1Z"/><path d="M16 5h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2"/><path d="M9 12h6M9 16h4"/></svg></a>
 <a class="rail-btn rail-book" href="https://book.squareup.com/appointments/gs1i408ex6v4ly/location/LQD6Q4Z7MZVFG/services" target="_blank" rel="noopener" aria-label="Book"><span class="rail-label">Book an Appointment</span><svg width="23" height="23" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9.5 15.5 1.6 1.6 3.4-3.4"/></svg><span class="rail-mobile-label" aria-hidden="true">Book</span></a>
 <a class="rail-btn" href="/?open=contact" aria-label="Contact"><span class="rail-label">Contact Us</span><svg width="23" height="23" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 8.1 5.6a1.6 1.6 0 0 0 1.8 0L21 7"/></svg></a>
 <a class="rail-btn" href="/?open=reviews" aria-label="Reviews"><span class="rail-label">332 Google reviews</span><svg width="23" height="23" viewBox="0 0 24 24"><path d="m12 3 2.6 5.3 5.9.8-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.1l5.9-.8Z"/></svg></a>
@@ -330,7 +330,7 @@ document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFu
   window.addEventListener('load', function(){ goHash(); setTimeout(goHash, 350); });
 })();
 </script>
-<script src="chatbot.js?v=PLS-20261006-NAV" defer></script>
+<script src="chatbot.js?v=PLS-20261007-FIX2" defer></script>
 <script src="offer-popup.js?v=1" defer></script>
 
 <script src="site-menu.js?v=PLS-20261006-DOORS2" defer></script>

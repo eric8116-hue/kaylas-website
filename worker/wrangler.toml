@@ -12,11 +12,11 @@ main = "chatbot-api.js"
 compatibility_date = "2026-08-14"
 
 [vars]
-# TEMPORARY: pointed at Eric's inbox because Kayla's address
-# (Preciselaserspa@gmail.com) is still Pending verification in Cloudflare
-# Email Routing. Flip this back to hers once she clicks the verification
-# link, then redeploy. Cloudflare refuses to send to unverified addresses.
-NOTIFY_TO = "eric8116@gmail.com"
+# Contact-form emails go to the spa (Eric, 2026-10-07). Live mail is sent via
+# Resend (RESEND_API_KEY secret), which does not need Cloudflare Email Routing
+# verification. If the key is ever removed, the Cloudflare path is used and
+# that DOES need the address verified in Email Routing.
+NOTIFY_TO = "Preciselaserspa@gmail.com"
 
 [[kv_namespaces]]
 binding = "CHATBOT_KV"

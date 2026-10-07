@@ -27,5 +27,5 @@
 .cb-toolbar #cbLanguages .cb-en { color: #2f80ed; }
 .cb-toolbar #cbLanguages .cb-es { color: #e53935; }
 .cb-toolbar #cbLanguages .cb-en[aria-pressed="true"] { background: #2870d0; color: #fff; }
-.cb-toolbar #cbLanguages .cb-es[aria-pressed="true"] { background: #e53935; color: #fff; }
+.cb-toolbar #cbLanguages .cb-es[aria-pressed="true"] { background: #d32f2f; color: #fff; }
 .cb-toolbar #cbLanguages .cb-lang:not([aria-pressed="true"]):hover { background: #ffffff14; }

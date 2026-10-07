@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="PLS-20261006-DOORS2">
+<meta name="build" content="PLS-20261007-FIX">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -150,10 +150,16 @@ and set each delay below to loop ÷ 4. */
 position:absolute; inset:0; background-size:cover; background-position:center;
 opacity:0; animation:kbCycle var(--kb-loop) infinite; will-change:transform,opacity;
 }
-.kb-slide:nth-child(1){animation-delay:0s}
+.kb-slide:nth-child(1){animation-delay:0s; animation-name:kbCycleFirst} /* first photo shows at once; only later slides fade in */
 .kb-slide:nth-child(2){animation-delay:2s}
 .kb-slide:nth-child(3){animation-delay:4s}
 .kb-slide:nth-child(4){animation-delay:6s}
+@keyframes kbCycleFirst{
+0% {opacity:1; transform:scale(1.00)}
+25% {opacity:1}
+30% {opacity:0}
+100% {opacity:0; transform:scale(1.16)}
+}
 @keyframes kbCycle{
 0% {opacity:0; transform:scale(1.00)}
 5% {opacity:1}
@@ -988,7 +994,10 @@ const CONFIG = {
 // listing before treating this as final).
 googleWriteReview : 'https://search.google.com/local/writereview?placeid=ChIJ672a9s0o6IkRq2rrf_v_490',
 googleReadReviews : 'https://www.google.com/maps/search/?api=1&query=Precise+Laser+Hair+Removal+%26+Esthetics+626+Deer+Park+Ave+Babylon+NY',
-reviewsApi : 'https://precise-laser-crm.pages.dev/api/public-reviews'
+reviewsApi : 'https://precise-laser-crm.pages.dev/api/public-reviews',
+// Off until the dashboard's sign-in lets /api/public-reviews through to the public.
+// While it is behind the sign-in every call fails, so leave this false until then.
+reviewsFeedEnabled : false
 };
 
 const SERVICES = [
@@ -1001,6 +1010,7 @@ const SERVICES = [
 
 /* ---------- wire up config ---------- */
 async function loadFeaturedReviews(){
+  if (!CONFIG.reviewsFeedEnabled) return;
   if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') return;
   try {
     const response = await fetch(CONFIG.reviewsApi, {cache:'no-store'});

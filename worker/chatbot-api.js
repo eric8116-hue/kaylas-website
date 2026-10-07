@@ -331,6 +331,18 @@ export default {
       const clean = kind === 'contact' ? sanitizeContact(body) : sanitizeTextWidget(body);
       if (!clean) return json({ ok: false, error: 'Missing or invalid fields.' }, request, 400);
 
+      // Best-effort flood protection, same approach as /miss: at most 5 sends per
+      // visitor per hour. Only a rotating hash is kept, never the raw IP.
+      const ip = request.headers.get('CF-Connecting-IP');
+      if (ip && env.CHATBOT_KV) {
+        const bucket = Math.floor(Date.now() / 3600000);
+        const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('notify:' + bucket + ':' + ip));
+        const key = 'notify-rate:' + Array.from(new Uint8Array(digest), x => x.toString(16).padStart(2, '0')).join('');
+        const count = Number(await env.CHATBOT_KV.get(key)) || 0;
+        if (count >= 5) return json({ ok: false, error: 'Too many messages. Please call or text the spa.' }, request, 429);
+        await env.CHATBOT_KV.put(key, String(count + 1), { expirationTtl: 7200 });
+      }
+
       if (!env.RESEND_API_KEY && !env.SEND_EMAIL) {
         // Neither delivery path configured — see NOTIFY-SETUP.md. Fail loudly
         // instead of silently pretending the message went somewhere.

@@ -60,3 +60,22 @@ test('delivery provider failure returns a recoverable failure', async () => {
     assert.equal((await response.json()).ok, false);
   } finally { globalThis.fetch = originalFetch; console.error = originalError; }
 });
+
+test('one visitor cannot flood the inbox: the 6th send in an hour is refused before delivery', async () => {
+  const originalFetch = globalThis.fetch;
+  let deliveries = 0;
+  globalThis.fetch = async () => { deliveries++; return Response.json({id: 'local-only'}); };
+  const store = new Map();
+  const kv = {get: async key => store.get(key) ?? null, put: async (key, value) => { store.set(key, value); }};
+  const env = {RESEND_API_KEY: 'synthetic-key', NOTIFY_TO: 'owner@example.invalid', CHATBOT_KV: kv};
+  const from = ip => { const r = request(payload); r.headers.set('CF-Connecting-IP', ip); return r; };
+  try {
+    for (let i = 0; i < 5; i++) assert.equal((await worker.fetch(from('203.0.113.7'), env)).status, 200);
+    const blocked = await worker.fetch(from('203.0.113.7'), env);
+    assert.equal(blocked.status, 429);
+    assert.equal(blocked.headers.get('Access-Control-Allow-Origin'), 'https://preciselaserspa.com');
+    assert.equal(deliveries, 5);
+    assert.equal((await worker.fetch(from('198.51.100.9'), env)).status, 200, 'other visitors still get through');
+    assert.ok([...store.keys()].every(k => !k.includes('203.0.113.7')), 'raw IP addresses are never stored');
+  } finally { globalThis.fetch = originalFetch; }
+});

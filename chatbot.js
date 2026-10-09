@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 const source=document.currentScript.src,local=['localhost','127.0.0.1'].includes(location.hostname);
-const API=local?'http://127.0.0.1:8815':'https://chatbot-api.eric8116.workers.dev';
+  const API=local?'http://127.0.0.1:8815':'https://precise-laser-chatbot.preciselaserspa.workers.dev';
 const script=document.createElement('script');script.src=new URL('chatbot-core.js?v=PLS-20261006-023901',source).href;script.onload=init;document.head.append(script);
 function init(){
  const core=window.PreciseChat,rail=document.querySelector('.action-rail');

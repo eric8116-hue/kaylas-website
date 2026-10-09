@@ -3,18 +3,10 @@ document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFu
 // =============================================================================
 // SUBMISSION DESTINATION
 //
-// Posts to the SAME endpoint the in-office iPad intake form uses on the CRM
-// (precise-laser-crm.pages.dev/submit-intake), so a client who fills this out
-// at home lands in the exact same client/intake records staff see in the CRM.
-//
-// KNOWN OPEN ITEM: this is a cross-origin request (marketing site -> CRM
-// domain). It will only succeed once the CRM's /submit-intake function sends
-// an Access-Control-Allow-Origin header permitting this site's domain. That's
-// a one-line change on the CRM side — flag it to Caleb/whoever owns that
-// Worker before this goes live. Until then, submitting from this page will
-// fail with a CORS error in the browser console, not silently.
+// Both intake forms write to Kayla's CRM D1 database.
+// This public website uses its own same-origin Pages Function.
 // =============================================================================
-const INTAKE_SUBMIT_URL = "https://precise-laser-crm.pages.dev/submit-intake";
+const INTAKE_SUBMIT_URL = "/submit-intake";
 
 // When this page was opened, used to measure how long the form took to fill.
 const FORM_OPENED_AT = Date.now();
@@ -107,6 +99,13 @@ const T = {
   photoTitle: ["Photo Consent", "Consentimiento para Fotografías"],
   photoText: ["I consent to clinical before/after photos being taken and stored in my file for treatment tracking.",
               "Doy mi consentimiento para que se tomen fotografías clínicas de antes y después y se guarden en mi expediente para dar seguimiento al tratamiento."],
+  communicationsTitle: ["How may Precise Laser contact you?", "¿Cómo puede comunicarse con usted Precise Laser?"],
+  communicationsSub: ["Choose only the messages you want. All choices are optional and start unchecked.", "Elija solo los mensajes que desea recibir. Todas las opciones son opcionales y comienzan sin marcar."],
+  smsRemindersChoice: ["Text me about appointments, including reminders and schedule changes.", "Envíenme mensajes de texto sobre mis citas, incluidos recordatorios y cambios de horario."],
+  smsQuestionsChoice: ["Text me replies to questions I ask Precise Laser.", "Envíenme por mensaje de texto respuestas a las preguntas que haga a Precise Laser."],
+  smsPromotionsChoice: ["Text me promotions, birthday offers, discounts, and gift certificate offers.", "Envíenme por mensaje de texto promociones, ofertas de cumpleaños, descuentos y ofertas de certificados de regalo."],
+  emailPromotionsChoice: ["Email me promotions, birthday offers, discounts, and gift certificate offers.", "Envíenme por correo electrónico promociones, ofertas de cumpleaños, descuentos y ofertas de certificados de regalo."],
+  communicationsNote: ["Consent is optional and does not affect treatment. Message and data rates may apply. You may withdraw text consent by replying STOP or contacting Precise Laser.", "El consentimiento es opcional y no afecta el tratamiento. Pueden aplicarse tarifas de mensajes y datos. Puede retirar el consentimiento para mensajes de texto respondiendo STOP o comunicándose con Precise Laser."],
   specialsTitle: ["Specials, Promotions & Gift Certificates", "Ofertas, Promociones y Certificados de Regalo"],
   specialsSub: ["We run specials throughout the year, including birthday offers, promotions, gift certificates, and discounts.",
                 "Tenemos ofertas durante todo el año, incluyendo promociones de cumpleaños, certificados de regalo y descuentos."],
@@ -297,7 +296,6 @@ function setYN(field, val, btn) {
   syncIntakeAccessibility();
   const followup = document.getElementById(field + "_detail_wrap");
   if (followup) followup.classList.toggle("show", val === true);
-  if (field === "marketing_optin") refreshStep4Gate();
 }
 
 function setAdult(isAdult, btn) {
@@ -312,7 +310,7 @@ function setAdult(isAdult, btn) {
 }
 
 function refreshStep4Gate() {
-  const answered = state.yn.marketing_optin !== undefined && state.adult !== null;
+  const answered = state.adult !== null;
   document.getElementById("toStep5Btn").disabled = !answered;
 }
 
@@ -450,7 +448,11 @@ async function submitIntake() {
     consent_initials: getInitials(),
     consent_items: state.consentDone,
     photo_consent: document.getElementById("photoConsentLine").classList.contains("on"),
-    marketing_optin: state.yn.marketing_optin === true,
+    sms_reminders_consent: document.getElementById("sms_reminders_consent").checked,
+    sms_questions_consent: document.getElementById("sms_questions_consent").checked,
+    sms_promotions_consent: document.getElementById("sms_promotions_consent").checked,
+    email_promotions_consent: document.getElementById("email_promotions_consent").checked,
+    marketing_optin: document.getElementById("sms_promotions_consent").checked || document.getElementById("email_promotions_consent").checked,
     is_adult: state.adult === true,
     guardian_name: val("guardian_name"),
     guardian_signature: val("guardian_signature"),
@@ -504,9 +506,11 @@ const DRAFT_MAX_AGE_MS = 60 * 60 * 1000;
 
 function draftFieldIds() {
   return Array.from(document.querySelectorAll(".ic-card input, .ic-card select, .ic-card textarea"))
-    .filter(el => el.id && el.type !== "file" && el.type !== "button")
+    .filter(el => el.id && el.type !== "file" && el.type !== "button" && el.type !== "checkbox")
     .map(el => el.id);
 }
+
+const COMMUNICATION_CONSENT_IDS = ["sms_reminders_consent", "sms_questions_consent", "sms_promotions_consent", "email_promotions_consent"];
 
 function saveDraft() {
   if (currentStep > 5) return;
@@ -524,6 +528,7 @@ function saveDraft() {
       v: 1, savedAt: Date.now(), lang: lang, currentStep: currentStep, fields: fields,
       state: { yn: state.yn, adult: state.adult, freq: state.freq, methods: state.methods, consentDone: state.consentDone },
       photoConsent: photoLine ? photoLine.classList.contains("on") : false,
+      communicationConsents: Object.fromEntries(COMMUNICATION_CONSENT_IDS.map(id => [id, document.getElementById(id).checked])),
     };
     const hasAnswers = Object.keys(fields).some(id => id !== "state" && id !== "company_url") || Object.keys(state.yn).length || state.adult !== null || state.freq || state.methods.length || state.consentDone.some(Boolean) || draft.photoConsent;
     if (!hasAnswers) { clearDraft(); return; }
@@ -553,6 +558,8 @@ function applyDraft(d) {
     const el = document.getElementById(id);
     if (el) el.value = d.fields[id];
   });
+
+  for (const id of COMMUNICATION_CONSENT_IDS) document.getElementById(id).checked = d.communicationConsents?.[id] === true;
 
   if (d.state) {
     state.yn = d.state.yn || {};
@@ -599,8 +606,6 @@ function syncConditionalFields() {
     if (val === true && btns[0]) btns[0].classList.add("sel");
     if (val === false && btns[1]) btns[1].classList.add("sel");
   };
-  const optinBtn = document.querySelector('[onclick*="marketing_optin"]');
-  markRow(optinBtn ? optinBtn.closest(".ic-yn-toggle") : null, state.yn.marketing_optin);
   const adultBtn = document.querySelector('[onclick*="setAdult"]');
   markRow(adultBtn ? adultBtn.closest(".ic-yn-toggle") : null, state.adult);
 

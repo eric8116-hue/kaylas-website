@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="PLS-20261007-TIDY">
+<meta name="build" content="PLS-20261008-FORM-F1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1E8A85">
@@ -24,10 +24,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="service-page.css?v=PLS-20261007-FIX2">
 <link rel="stylesheet" href="language-switch.css?v=PLS-20261007-FIX2">
-<link rel="stylesheet" href="client-intake.css?v=PLS-20261007-TIDY">
+<link rel="stylesheet" href="client-intake.css?v=PLS-20261008-FORM-F1">
 <link rel="stylesheet" href="button-refinement.css?v=1">
 <link rel="stylesheet" href="form-accessibility.css?v=PLS-20261006-023901">
 <script src="actions.js?v=PLS-20261007-TIDY"></script>
+<link rel="stylesheet" href="email-domain-suggest.css?v=PLS-20261008-FORM-F1">
+<script src="email-domain-suggest.js?v=PLS-20261008-FORM-F1" defer></script>
 </head>
 <body class="intake-page">
 <a class="skip-link" href="#main-content">Skip to intake form</a>
@@ -71,19 +73,15 @@
 </div>
 
 <main id="main-content" tabindex="-1">
-<section class="pbanner" style="min-height:260px">
-<div class="pbanner-img" style="background-image:url('source-images/image0-1-500w.jpg')"></div>
-<div class="pbanner-veil"></div>
-<div class="pbanner-in">
-<div class="crumb"><a href="/">Home</a> · Client Intake</div>
-<h1 class="pbanner-title" data-i18n="pageH1">New Client Intake</h1>
-<p class="pbanner-sub" data-i18n="pageSub">Fill this out before your appointment — contact info, medical history, and consent, all on file when you walk in.</p>
-</div>
-</section>
-
 <section class="ic-section">
 <div class="wrap">
 <div class="ic-card">
+  <header class="ic-card-header">
+    <div class="crumb"><a href="/">Home</a> · Client Intake</div>
+    <h1 class="pbanner-title" data-i18n="pageH1">New Client Intake</h1>
+    <span class="form-build">BUILD 10.08-F1</span>
+    <p class="pbanner-sub" data-i18n="pageSub">Fill this out before your appointment — contact info, medical history, and consent, all on file when you walk in.</p>
+  </header>
 
   <div class="mobile-lang-switch ic-lang" id="icLangSwitch" role="group" aria-label="Language / Idioma">
     <button type="button" class="ls" id="icLangEn" lang="en" aria-label="English" data-on-click="setLang('en')">EN</button>
@@ -268,12 +266,16 @@
       <div class="ic-txt" data-i18n="photoText">I consent to clinical before/after photos being taken and stored in my file for treatment tracking.</div>
     </div>
 
-    <h2 data-i18n="specialsTitle">Specials, Promotions &amp; Gift Certificates</h2>
-    <p class="ic-sub" data-i18n="specialsSub">We run specials throughout the year, including birthday offers, promotions, gift certificates, and discounts.</p>
-    <div class="ic-yn-row"><div class="ic-q"><span data-i18n="marketingQ">May we send you birthday specials, promotions, gift certificates, and discounts by text and/or email?</span> <span class="ic-req">*</span> <span class="ic-req-note" data-i18n="required">Required</span></div>
-      <div class="ic-yn-toggle"><button class="sel-y" data-on-click="setYN('marketing_optin',true,this)" data-i18n="yes">Yes</button><button class="sel-n" data-on-click="setYN('marketing_optin',false,this)" data-i18n="no">No</button></div></div>
-
-    <h2 data-i18n="ageTitle">Age</h2>
+    <h2 data-i18n="communicationsTitle">How may Precise Laser contact you?</h2>
+<p class="ic-sub" data-i18n="communicationsSub">Choose only the messages you want. All choices are optional and start unchecked.</p>
+<div class="ic-communication-choices" role="group" aria-label="Communication preferences">
+  <label class="ic-communication-choice"><input type="checkbox" id="sms_reminders_consent"><span data-i18n="smsRemindersChoice">Text me about appointments, including reminders and schedule changes.</span></label>
+  <label class="ic-communication-choice"><input type="checkbox" id="sms_questions_consent"><span data-i18n="smsQuestionsChoice">Text me replies to questions I ask Precise Laser.</span></label>
+  <label class="ic-communication-choice"><input type="checkbox" id="sms_promotions_consent"><span data-i18n="smsPromotionsChoice">Text me promotions, birthday offers, discounts, and gift certificate offers.</span></label>
+  <label class="ic-communication-choice"><input type="checkbox" id="email_promotions_consent"><span data-i18n="emailPromotionsChoice">Email me promotions, birthday offers, discounts, and gift certificate offers.</span></label>
+</div>
+<p class="ic-communication-note" data-i18n="communicationsNote">Consent is optional and does not affect treatment. Message and data rates may apply. You may withdraw text consent by replying STOP or contacting Precise Laser.</p>
+<h2 data-i18n="ageTitle">Age</h2>
     <div class="ic-yn-row"><div class="ic-q"><span data-i18n="ageQ">Are you 18 or over?</span> <span class="ic-req">*</span> <span class="ic-req-note" data-i18n="required">Required</span></div>
       <div class="ic-yn-toggle"><button class="sel-y" data-on-click="setAdult(true,this)" data-i18n="yes">Yes</button><button class="sel-n" data-on-click="setAdult(false,this)" data-i18n="no">No</button></div></div>
     <div id="guardianWrap" style="display:none">
@@ -376,7 +378,7 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <li><a href="tel:6319231174">(631) 923-1174</a></li>
 <li><a href="mailto:Preciselaserspa@gmail.com">Preciselaserspa@gmail.com</a></li>
 <li><a href="/?open=contact">Contact Us</a></li>
-<li><a href="/#reviews">Reviews</a></li><li><a class="staff-link" href="https://precise-laser-crm.pages.dev/dashboard.html" rel="nofollow">Staff &#8594;</a></li>
+<li><a href="/#reviews">Reviews</a></li><li><a class="staff-link" href="https://precise-laser-crm-bkm.pages.dev/cloud-dashboard/" rel="nofollow">Staff &#8594;</a></li>
 </ul>
 </div>
 </div>
@@ -389,8 +391,8 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
 <div class="ic-toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="client-intake.js?v=PLS-20261007-TIDY"></script>
-<script src="chatbot.js?v=PLS-20261007-FIX2" defer></script>
+<script src="client-intake.js?v=PLS-20261008-PUBLIC-API"></script>
+<script src="chatbot.js?v=PLS-20261008-KAYLA1" defer></script>
 
 <script src="site-menu.js?v=PLS-20261006-DOORS2" defer></script>
 </body>

@@ -13,9 +13,8 @@ const CONFIG = {
 // listing before treating this as final).
 googleWriteReview : 'https://search.google.com/local/writereview?placeid=ChIJ672a9s0o6IkRq2rrf_v_490',
 googleReadReviews : 'https://www.google.com/maps/search/?api=1&query=Precise+Laser+Hair+Removal+%26+Esthetics+626+Deer+Park+Ave+Babylon+NY',
-reviewsApi : 'https://precise-laser-crm.pages.dev/api/public-reviews',
-// Off until the dashboard's sign-in lets /api/public-reviews through to the public.
-// While it is behind the sign-in every call fails, so leave this false until then.
+reviewsApi : '/api/public-reviews',
+  // Enable after Kayla has approved public reviews to feature.
 reviewsFeedEnabled : false
 };
 
@@ -89,7 +88,7 @@ const PROMOTIONS_DISABLED = true;
 if (PROMOTIONS_DISABLED) return;
 const preview = new URLSearchParams(location.search).has('preview');
 const local = ['127.0.0.1','localhost'].includes(location.hostname);
-const endpoint = local ? 'http://127.0.0.1:8818/api/offer' : 'https://precise-laser-crm.pages.dev/api/offer';
+const endpoint = local ? 'http://127.0.0.1:8818/api/offer' : '/api/offer';
 const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
 const seenKey = 'preciseOfferSeen';
 try { if (!preview && sessionStorage.getItem(seenKey)) return; } catch(e){}

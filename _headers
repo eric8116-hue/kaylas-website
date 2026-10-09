@@ -8,7 +8,7 @@
 #   fonts.googleapis.com / fonts.gstatic.com   Google Fonts
 #   www.google.com                             map embed
 #   chatbot-api.eric8116.workers.dev           chat answers + contact form
-#   precise-laser-crm.pages.dev                intake form, offer, reviews feed
+#   same-origin Pages Functions                intake form, offer, reviews feed
 #   googletagmanager / google-analytics / doubleclick   ad + visit tracking (site-tracking.js)
 #   static.cloudflareinsights.com / cloudflareinsights.com   Cloudflare's own visitor counter
 
@@ -18,4 +18,4 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://cloudflareinsights.com https://chatbot-api.eric8116.workers.dev https://precise-laser-crm.pages.dev https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://www.google.com https://googleads.g.doubleclick.net; frame-src https://www.google.com https://www.googletagmanager.com https://td.doubleclick.net; form-action 'self' https://precise-laser-crm.pages.dev; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://cloudflareinsights.com https://chatbot-api.eric8116.workers.dev https://precise-laser-chatbot.preciselaserspa.workers.dev https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://www.google.com https://googleads.g.doubleclick.net; frame-src https://www.google.com https://www.googletagmanager.com https://td.doubleclick.net; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests

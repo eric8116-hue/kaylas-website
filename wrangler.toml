@@ -1,6 +1,6 @@
 name = "web-precise-laser"
 compatibility_date = "2026-10-08"
-pages_build_output_dir = "public"
+pages_build_output_dir = "dist"
 
 [[env.production.d1_databases]]
 binding = "DB"

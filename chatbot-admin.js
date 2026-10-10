@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 const core=window.PreciseChat,$=id=>document.getElementById(id),local=['127.0.0.1','localhost'].includes(location.hostname);
-  const API=local?(location.port==='8818'?'/response-api':'http://127.0.0.1:8815'):'https://precise-laser-chatbot.preciselaserspa.workers.dev';
+const API=local?(location.port==='8818'?'/response-api':'http://127.0.0.1:8815'):'https://precise-laser-chatbot.preciselaserspa.workers.dev';
 let qa=[],revision='',password='',editing=null,busy=false,loaded=false;
 function notice(text,error=false){$('notice').textContent=text;$('notice').classList.toggle('error',error);}
 async function request(path,options={}){

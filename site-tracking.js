@@ -35,7 +35,7 @@
   window.preciseTrack = track;
 
   // In the local Site Preview, the footer Staff link opens the local dashboard preview.
-  if (local) document.querySelectorAll('a.staff-link').forEach(function (l) { l.href = 'http://127.0.0.1:8818/dashboard.html'; });
+  if (local) document.querySelectorAll('a.staff-link').forEach(function (l) { l.href = 'http://127.0.0.1:8818/index.html'; });
 
   // One listener catches every link, including ones added later by the menu and chat.
   document.addEventListener('click', function (e) {

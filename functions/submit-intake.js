@@ -25,6 +25,9 @@
 // (once configured) Turnstile.
 
 import { encryptField, ENCRYPTED_CLIENT_FIELDS } from "../lib/crypto.js";
+import { logAudit } from "../lib/audit.js";
+import { readJsonObject, requestFailure } from "../lib/request-validation.js";
+import { normalizeIntake } from "../lib/intake-validation.js";
 import { checkRateLimit, verifyTurnstile, checkSpamSignals, record, pruneThrottle } from "../lib/abuse.js";
 
 const COLUMNS = [
@@ -61,8 +64,10 @@ function corsOrigin(request) {
 
 function withCors(response, request) {
   const origin = corsOrigin(request);
-  if (!origin) return response;
   const headers = new Headers(response.headers);
+  headers.set("Cache-Control", "private, no-store");
+  headers.set("X-Content-Type-Options", "nosniff");
+  if (!origin) return new Response(response.body, { status: response.status, headers });
   headers.set("Access-Control-Allow-Origin", origin);
   headers.set("Vary", "Origin");
   return new Response(response.body, { status: response.status, headers });
@@ -97,22 +102,14 @@ const MSG = {
   },
 };
 const pick = (m, lang) => (lang === "es" ? m.es : m.en);
-const COMMUNICATION_CONSENT_FIELDS = [
-  "sms_reminders_consent", "sms_questions_consent", "sms_promotions_consent", "email_promotions_consent",
-];
-const COMMUNICATION_CONSENT_VERSION = "2026-10-08-v1";
-
 export async function onRequestPost(context) {
+  try { return await submitIntake(context); }
+  catch (error) { return withCors(requestFailure(error), context.request); }
+}
+
+async function submitIntake(context) {
   const { request, env } = context;
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return withCors(Response.json({ error: "Invalid JSON" }, { status: 400 }), request);
-  }
-  if (!body || typeof body !== "object" || Array.isArray(body)) {
-    return withCors(Response.json({ error: "Invalid intake request" }, { status: 400 }), request);
-  }
+  let body = await readJsonObject(request);
   const lang = body.form_language === "es" ? "es" : "en";
 
   // --- layer 1: rate limiting (always on, needs no configuration) ----------
@@ -167,29 +164,7 @@ export async function onRequestPost(context) {
     );
   }
 
-  if (!body.first_name || !body.first_name.trim() || !body.last_name || !body.last_name.trim()) {
-    return withCors(
-      new Response(JSON.stringify({ error: "first_name and last_name are required" }), { status: 400 }),
-      request
-    );
-  }
-  // The older public-site form has one combined marketing answer. Leave its
-  // channel-specific fields unknown. New iPad submissions must explicitly
-  // send all four independent, boolean choices, including unchecked ones.
-  const hasCommunicationChoices = COMMUNICATION_CONSENT_FIELDS.some(field => Object.hasOwn(body, field));
-  if (hasCommunicationChoices) {
-    if (COMMUNICATION_CONSENT_FIELDS.some(field => typeof body[field] !== "boolean")) {
-      return withCors(Response.json({ error: "Invalid communication choices" }, { status: 400 }), request);
-    }
-    body.marketing_optin = body.sms_promotions_consent || body.email_promotions_consent;
-    body.communications_consent_version = COMMUNICATION_CONSENT_VERSION;
-    body.communications_consent_at = new Date().toISOString();
-  } else {
-    // Never accept a claimed version or timestamp without the choices it describes.
-    body.communications_consent_version = null;
-    body.communications_consent_at = null;
-  }
-
+  body = normalizeIntake(body);
   // Medications, allergies, the nine yes/no screening answers, and the
   // condition-detail fields are encrypted before they ever reach the
   // database — everything else (name, contact info, consent, signatures)
@@ -212,18 +187,11 @@ export async function onRequestPost(context) {
   const sql = `INSERT INTO clients (${COLUMNS.join(",")}) VALUES (${placeholders})`;
   const res = await env.DB.prepare(sql).bind(...values).run();
 
-  try {
-    await env.DB.prepare(
-      `INSERT INTO audit_log (actor, action, client_id, detail, ip) VALUES (?,?,?,?,?)`
-    ).bind(
-      body.submission_source === "website" ? "client (web intake)" : "client (self-intake)",
-      "create_client", res.meta.last_row_id, "submitted via intake form",
-      request.headers.get("CF-Connecting-IP") || null
-    ).run();
-  } catch (err) {
-    console.error("audit log failed:", err);
-  }
-
+  await logAudit(env, request, {
+    actor: body.submission_source === "website" ? "client (web intake)" : "client (self-intake)",
+    action: "create_client", client_id: res.meta.last_row_id,
+    detail: "submitted via intake form",
+  });
   // Ledger the accepted submission so it counts toward the next caller's
   // limit, then opportunistically prune old rows. Both are best-effort and
   // never throw — a bookkeeping failure must not fail a saved intake.

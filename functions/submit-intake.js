@@ -37,6 +37,7 @@ const COLUMNS = [
   "chemical_peel","chemical_peel_detail","medications","light_sensitive","light_sensitive_detail",
   "allergies","removal_frequency","removal_methods","last_treatment_before_us",
   "q_headaches","q_testosterone","q_laser_resurfacing","q_skin_infection","q_sensitive_skin",
+  "q_pregnant","q_antibiotics","q_antibiotics_detail","q_laser_hair_removal","intake_consent_version",
   "q_genital_herpes","q_microdermabrasion","q_hirsutism_family","q_cold_sores","skin_type",
   "consent_initials","consent_items","photo_consent","marketing_optin",
   "sms_reminders_consent","sms_questions_consent","sms_promotions_consent","email_promotions_consent",

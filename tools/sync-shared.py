@@ -13,8 +13,8 @@ SERVICE = ['services-hair-removal.html', 'services-detox.html', 'services-facial
 BLOCKS = {
     # partial file: (how to find the block in a page, pages that share it)
     'service-header.html': ('header', SERVICE),
-    'footer.html': ('footer', SERVICE + ['client-intake.html']),
-    'drawer.html': ('drawer', SERVICE + ['client-intake.html', '404.html']),
+    'footer.html': ('footer', SERVICE),
+    'drawer.html': ('drawer', SERVICE + ['404.html']),
 }
 
 def find(text, kind):

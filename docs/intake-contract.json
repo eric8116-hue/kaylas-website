@@ -1,0 +1,11 @@
+{
+  "canonicalIntake": "https://precise-laser-crm-bkm.pages.dev/intake.html",
+  "files": {
+    "functions/submit-intake.js": "12b6e49c38ef2958fcc0853438e0cf3a12808c9bf7cefc5ea7a012863aadfc6c",
+    "lib/abuse.js": "bbeb0a49b5f6f4dca0391508892f42f3db16f0664f7662e990a81f318ad58402",
+    "lib/audit.js": "6d027fffb5cec80ab8d75d73e5dcabfb7a6d28fe361110b96dd5958e16ecbaf1",
+    "lib/crypto.js": "9fd2384872d776c0be261fa5233906de496eaec9dc20111cf744e7e7503e5c3f",
+    "lib/intake-validation.js": "d2d6c9775eeeba24a957a5d4aa0bcf5f91e4880bb210a846c1912e791f19e216",
+    "lib/request-validation.js": "ab3d2b2b73905ea522c9cbb2a5236de040c98b480188ea39499735eabb1c84df"
+  }
+}

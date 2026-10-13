@@ -91,3 +91,19 @@ of a Pages asset upload. Review its current name, bindings and secrets in
 `worker/wrangler.toml`; the KV ID is already configured, not a placeholder.
 Changes to that Worker need their own review and release authorization. An
 approved Pages release does not authorize a Worker deployment.
+
+## Pending R22 intake and access batch
+
+The public intake entry redirects to the canonical CRM form. Publish the CRM
+first, after the pending medical-question migration 024 is approved and applied.
+The public POST writer is retained for older already-open forms and must share
+the existing D1 database and encryption key.
+
+From the sibling CRM repository, run `node tools/sync-intake-contract.mjs --check`
+before release. The two repositories carry matching `docs/intake-contract.json`
+manifests; each suite rejects shared code that does not match its manifest.
+Intentional shared updates are copied with the same tool's `--write` option.
+
+Local verification: 38 public-site tests passed and Pages Functions compiled.
+The companion CRM batch passed 182 tests. Visual and production verification
+remain separate; this note does not authorize push or deployment.

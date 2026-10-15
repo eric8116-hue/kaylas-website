@@ -5,3 +5,4 @@ Our Mission Screenshot.png
 DEPLOY.bat
 *.pdf
 /dist/
+.wrangler/

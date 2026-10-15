@@ -155,7 +155,7 @@ section[id]{scroll-margin-top:110px}
 .mini .btn{margin-top:auto; padding:13px 20px; font-size:13.5px}
 
 /* CTA band */
-.cta-band{background:linear-gradient(160deg,var(--teal-deep),var(--teal) 60%,#2AA09A); color:#fff; padding:72px 0; text-align:center}
+.cta-band{background:linear-gradient(160deg,var(--teal-deep),#17706B); color:#fff; padding:72px 0; text-align:center}
 .cta-band h2{font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:600; font-size:clamp(30px,4.4vw,44px); margin-bottom:14px}
 .cta-band p{font-size:16.5px; color:rgba(255,255,255,.9); max-width:52ch; margin:0 auto 28px; line-height:1.65}
 .cta-band .row{display:flex; gap:13px; justify-content:center; flex-wrap:wrap}

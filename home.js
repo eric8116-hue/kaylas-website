@@ -2,8 +2,21 @@
 ★★★ THE ONLY BLOCK YOU NEED TO EDIT ★★★
 Change the special here. Nothing else in the file has to change.
 ═══════════════════════════════════════════════════════════════════════ */
-/* Where the contact form + text widget actually deliver to. */
-const NOTIFY_API = 'https://chatbot-api.eric8116.workers.dev/notify';
+/* Where the contact form + text widget actually deliver to. Kayla's own
+   /api/notify answers first; until her Resend key is set it replies
+   { fallback: true } and the message goes to Eric's worker as before. */
+const NOTIFY_API = '/api/notify';
+const NOTIFY_FALLBACK_API = 'https://chatbot-api.eric8116.workers.dev/notify';
+async function sendNotify(payload) {
+  const options = { method: 'POST', signal: AbortSignal.timeout(20000), headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) };
+  let res = null;
+  try { res = await fetch(NOTIFY_API, options); } catch (err) { if (err.name === 'TimeoutError') throw err; }
+  // Only a JSON reply from the new function counts; a missing route (older
+  // deploy, local preview) or { fallback: true } goes to Eric's worker.
+  const answer = res ? await res.clone().json().catch(() => null) : null;
+  const fallback = !answer || typeof answer.ok !== 'boolean' || answer.fallback === true;
+  return fallback ? fetch(NOTIFY_FALLBACK_API, { ...options, signal: AbortSignal.timeout(20000) }) : res;
+}
 
 /* Other editable values */
 const CONFIG = {
@@ -248,17 +261,12 @@ const originalLabel = btn.textContent;
 btn.textContent = 'Sending…';
 
 try {
-const res = await fetch(NOTIFY_API, {
-method: 'POST',
-signal: AbortSignal.timeout(20000),
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({
+const res = await sendNotify({
 kind: 'contact',
 firstName: first, lastName: document.getElementById('cLast').value.trim(),
 email, phone, heardVia: feedback ? 'Private feedback' : hear.textContent.trim(), interests: feedback ? [] : interests,
 message: feedback ? 'Private feedback: ' + document.getElementById('cMsg').value.trim() : document.getElementById('cMsg').value.trim(),
 hp: document.getElementById('cHp').value
-})
 });
 if (!res.ok) throw new Error('notify failed');
 if (!feedback && window.preciseTrack) window.preciseTrack('contact_form_sent');

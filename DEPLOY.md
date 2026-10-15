@@ -19,6 +19,22 @@ changes, and secret changes require Eric's separate authorization.
 or upload the repository root. The old `public` output setting did not match
 this repository's layout. The Pages configuration now points to `dist`.
 
+## Contact form: Resend cutover (prepared October 14, 2026)
+
+`functions/api/notify.js` delivers the contact form and "Text us" widget
+through Kayla's own Resend account. Until `RESEND_API_KEY` is set on
+`web-precise-laser`, it answers `503 { fallback: true }` and `home.js` posts to
+Eric's `chatbot-api` `/notify` as before. A missing route (older deploy, local
+preview) also falls back, so there's no downtime.
+
+Cutover, after Kayla's Resend sending domain `preciselaserspa.com` is verified:
+add the `RESEND_API_KEY` secret (and optionally `NOTIFY_TO`) to
+`web-precise-laser` in Kayla's dashboard, then deploy this repo. Send one
+message containing no client details and confirm it **arrives** in the spa
+inbox; Resend acceptance alone doesn't prove that. Eric's worker can be retired
+only after that. Limit: 5 messages per visitor per hour, recorded in
+`intake_throttle` as `notify` (doesn't count against intake limits).
+
 ## Local preparation and checks
 
 Run from this repository root:

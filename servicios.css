@@ -29,7 +29,7 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 @media (max-width:640px){ .hdr-logo img{height:88px} }
 .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 22px; border-radius:99px; font-weight:600; font-size:14.5px; transition:transform .16s, box-shadow .16s; cursor:pointer; border:none}
 .btn:hover{transform:translateY(-2px)}
-.btn-p{background:linear-gradient(135deg,var(--teal),var(--teal-deep)); color:#fff; box-shadow:0 8px 22px rgba(20,97,93,.3)}
+.btn-p{background:linear-gradient(135deg,#17706B,var(--teal-deep)); color:#fff; box-shadow:0 8px 22px rgba(20,97,93,.3)}
 .btn-o{background:transparent; color:var(--teal-deep); border:1.5px solid var(--teal)}
 .lang-link{font-size:13.5px; font-weight:600; color:var(--ink-soft); padding:8px 12px; border:1px solid var(--line); border-radius:99px}
 .lang-link:hover{color:var(--teal-deep); border-color:var(--teal)}
@@ -52,7 +52,7 @@ h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.
 .btn-w{background:#fff; color:var(--teal-deep)}
 .hero-micro{display:flex; gap:22px; justify-content:center; flex-wrap:wrap; margin-top:26px; font-size:13.5px; color:rgba(255,255,255,.85)}
 
-.eyebrow{font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--teal)}
+.eyebrow{font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#167671}
 .sec{padding:72px 0}
 .sec-head{text-align:center; margin-bottom:44px}
 .h2{font-size:clamp(28px,4vw,40px); margin-top:10px}

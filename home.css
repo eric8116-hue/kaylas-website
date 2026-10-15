@@ -186,7 +186,7 @@ a.way:focus-visible{outline:3px solid var(--teal-deep); outline-offset:4px; bord
 .assess-art img{width:100%; max-width:300px; height:auto; display:block; filter:drop-shadow(0 14px 24px rgba(20,97,93,.22))}
 
 /* reviews section (full, in-page) */
-.revsec{background:linear-gradient(165deg,var(--teal-deep),var(--teal) 60%,#2AA09A); color:#fff; padding:59px 0}
+.revsec{background:linear-gradient(165deg,var(--teal-deep),#17706B); color:#fff; padding:59px 0}
 .revsec .eyebrow,.revsec .eyebrow a,.revsec .lede{color:#fff}
 .revsec-top{display:flex; align-items:center; justify-content:center; gap:clamp(16px,4vw,42px); flex-wrap:wrap; text-align:center; margin-bottom:32px}
 .revsec-score{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(56px,8vw,84px); line-height:.95}

@@ -20,11 +20,11 @@
 /book                     /?open=contact             301
 
 # Convenience paths people may type or that staff may hand out verbally.
-/client-intake https://precise-laser-crm-bkm.pages.dev/intake.html 302
-/client-intake/ https://precise-laser-crm-bkm.pages.dev/intake.html 302
-/client-intake.html https://precise-laser-crm-bkm.pages.dev/intake.html 302
-/intake https://precise-laser-crm-bkm.pages.dev/intake.html 302
-/intake.html https://precise-laser-crm-bkm.pages.dev/intake.html 302
+/client-intake /intake-form/intake 302
+/client-intake/ /intake-form/intake 302
+/client-intake.html /intake-form/intake 302
+/intake /intake-form/intake 302
+/intake.html /intake-form/intake 302
 /espanol                  /servicios                 301
 
 # Self-assessment moved to a clean address (2026-10-07). Keep the old one working.

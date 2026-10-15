@@ -1,0 +1,15 @@
+.intake-idle[hidden]{display:none!important}
+.intake-idle{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;isolation:isolate;min-height:100dvh;padding:24px;box-sizing:border-box}
+.intake-idle-shade{position:absolute;inset:0;background:linear-gradient(180deg,#133e3b25,#123937a8);z-index:-1}
+.intake-idle-content{text-align:center;color:#fff;max-width:700px;width:100%}
+.intake-idle-content>img{width:clamp(180px,26vw,260px);height:auto;max-height:220px;object-fit:contain;background:#fffdf9f5;border-radius:24px;padding:16px 24px;box-sizing:border-box}
+.intake-idle-content h1{color:#fff;font:400 clamp(27px,4vw,42px)/1.2 Georgia,serif;margin:18px 0 12px}
+.intake-idle-tagline{color:#e0f5e7;font-size:16px;margin:16px 0 0}
+.intake-idle-message{font-size:17px;line-height:1.5;margin:0 0 20px}
+button.intake-idle-start{border:1px solid #bfe8dd;border-radius:999px;background:#e7f5ed;color:#125c58;padding:12px 22px;min-height:46px;font-size:16px;font-weight:850;box-shadow:none}
+.intake-idle-footer{font-size:12px;letter-spacing:.12em;margin:24px 0 0;color:#e0f5e7}
+.intake-idle-open{overflow:hidden}
+button.intake-beach-button{border:1px solid #218298;border-radius:999px;background:#e9f7fb;color:#155c71;font-size:12px;font-weight:850;padding:8px 13px;min-height:36px;white-space:nowrap;box-shadow:none}
+.kiosk-banner:has(.intake-beach-button){gap:10px;flex-wrap:wrap}
+.kiosk-banner:has(.intake-beach-button)>div{margin-right:auto}
+@media(max-height:600px){.intake-idle-content>img{max-height:150px}.intake-idle-content h1{margin-top:12px}.intake-idle-tagline{margin-top:8px}.intake-idle-footer{margin-top:12px}}

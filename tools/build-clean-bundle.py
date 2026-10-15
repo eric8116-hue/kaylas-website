@@ -6,9 +6,9 @@ import shutil
 import sys
 
 ROOT = Path(__file__).resolve().parent.parent
-ASSET_DIRS = ("source-images", "assets", "images", "fonts")
+ASSET_DIRS = ("source-images", "assets", "images", "fonts", "intake-form")
 EXTENSIONS = {
-    ".html", ".css", ".js", ".svg", ".jpg", ".jpeg", ".png", ".webp",
+    ".html", ".css", ".js", ".mjs", ".svg", ".jpg", ".jpeg", ".png", ".webp",
     ".avif", ".gif", ".ico", ".woff", ".woff2", ".ttf", ".otf", ".mp4", ".webm",
 }
 SPECIAL_FILES = {"_headers", "_redirects", "robots.txt", "sitemap.xml"}

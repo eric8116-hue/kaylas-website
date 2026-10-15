@@ -1,0 +1,39 @@
+/* Compact, smooth action controls; semantic colors stay with their variants. */
+.crm-shell .btn,
+.crm-shell .pill,
+.crm-shell button:not(.opt):not(.lang-btn):not(.rev-star):not(.client-toggle):not(.thread-button) {
+  min-height: 34px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: .01em;
+  transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease, color .16s ease;
+}
+
+.crm-shell .btn:hover,
+.crm-shell .pill:hover,
+.crm-shell button:not(.opt):not(.lang-btn):not(.rev-star):not(.client-toggle):not(.thread-button):hover {
+  transform: translateY(-1px);
+}
+
+.crm-shell .btn:active,
+.crm-shell .pill:active,
+.crm-shell button:not(.opt):not(.lang-btn):not(.rev-star):not(.client-toggle):not(.thread-button):active {
+  transform: translateY(0) scale(.985);
+}
+
+.crm-shell .btn.small { min-height: 30px; padding: 5px 10px; }
+.intake-shell .btn,
+.intake-shell button:not(.opt):not(.lang-btn):not(.rev-star):not(.client-toggle):not(.thread-button) {
+  min-height: 44px;
+}
+
+@media (max-width: 760px) {
+  .crm-shell .btn,
+  .crm-shell .pill,
+  .crm-shell button:not(.opt):not(.lang-btn):not(.rev-star):not(.client-toggle):not(.thread-button) {
+    min-height: 40px;
+    padding-inline: 11px;
+  }
+  .crm-shell .btn.small { min-height: 34px; }
+}

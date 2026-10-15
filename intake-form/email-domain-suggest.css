@@ -1,0 +1,9 @@
+.email-domain-field { display: block; position: relative; width: 100%; }
+.email-domain-field > input { width: 100%; }
+.email-domain-list[hidden] { display: none; }
+.email-domain-list { position: absolute; top: calc(100% + 5px); left: 0; right: 0; z-index: 200; display: grid; gap: 3px; padding: 6px; border: 1px solid #9ebdb1; border-radius: 14px; background: #fffdf9; box-shadow: 0 12px 28px #233e4326; }
+.email-domain-option { display: flex !important; align-items: center; justify-content: space-between; gap: 8px; width: 100% !important; min-height: 36px !important; padding: 7px 12px !important; border: 1px solid transparent !important; border-radius: 999px !important; background: transparent !important; color: #233e43 !important; text-align: left; cursor: pointer; font-size: 13px !important; }
+.email-domain-option strong { color: #14625e; }
+.email-domain-option span { color: #526b70; font-weight: 550; }
+.email-domain-option:hover, .email-domain-option.active, .email-domain-option:focus-visible { border-color: #9ebdb1 !important; background: #e0f1eb !important; }
+.form-build { display: inline-flex; align-items: center; width: fit-content; border: 1px solid #d7ba78; border-radius: 999px; background: #fbf0d9; color: #765325; padding: 6px 10px; font-size: 12px; font-weight: 850; letter-spacing: .04em; line-height: 1.2; }
